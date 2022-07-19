@@ -99,7 +99,7 @@
                         };
     
                         /**
-                         * Callback as used by {@link google.cloud.apigeeregistry.v1.Provisioning|createInstance}.
+                         * Callback as used by {@link google.cloud.apigeeregistry.v1.Provisioning#createInstance}.
                          * @memberof google.cloud.apigeeregistry.v1.Provisioning
                          * @typedef CreateInstanceCallback
                          * @type {function}
@@ -132,7 +132,7 @@
                          */
     
                         /**
-                         * Callback as used by {@link google.cloud.apigeeregistry.v1.Provisioning|deleteInstance}.
+                         * Callback as used by {@link google.cloud.apigeeregistry.v1.Provisioning#deleteInstance}.
                          * @memberof google.cloud.apigeeregistry.v1.Provisioning
                          * @typedef DeleteInstanceCallback
                          * @type {function}
@@ -165,7 +165,7 @@
                          */
     
                         /**
-                         * Callback as used by {@link google.cloud.apigeeregistry.v1.Provisioning|getInstance}.
+                         * Callback as used by {@link google.cloud.apigeeregistry.v1.Provisioning#getInstance}.
                          * @memberof google.cloud.apigeeregistry.v1.Provisioning
                          * @typedef GetInstanceCallback
                          * @type {function}
@@ -4117,7 +4117,7 @@
                         };
     
                         /**
-                         * Callback as used by {@link google.cloud.apigeeregistry.v1.Registry|listApis}.
+                         * Callback as used by {@link google.cloud.apigeeregistry.v1.Registry#listApis}.
                          * @memberof google.cloud.apigeeregistry.v1.Registry
                          * @typedef ListApisCallback
                          * @type {function}
@@ -4150,7 +4150,7 @@
                          */
     
                         /**
-                         * Callback as used by {@link google.cloud.apigeeregistry.v1.Registry|getApi}.
+                         * Callback as used by {@link google.cloud.apigeeregistry.v1.Registry#getApi}.
                          * @memberof google.cloud.apigeeregistry.v1.Registry
                          * @typedef GetApiCallback
                          * @type {function}
@@ -4183,7 +4183,7 @@
                          */
     
                         /**
-                         * Callback as used by {@link google.cloud.apigeeregistry.v1.Registry|createApi}.
+                         * Callback as used by {@link google.cloud.apigeeregistry.v1.Registry#createApi}.
                          * @memberof google.cloud.apigeeregistry.v1.Registry
                          * @typedef CreateApiCallback
                          * @type {function}
@@ -4216,7 +4216,7 @@
                          */
     
                         /**
-                         * Callback as used by {@link google.cloud.apigeeregistry.v1.Registry|updateApi}.
+                         * Callback as used by {@link google.cloud.apigeeregistry.v1.Registry#updateApi}.
                          * @memberof google.cloud.apigeeregistry.v1.Registry
                          * @typedef UpdateApiCallback
                          * @type {function}
@@ -4249,7 +4249,7 @@
                          */
     
                         /**
-                         * Callback as used by {@link google.cloud.apigeeregistry.v1.Registry|deleteApi}.
+                         * Callback as used by {@link google.cloud.apigeeregistry.v1.Registry#deleteApi}.
                          * @memberof google.cloud.apigeeregistry.v1.Registry
                          * @typedef DeleteApiCallback
                          * @type {function}
@@ -4282,7 +4282,7 @@
                          */
     
                         /**
-                         * Callback as used by {@link google.cloud.apigeeregistry.v1.Registry|listApiVersions}.
+                         * Callback as used by {@link google.cloud.apigeeregistry.v1.Registry#listApiVersions}.
                          * @memberof google.cloud.apigeeregistry.v1.Registry
                          * @typedef ListApiVersionsCallback
                          * @type {function}
@@ -4315,7 +4315,7 @@
                          */
     
                         /**
-                         * Callback as used by {@link google.cloud.apigeeregistry.v1.Registry|getApiVersion}.
+                         * Callback as used by {@link google.cloud.apigeeregistry.v1.Registry#getApiVersion}.
                          * @memberof google.cloud.apigeeregistry.v1.Registry
                          * @typedef GetApiVersionCallback
                          * @type {function}
@@ -4348,7 +4348,7 @@
                          */
     
                         /**
-                         * Callback as used by {@link google.cloud.apigeeregistry.v1.Registry|createApiVersion}.
+                         * Callback as used by {@link google.cloud.apigeeregistry.v1.Registry#createApiVersion}.
                          * @memberof google.cloud.apigeeregistry.v1.Registry
                          * @typedef CreateApiVersionCallback
                          * @type {function}
@@ -4381,7 +4381,7 @@
                          */
     
                         /**
-                         * Callback as used by {@link google.cloud.apigeeregistry.v1.Registry|updateApiVersion}.
+                         * Callback as used by {@link google.cloud.apigeeregistry.v1.Registry#updateApiVersion}.
                          * @memberof google.cloud.apigeeregistry.v1.Registry
                          * @typedef UpdateApiVersionCallback
                          * @type {function}
@@ -4414,7 +4414,7 @@
                          */
     
                         /**
-                         * Callback as used by {@link google.cloud.apigeeregistry.v1.Registry|deleteApiVersion}.
+                         * Callback as used by {@link google.cloud.apigeeregistry.v1.Registry#deleteApiVersion}.
                          * @memberof google.cloud.apigeeregistry.v1.Registry
                          * @typedef DeleteApiVersionCallback
                          * @type {function}
@@ -4447,7 +4447,7 @@
                          */
     
                         /**
-                         * Callback as used by {@link google.cloud.apigeeregistry.v1.Registry|listApiSpecs}.
+                         * Callback as used by {@link google.cloud.apigeeregistry.v1.Registry#listApiSpecs}.
                          * @memberof google.cloud.apigeeregistry.v1.Registry
                          * @typedef ListApiSpecsCallback
                          * @type {function}
@@ -4480,7 +4480,7 @@
                          */
     
                         /**
-                         * Callback as used by {@link google.cloud.apigeeregistry.v1.Registry|getApiSpec}.
+                         * Callback as used by {@link google.cloud.apigeeregistry.v1.Registry#getApiSpec}.
                          * @memberof google.cloud.apigeeregistry.v1.Registry
                          * @typedef GetApiSpecCallback
                          * @type {function}
@@ -4513,7 +4513,7 @@
                          */
     
                         /**
-                         * Callback as used by {@link google.cloud.apigeeregistry.v1.Registry|getApiSpecContents}.
+                         * Callback as used by {@link google.cloud.apigeeregistry.v1.Registry#getApiSpecContents}.
                          * @memberof google.cloud.apigeeregistry.v1.Registry
                          * @typedef GetApiSpecContentsCallback
                          * @type {function}
@@ -4546,7 +4546,7 @@
                          */
     
                         /**
-                         * Callback as used by {@link google.cloud.apigeeregistry.v1.Registry|createApiSpec}.
+                         * Callback as used by {@link google.cloud.apigeeregistry.v1.Registry#createApiSpec}.
                          * @memberof google.cloud.apigeeregistry.v1.Registry
                          * @typedef CreateApiSpecCallback
                          * @type {function}
@@ -4579,7 +4579,7 @@
                          */
     
                         /**
-                         * Callback as used by {@link google.cloud.apigeeregistry.v1.Registry|updateApiSpec}.
+                         * Callback as used by {@link google.cloud.apigeeregistry.v1.Registry#updateApiSpec}.
                          * @memberof google.cloud.apigeeregistry.v1.Registry
                          * @typedef UpdateApiSpecCallback
                          * @type {function}
@@ -4612,7 +4612,7 @@
                          */
     
                         /**
-                         * Callback as used by {@link google.cloud.apigeeregistry.v1.Registry|deleteApiSpec}.
+                         * Callback as used by {@link google.cloud.apigeeregistry.v1.Registry#deleteApiSpec}.
                          * @memberof google.cloud.apigeeregistry.v1.Registry
                          * @typedef DeleteApiSpecCallback
                          * @type {function}
@@ -4645,7 +4645,7 @@
                          */
     
                         /**
-                         * Callback as used by {@link google.cloud.apigeeregistry.v1.Registry|tagApiSpecRevision}.
+                         * Callback as used by {@link google.cloud.apigeeregistry.v1.Registry#tagApiSpecRevision}.
                          * @memberof google.cloud.apigeeregistry.v1.Registry
                          * @typedef TagApiSpecRevisionCallback
                          * @type {function}
@@ -4678,7 +4678,7 @@
                          */
     
                         /**
-                         * Callback as used by {@link google.cloud.apigeeregistry.v1.Registry|listApiSpecRevisions}.
+                         * Callback as used by {@link google.cloud.apigeeregistry.v1.Registry#listApiSpecRevisions}.
                          * @memberof google.cloud.apigeeregistry.v1.Registry
                          * @typedef ListApiSpecRevisionsCallback
                          * @type {function}
@@ -4711,7 +4711,7 @@
                          */
     
                         /**
-                         * Callback as used by {@link google.cloud.apigeeregistry.v1.Registry|rollbackApiSpec}.
+                         * Callback as used by {@link google.cloud.apigeeregistry.v1.Registry#rollbackApiSpec}.
                          * @memberof google.cloud.apigeeregistry.v1.Registry
                          * @typedef RollbackApiSpecCallback
                          * @type {function}
@@ -4744,7 +4744,7 @@
                          */
     
                         /**
-                         * Callback as used by {@link google.cloud.apigeeregistry.v1.Registry|deleteApiSpecRevision}.
+                         * Callback as used by {@link google.cloud.apigeeregistry.v1.Registry#deleteApiSpecRevision}.
                          * @memberof google.cloud.apigeeregistry.v1.Registry
                          * @typedef DeleteApiSpecRevisionCallback
                          * @type {function}
@@ -4777,7 +4777,7 @@
                          */
     
                         /**
-                         * Callback as used by {@link google.cloud.apigeeregistry.v1.Registry|listApiDeployments}.
+                         * Callback as used by {@link google.cloud.apigeeregistry.v1.Registry#listApiDeployments}.
                          * @memberof google.cloud.apigeeregistry.v1.Registry
                          * @typedef ListApiDeploymentsCallback
                          * @type {function}
@@ -4810,7 +4810,7 @@
                          */
     
                         /**
-                         * Callback as used by {@link google.cloud.apigeeregistry.v1.Registry|getApiDeployment}.
+                         * Callback as used by {@link google.cloud.apigeeregistry.v1.Registry#getApiDeployment}.
                          * @memberof google.cloud.apigeeregistry.v1.Registry
                          * @typedef GetApiDeploymentCallback
                          * @type {function}
@@ -4843,7 +4843,7 @@
                          */
     
                         /**
-                         * Callback as used by {@link google.cloud.apigeeregistry.v1.Registry|createApiDeployment}.
+                         * Callback as used by {@link google.cloud.apigeeregistry.v1.Registry#createApiDeployment}.
                          * @memberof google.cloud.apigeeregistry.v1.Registry
                          * @typedef CreateApiDeploymentCallback
                          * @type {function}
@@ -4876,7 +4876,7 @@
                          */
     
                         /**
-                         * Callback as used by {@link google.cloud.apigeeregistry.v1.Registry|updateApiDeployment}.
+                         * Callback as used by {@link google.cloud.apigeeregistry.v1.Registry#updateApiDeployment}.
                          * @memberof google.cloud.apigeeregistry.v1.Registry
                          * @typedef UpdateApiDeploymentCallback
                          * @type {function}
@@ -4909,7 +4909,7 @@
                          */
     
                         /**
-                         * Callback as used by {@link google.cloud.apigeeregistry.v1.Registry|deleteApiDeployment}.
+                         * Callback as used by {@link google.cloud.apigeeregistry.v1.Registry#deleteApiDeployment}.
                          * @memberof google.cloud.apigeeregistry.v1.Registry
                          * @typedef DeleteApiDeploymentCallback
                          * @type {function}
@@ -4942,7 +4942,7 @@
                          */
     
                         /**
-                         * Callback as used by {@link google.cloud.apigeeregistry.v1.Registry|tagApiDeploymentRevision}.
+                         * Callback as used by {@link google.cloud.apigeeregistry.v1.Registry#tagApiDeploymentRevision}.
                          * @memberof google.cloud.apigeeregistry.v1.Registry
                          * @typedef TagApiDeploymentRevisionCallback
                          * @type {function}
@@ -4975,7 +4975,7 @@
                          */
     
                         /**
-                         * Callback as used by {@link google.cloud.apigeeregistry.v1.Registry|listApiDeploymentRevisions}.
+                         * Callback as used by {@link google.cloud.apigeeregistry.v1.Registry#listApiDeploymentRevisions}.
                          * @memberof google.cloud.apigeeregistry.v1.Registry
                          * @typedef ListApiDeploymentRevisionsCallback
                          * @type {function}
@@ -5008,7 +5008,7 @@
                          */
     
                         /**
-                         * Callback as used by {@link google.cloud.apigeeregistry.v1.Registry|rollbackApiDeployment}.
+                         * Callback as used by {@link google.cloud.apigeeregistry.v1.Registry#rollbackApiDeployment}.
                          * @memberof google.cloud.apigeeregistry.v1.Registry
                          * @typedef RollbackApiDeploymentCallback
                          * @type {function}
@@ -5041,7 +5041,7 @@
                          */
     
                         /**
-                         * Callback as used by {@link google.cloud.apigeeregistry.v1.Registry|deleteApiDeploymentRevision}.
+                         * Callback as used by {@link google.cloud.apigeeregistry.v1.Registry#deleteApiDeploymentRevision}.
                          * @memberof google.cloud.apigeeregistry.v1.Registry
                          * @typedef DeleteApiDeploymentRevisionCallback
                          * @type {function}
@@ -5074,7 +5074,7 @@
                          */
     
                         /**
-                         * Callback as used by {@link google.cloud.apigeeregistry.v1.Registry|listArtifacts}.
+                         * Callback as used by {@link google.cloud.apigeeregistry.v1.Registry#listArtifacts}.
                          * @memberof google.cloud.apigeeregistry.v1.Registry
                          * @typedef ListArtifactsCallback
                          * @type {function}
@@ -5107,7 +5107,7 @@
                          */
     
                         /**
-                         * Callback as used by {@link google.cloud.apigeeregistry.v1.Registry|getArtifact}.
+                         * Callback as used by {@link google.cloud.apigeeregistry.v1.Registry#getArtifact}.
                          * @memberof google.cloud.apigeeregistry.v1.Registry
                          * @typedef GetArtifactCallback
                          * @type {function}
@@ -5140,7 +5140,7 @@
                          */
     
                         /**
-                         * Callback as used by {@link google.cloud.apigeeregistry.v1.Registry|getArtifactContents}.
+                         * Callback as used by {@link google.cloud.apigeeregistry.v1.Registry#getArtifactContents}.
                          * @memberof google.cloud.apigeeregistry.v1.Registry
                          * @typedef GetArtifactContentsCallback
                          * @type {function}
@@ -5173,7 +5173,7 @@
                          */
     
                         /**
-                         * Callback as used by {@link google.cloud.apigeeregistry.v1.Registry|createArtifact}.
+                         * Callback as used by {@link google.cloud.apigeeregistry.v1.Registry#createArtifact}.
                          * @memberof google.cloud.apigeeregistry.v1.Registry
                          * @typedef CreateArtifactCallback
                          * @type {function}
@@ -5206,7 +5206,7 @@
                          */
     
                         /**
-                         * Callback as used by {@link google.cloud.apigeeregistry.v1.Registry|replaceArtifact}.
+                         * Callback as used by {@link google.cloud.apigeeregistry.v1.Registry#replaceArtifact}.
                          * @memberof google.cloud.apigeeregistry.v1.Registry
                          * @typedef ReplaceArtifactCallback
                          * @type {function}
@@ -5239,7 +5239,7 @@
                          */
     
                         /**
-                         * Callback as used by {@link google.cloud.apigeeregistry.v1.Registry|deleteArtifact}.
+                         * Callback as used by {@link google.cloud.apigeeregistry.v1.Registry#deleteArtifact}.
                          * @memberof google.cloud.apigeeregistry.v1.Registry
                          * @typedef DeleteArtifactCallback
                          * @type {function}
@@ -21549,7 +21549,6 @@
                  * @property {boolean|null} [packed] FieldOptions packed
                  * @property {google.protobuf.FieldOptions.JSType|null} [jstype] FieldOptions jstype
                  * @property {boolean|null} [lazy] FieldOptions lazy
-                 * @property {boolean|null} [unverifiedLazy] FieldOptions unverifiedLazy
                  * @property {boolean|null} [deprecated] FieldOptions deprecated
                  * @property {boolean|null} [weak] FieldOptions weak
                  * @property {Array.<google.protobuf.IUninterpretedOption>|null} [uninterpretedOption] FieldOptions uninterpretedOption
@@ -21605,14 +21604,6 @@
                  * @instance
                  */
                 FieldOptions.prototype.lazy = false;
-    
-                /**
-                 * FieldOptions unverifiedLazy.
-                 * @member {boolean} unverifiedLazy
-                 * @memberof google.protobuf.FieldOptions
-                 * @instance
-                 */
-                FieldOptions.prototype.unverifiedLazy = false;
     
                 /**
                  * FieldOptions deprecated.
@@ -21690,8 +21681,6 @@
                         writer.uint32(/* id 6, wireType 0 =*/48).int32(message.jstype);
                     if (message.weak != null && Object.hasOwnProperty.call(message, "weak"))
                         writer.uint32(/* id 10, wireType 0 =*/80).bool(message.weak);
-                    if (message.unverifiedLazy != null && Object.hasOwnProperty.call(message, "unverifiedLazy"))
-                        writer.uint32(/* id 15, wireType 0 =*/120).bool(message.unverifiedLazy);
                     if (message.uninterpretedOption != null && message.uninterpretedOption.length)
                         for (var i = 0; i < message.uninterpretedOption.length; ++i)
                             $root.google.protobuf.UninterpretedOption.encode(message.uninterpretedOption[i], writer.uint32(/* id 999, wireType 2 =*/7994).fork()).ldelim();
@@ -21748,9 +21737,6 @@
                             break;
                         case 5:
                             message.lazy = reader.bool();
-                            break;
-                        case 15:
-                            message.unverifiedLazy = reader.bool();
                             break;
                         case 3:
                             message.deprecated = reader.bool();
@@ -21835,9 +21821,6 @@
                     if (message.lazy != null && message.hasOwnProperty("lazy"))
                         if (typeof message.lazy !== "boolean")
                             return "lazy: boolean expected";
-                    if (message.unverifiedLazy != null && message.hasOwnProperty("unverifiedLazy"))
-                        if (typeof message.unverifiedLazy !== "boolean")
-                            return "unverifiedLazy: boolean expected";
                     if (message.deprecated != null && message.hasOwnProperty("deprecated"))
                         if (typeof message.deprecated !== "boolean")
                             return "deprecated: boolean expected";
@@ -21923,8 +21906,6 @@
                     }
                     if (object.lazy != null)
                         message.lazy = Boolean(object.lazy);
-                    if (object.unverifiedLazy != null)
-                        message.unverifiedLazy = Boolean(object.unverifiedLazy);
                     if (object.deprecated != null)
                         message.deprecated = Boolean(object.deprecated);
                     if (object.weak != null)
@@ -22012,7 +21993,6 @@
                         object.lazy = false;
                         object.jstype = options.enums === String ? "JS_NORMAL" : 0;
                         object.weak = false;
-                        object.unverifiedLazy = false;
                         object[".google.api.resourceReference"] = null;
                     }
                     if (message.ctype != null && message.hasOwnProperty("ctype"))
@@ -22027,8 +22007,6 @@
                         object.jstype = options.enums === String ? $root.google.protobuf.FieldOptions.JSType[message.jstype] : message.jstype;
                     if (message.weak != null && message.hasOwnProperty("weak"))
                         object.weak = message.weak;
-                    if (message.unverifiedLazy != null && message.hasOwnProperty("unverifiedLazy"))
-                        object.unverifiedLazy = message.unverifiedLazy;
                     if (message.uninterpretedOption && message.uninterpretedOption.length) {
                         object.uninterpretedOption = [];
                         for (var j = 0; j < message.uninterpretedOption.length; ++j)
@@ -26141,7 +26119,7 @@
                 };
     
                 /**
-                 * Callback as used by {@link google.longrunning.Operations|listOperations}.
+                 * Callback as used by {@link google.longrunning.Operations#listOperations}.
                  * @memberof google.longrunning.Operations
                  * @typedef ListOperationsCallback
                  * @type {function}
@@ -26174,7 +26152,7 @@
                  */
     
                 /**
-                 * Callback as used by {@link google.longrunning.Operations|getOperation}.
+                 * Callback as used by {@link google.longrunning.Operations#getOperation}.
                  * @memberof google.longrunning.Operations
                  * @typedef GetOperationCallback
                  * @type {function}
@@ -26207,7 +26185,7 @@
                  */
     
                 /**
-                 * Callback as used by {@link google.longrunning.Operations|deleteOperation}.
+                 * Callback as used by {@link google.longrunning.Operations#deleteOperation}.
                  * @memberof google.longrunning.Operations
                  * @typedef DeleteOperationCallback
                  * @type {function}
@@ -26240,7 +26218,7 @@
                  */
     
                 /**
-                 * Callback as used by {@link google.longrunning.Operations|cancelOperation}.
+                 * Callback as used by {@link google.longrunning.Operations#cancelOperation}.
                  * @memberof google.longrunning.Operations
                  * @typedef CancelOperationCallback
                  * @type {function}
@@ -26273,7 +26251,7 @@
                  */
     
                 /**
-                 * Callback as used by {@link google.longrunning.Operations|waitOperation}.
+                 * Callback as used by {@link google.longrunning.Operations#waitOperation}.
                  * @memberof google.longrunning.Operations
                  * @typedef WaitOperationCallback
                  * @type {function}
