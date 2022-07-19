@@ -46,6 +46,6 @@ describe('Quickstart', () => {
       execSync(`node ./quickstart.js projects/${projectId}/locations/global`, {
         cwd,
       });
-    }, /9 FAILED_PRECONDITION: Invalid resource state for "�": Runtime instance not found for the project. Please ensure a runtime instance was provisioned for this project/);
+    }, /9 FAILED_PRECONDITION/);
   });
 });
