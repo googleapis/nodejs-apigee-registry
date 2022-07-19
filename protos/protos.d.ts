@@ -92,21 +92,21 @@ export namespace google {
                 namespace Provisioning {
 
                     /**
-                     * Callback as used by {@link google.cloud.apigeeregistry.v1.Provisioning#createInstance}.
+                     * Callback as used by {@link google.cloud.apigeeregistry.v1.Provisioning|createInstance}.
                      * @param error Error, if any
                      * @param [response] Operation
                      */
                     type CreateInstanceCallback = (error: (Error|null), response?: google.longrunning.Operation) => void;
 
                     /**
-                     * Callback as used by {@link google.cloud.apigeeregistry.v1.Provisioning#deleteInstance}.
+                     * Callback as used by {@link google.cloud.apigeeregistry.v1.Provisioning|deleteInstance}.
                      * @param error Error, if any
                      * @param [response] Operation
                      */
                     type DeleteInstanceCallback = (error: (Error|null), response?: google.longrunning.Operation) => void;
 
                     /**
-                     * Callback as used by {@link google.cloud.apigeeregistry.v1.Provisioning#getInstance}.
+                     * Callback as used by {@link google.cloud.apigeeregistry.v1.Provisioning|getInstance}.
                      * @param error Error, if any
                      * @param [response] Instance
                      */
@@ -2003,245 +2003,245 @@ export namespace google {
                 namespace Registry {
 
                     /**
-                     * Callback as used by {@link google.cloud.apigeeregistry.v1.Registry#listApis}.
+                     * Callback as used by {@link google.cloud.apigeeregistry.v1.Registry|listApis}.
                      * @param error Error, if any
                      * @param [response] ListApisResponse
                      */
                     type ListApisCallback = (error: (Error|null), response?: google.cloud.apigeeregistry.v1.ListApisResponse) => void;
 
                     /**
-                     * Callback as used by {@link google.cloud.apigeeregistry.v1.Registry#getApi}.
+                     * Callback as used by {@link google.cloud.apigeeregistry.v1.Registry|getApi}.
                      * @param error Error, if any
                      * @param [response] Api
                      */
                     type GetApiCallback = (error: (Error|null), response?: google.cloud.apigeeregistry.v1.Api) => void;
 
                     /**
-                     * Callback as used by {@link google.cloud.apigeeregistry.v1.Registry#createApi}.
+                     * Callback as used by {@link google.cloud.apigeeregistry.v1.Registry|createApi}.
                      * @param error Error, if any
                      * @param [response] Api
                      */
                     type CreateApiCallback = (error: (Error|null), response?: google.cloud.apigeeregistry.v1.Api) => void;
 
                     /**
-                     * Callback as used by {@link google.cloud.apigeeregistry.v1.Registry#updateApi}.
+                     * Callback as used by {@link google.cloud.apigeeregistry.v1.Registry|updateApi}.
                      * @param error Error, if any
                      * @param [response] Api
                      */
                     type UpdateApiCallback = (error: (Error|null), response?: google.cloud.apigeeregistry.v1.Api) => void;
 
                     /**
-                     * Callback as used by {@link google.cloud.apigeeregistry.v1.Registry#deleteApi}.
+                     * Callback as used by {@link google.cloud.apigeeregistry.v1.Registry|deleteApi}.
                      * @param error Error, if any
                      * @param [response] Empty
                      */
                     type DeleteApiCallback = (error: (Error|null), response?: google.protobuf.Empty) => void;
 
                     /**
-                     * Callback as used by {@link google.cloud.apigeeregistry.v1.Registry#listApiVersions}.
+                     * Callback as used by {@link google.cloud.apigeeregistry.v1.Registry|listApiVersions}.
                      * @param error Error, if any
                      * @param [response] ListApiVersionsResponse
                      */
                     type ListApiVersionsCallback = (error: (Error|null), response?: google.cloud.apigeeregistry.v1.ListApiVersionsResponse) => void;
 
                     /**
-                     * Callback as used by {@link google.cloud.apigeeregistry.v1.Registry#getApiVersion}.
+                     * Callback as used by {@link google.cloud.apigeeregistry.v1.Registry|getApiVersion}.
                      * @param error Error, if any
                      * @param [response] ApiVersion
                      */
                     type GetApiVersionCallback = (error: (Error|null), response?: google.cloud.apigeeregistry.v1.ApiVersion) => void;
 
                     /**
-                     * Callback as used by {@link google.cloud.apigeeregistry.v1.Registry#createApiVersion}.
+                     * Callback as used by {@link google.cloud.apigeeregistry.v1.Registry|createApiVersion}.
                      * @param error Error, if any
                      * @param [response] ApiVersion
                      */
                     type CreateApiVersionCallback = (error: (Error|null), response?: google.cloud.apigeeregistry.v1.ApiVersion) => void;
 
                     /**
-                     * Callback as used by {@link google.cloud.apigeeregistry.v1.Registry#updateApiVersion}.
+                     * Callback as used by {@link google.cloud.apigeeregistry.v1.Registry|updateApiVersion}.
                      * @param error Error, if any
                      * @param [response] ApiVersion
                      */
                     type UpdateApiVersionCallback = (error: (Error|null), response?: google.cloud.apigeeregistry.v1.ApiVersion) => void;
 
                     /**
-                     * Callback as used by {@link google.cloud.apigeeregistry.v1.Registry#deleteApiVersion}.
+                     * Callback as used by {@link google.cloud.apigeeregistry.v1.Registry|deleteApiVersion}.
                      * @param error Error, if any
                      * @param [response] Empty
                      */
                     type DeleteApiVersionCallback = (error: (Error|null), response?: google.protobuf.Empty) => void;
 
                     /**
-                     * Callback as used by {@link google.cloud.apigeeregistry.v1.Registry#listApiSpecs}.
+                     * Callback as used by {@link google.cloud.apigeeregistry.v1.Registry|listApiSpecs}.
                      * @param error Error, if any
                      * @param [response] ListApiSpecsResponse
                      */
                     type ListApiSpecsCallback = (error: (Error|null), response?: google.cloud.apigeeregistry.v1.ListApiSpecsResponse) => void;
 
                     /**
-                     * Callback as used by {@link google.cloud.apigeeregistry.v1.Registry#getApiSpec}.
+                     * Callback as used by {@link google.cloud.apigeeregistry.v1.Registry|getApiSpec}.
                      * @param error Error, if any
                      * @param [response] ApiSpec
                      */
                     type GetApiSpecCallback = (error: (Error|null), response?: google.cloud.apigeeregistry.v1.ApiSpec) => void;
 
                     /**
-                     * Callback as used by {@link google.cloud.apigeeregistry.v1.Registry#getApiSpecContents}.
+                     * Callback as used by {@link google.cloud.apigeeregistry.v1.Registry|getApiSpecContents}.
                      * @param error Error, if any
                      * @param [response] HttpBody
                      */
                     type GetApiSpecContentsCallback = (error: (Error|null), response?: google.api.HttpBody) => void;
 
                     /**
-                     * Callback as used by {@link google.cloud.apigeeregistry.v1.Registry#createApiSpec}.
+                     * Callback as used by {@link google.cloud.apigeeregistry.v1.Registry|createApiSpec}.
                      * @param error Error, if any
                      * @param [response] ApiSpec
                      */
                     type CreateApiSpecCallback = (error: (Error|null), response?: google.cloud.apigeeregistry.v1.ApiSpec) => void;
 
                     /**
-                     * Callback as used by {@link google.cloud.apigeeregistry.v1.Registry#updateApiSpec}.
+                     * Callback as used by {@link google.cloud.apigeeregistry.v1.Registry|updateApiSpec}.
                      * @param error Error, if any
                      * @param [response] ApiSpec
                      */
                     type UpdateApiSpecCallback = (error: (Error|null), response?: google.cloud.apigeeregistry.v1.ApiSpec) => void;
 
                     /**
-                     * Callback as used by {@link google.cloud.apigeeregistry.v1.Registry#deleteApiSpec}.
+                     * Callback as used by {@link google.cloud.apigeeregistry.v1.Registry|deleteApiSpec}.
                      * @param error Error, if any
                      * @param [response] Empty
                      */
                     type DeleteApiSpecCallback = (error: (Error|null), response?: google.protobuf.Empty) => void;
 
                     /**
-                     * Callback as used by {@link google.cloud.apigeeregistry.v1.Registry#tagApiSpecRevision}.
+                     * Callback as used by {@link google.cloud.apigeeregistry.v1.Registry|tagApiSpecRevision}.
                      * @param error Error, if any
                      * @param [response] ApiSpec
                      */
                     type TagApiSpecRevisionCallback = (error: (Error|null), response?: google.cloud.apigeeregistry.v1.ApiSpec) => void;
 
                     /**
-                     * Callback as used by {@link google.cloud.apigeeregistry.v1.Registry#listApiSpecRevisions}.
+                     * Callback as used by {@link google.cloud.apigeeregistry.v1.Registry|listApiSpecRevisions}.
                      * @param error Error, if any
                      * @param [response] ListApiSpecRevisionsResponse
                      */
                     type ListApiSpecRevisionsCallback = (error: (Error|null), response?: google.cloud.apigeeregistry.v1.ListApiSpecRevisionsResponse) => void;
 
                     /**
-                     * Callback as used by {@link google.cloud.apigeeregistry.v1.Registry#rollbackApiSpec}.
+                     * Callback as used by {@link google.cloud.apigeeregistry.v1.Registry|rollbackApiSpec}.
                      * @param error Error, if any
                      * @param [response] ApiSpec
                      */
                     type RollbackApiSpecCallback = (error: (Error|null), response?: google.cloud.apigeeregistry.v1.ApiSpec) => void;
 
                     /**
-                     * Callback as used by {@link google.cloud.apigeeregistry.v1.Registry#deleteApiSpecRevision}.
+                     * Callback as used by {@link google.cloud.apigeeregistry.v1.Registry|deleteApiSpecRevision}.
                      * @param error Error, if any
                      * @param [response] ApiSpec
                      */
                     type DeleteApiSpecRevisionCallback = (error: (Error|null), response?: google.cloud.apigeeregistry.v1.ApiSpec) => void;
 
                     /**
-                     * Callback as used by {@link google.cloud.apigeeregistry.v1.Registry#listApiDeployments}.
+                     * Callback as used by {@link google.cloud.apigeeregistry.v1.Registry|listApiDeployments}.
                      * @param error Error, if any
                      * @param [response] ListApiDeploymentsResponse
                      */
                     type ListApiDeploymentsCallback = (error: (Error|null), response?: google.cloud.apigeeregistry.v1.ListApiDeploymentsResponse) => void;
 
                     /**
-                     * Callback as used by {@link google.cloud.apigeeregistry.v1.Registry#getApiDeployment}.
+                     * Callback as used by {@link google.cloud.apigeeregistry.v1.Registry|getApiDeployment}.
                      * @param error Error, if any
                      * @param [response] ApiDeployment
                      */
                     type GetApiDeploymentCallback = (error: (Error|null), response?: google.cloud.apigeeregistry.v1.ApiDeployment) => void;
 
                     /**
-                     * Callback as used by {@link google.cloud.apigeeregistry.v1.Registry#createApiDeployment}.
+                     * Callback as used by {@link google.cloud.apigeeregistry.v1.Registry|createApiDeployment}.
                      * @param error Error, if any
                      * @param [response] ApiDeployment
                      */
                     type CreateApiDeploymentCallback = (error: (Error|null), response?: google.cloud.apigeeregistry.v1.ApiDeployment) => void;
 
                     /**
-                     * Callback as used by {@link google.cloud.apigeeregistry.v1.Registry#updateApiDeployment}.
+                     * Callback as used by {@link google.cloud.apigeeregistry.v1.Registry|updateApiDeployment}.
                      * @param error Error, if any
                      * @param [response] ApiDeployment
                      */
                     type UpdateApiDeploymentCallback = (error: (Error|null), response?: google.cloud.apigeeregistry.v1.ApiDeployment) => void;
 
                     /**
-                     * Callback as used by {@link google.cloud.apigeeregistry.v1.Registry#deleteApiDeployment}.
+                     * Callback as used by {@link google.cloud.apigeeregistry.v1.Registry|deleteApiDeployment}.
                      * @param error Error, if any
                      * @param [response] Empty
                      */
                     type DeleteApiDeploymentCallback = (error: (Error|null), response?: google.protobuf.Empty) => void;
 
                     /**
-                     * Callback as used by {@link google.cloud.apigeeregistry.v1.Registry#tagApiDeploymentRevision}.
+                     * Callback as used by {@link google.cloud.apigeeregistry.v1.Registry|tagApiDeploymentRevision}.
                      * @param error Error, if any
                      * @param [response] ApiDeployment
                      */
                     type TagApiDeploymentRevisionCallback = (error: (Error|null), response?: google.cloud.apigeeregistry.v1.ApiDeployment) => void;
 
                     /**
-                     * Callback as used by {@link google.cloud.apigeeregistry.v1.Registry#listApiDeploymentRevisions}.
+                     * Callback as used by {@link google.cloud.apigeeregistry.v1.Registry|listApiDeploymentRevisions}.
                      * @param error Error, if any
                      * @param [response] ListApiDeploymentRevisionsResponse
                      */
                     type ListApiDeploymentRevisionsCallback = (error: (Error|null), response?: google.cloud.apigeeregistry.v1.ListApiDeploymentRevisionsResponse) => void;
 
                     /**
-                     * Callback as used by {@link google.cloud.apigeeregistry.v1.Registry#rollbackApiDeployment}.
+                     * Callback as used by {@link google.cloud.apigeeregistry.v1.Registry|rollbackApiDeployment}.
                      * @param error Error, if any
                      * @param [response] ApiDeployment
                      */
                     type RollbackApiDeploymentCallback = (error: (Error|null), response?: google.cloud.apigeeregistry.v1.ApiDeployment) => void;
 
                     /**
-                     * Callback as used by {@link google.cloud.apigeeregistry.v1.Registry#deleteApiDeploymentRevision}.
+                     * Callback as used by {@link google.cloud.apigeeregistry.v1.Registry|deleteApiDeploymentRevision}.
                      * @param error Error, if any
                      * @param [response] ApiDeployment
                      */
                     type DeleteApiDeploymentRevisionCallback = (error: (Error|null), response?: google.cloud.apigeeregistry.v1.ApiDeployment) => void;
 
                     /**
-                     * Callback as used by {@link google.cloud.apigeeregistry.v1.Registry#listArtifacts}.
+                     * Callback as used by {@link google.cloud.apigeeregistry.v1.Registry|listArtifacts}.
                      * @param error Error, if any
                      * @param [response] ListArtifactsResponse
                      */
                     type ListArtifactsCallback = (error: (Error|null), response?: google.cloud.apigeeregistry.v1.ListArtifactsResponse) => void;
 
                     /**
-                     * Callback as used by {@link google.cloud.apigeeregistry.v1.Registry#getArtifact}.
+                     * Callback as used by {@link google.cloud.apigeeregistry.v1.Registry|getArtifact}.
                      * @param error Error, if any
                      * @param [response] Artifact
                      */
                     type GetArtifactCallback = (error: (Error|null), response?: google.cloud.apigeeregistry.v1.Artifact) => void;
 
                     /**
-                     * Callback as used by {@link google.cloud.apigeeregistry.v1.Registry#getArtifactContents}.
+                     * Callback as used by {@link google.cloud.apigeeregistry.v1.Registry|getArtifactContents}.
                      * @param error Error, if any
                      * @param [response] HttpBody
                      */
                     type GetArtifactContentsCallback = (error: (Error|null), response?: google.api.HttpBody) => void;
 
                     /**
-                     * Callback as used by {@link google.cloud.apigeeregistry.v1.Registry#createArtifact}.
+                     * Callback as used by {@link google.cloud.apigeeregistry.v1.Registry|createArtifact}.
                      * @param error Error, if any
                      * @param [response] Artifact
                      */
                     type CreateArtifactCallback = (error: (Error|null), response?: google.cloud.apigeeregistry.v1.Artifact) => void;
 
                     /**
-                     * Callback as used by {@link google.cloud.apigeeregistry.v1.Registry#replaceArtifact}.
+                     * Callback as used by {@link google.cloud.apigeeregistry.v1.Registry|replaceArtifact}.
                      * @param error Error, if any
                      * @param [response] Artifact
                      */
                     type ReplaceArtifactCallback = (error: (Error|null), response?: google.cloud.apigeeregistry.v1.Artifact) => void;
 
                     /**
-                     * Callback as used by {@link google.cloud.apigeeregistry.v1.Registry#deleteArtifact}.
+                     * Callback as used by {@link google.cloud.apigeeregistry.v1.Registry|deleteArtifact}.
                      * @param error Error, if any
                      * @param [response] Empty
                      */
@@ -8880,6 +8880,9 @@ export namespace google {
             /** FieldOptions lazy */
             lazy?: (boolean|null);
 
+            /** FieldOptions unverifiedLazy */
+            unverifiedLazy?: (boolean|null);
+
             /** FieldOptions deprecated */
             deprecated?: (boolean|null);
 
@@ -8916,6 +8919,9 @@ export namespace google {
 
             /** FieldOptions lazy. */
             public lazy: boolean;
+
+            /** FieldOptions unverifiedLazy. */
+            public unverifiedLazy: boolean;
 
             /** FieldOptions deprecated. */
             public deprecated: boolean;
@@ -10718,35 +10724,35 @@ export namespace google {
         namespace Operations {
 
             /**
-             * Callback as used by {@link google.longrunning.Operations#listOperations}.
+             * Callback as used by {@link google.longrunning.Operations|listOperations}.
              * @param error Error, if any
              * @param [response] ListOperationsResponse
              */
             type ListOperationsCallback = (error: (Error|null), response?: google.longrunning.ListOperationsResponse) => void;
 
             /**
-             * Callback as used by {@link google.longrunning.Operations#getOperation}.
+             * Callback as used by {@link google.longrunning.Operations|getOperation}.
              * @param error Error, if any
              * @param [response] Operation
              */
             type GetOperationCallback = (error: (Error|null), response?: google.longrunning.Operation) => void;
 
             /**
-             * Callback as used by {@link google.longrunning.Operations#deleteOperation}.
+             * Callback as used by {@link google.longrunning.Operations|deleteOperation}.
              * @param error Error, if any
              * @param [response] Empty
              */
             type DeleteOperationCallback = (error: (Error|null), response?: google.protobuf.Empty) => void;
 
             /**
-             * Callback as used by {@link google.longrunning.Operations#cancelOperation}.
+             * Callback as used by {@link google.longrunning.Operations|cancelOperation}.
              * @param error Error, if any
              * @param [response] Empty
              */
             type CancelOperationCallback = (error: (Error|null), response?: google.protobuf.Empty) => void;
 
             /**
-             * Callback as used by {@link google.longrunning.Operations#waitOperation}.
+             * Callback as used by {@link google.longrunning.Operations|waitOperation}.
              * @param error Error, if any
              * @param [response] Operation
              */
