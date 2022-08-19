@@ -27,7 +27,7 @@ function main(name) {
    */
   /**
    *  Required. The name of the artifact whose contents should be retrieved.
-   *  Format: {parent}/artifacts/*
+   *  Format: `{parent}/artifacts/*`
    */
   // const name = 'abc123'
 

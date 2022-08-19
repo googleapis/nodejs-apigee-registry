@@ -27,7 +27,7 @@ function main(name) {
    */
   /**
    *  Required. The name of the deployment to retrieve.
-   *  Format: projects/* /locations/* /apis/* /deployments/*
+   *  Format: `projects/* /locations/* /apis/* /deployments/*`
    */
   // const name = 'abc123'
 

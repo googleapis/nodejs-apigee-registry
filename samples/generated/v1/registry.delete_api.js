@@ -27,9 +27,14 @@ function main(name) {
    */
   /**
    *  Required. The name of the API to delete.
-   *  Format: projects/* /locations/* /apis/*
+   *  Format: `projects/* /locations/* /apis/*`
    */
   // const name = 'abc123'
+  /**
+   *  If set to true, any child resources will also be deleted.
+   *  (Otherwise, the request will only work if there are no child resources.)
+   */
+  // const force = true
 
   // Imports the Apigeeregistry library
   const {RegistryClient} = require('@google-cloud/apigeeregistry').v1;

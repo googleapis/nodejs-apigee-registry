@@ -585,13 +585,13 @@ export class RegistryClient {
   // -- Service calls --
   // -------------------
   /**
-   * GetApi returns a specified API.
+   * Returns a specified API.
    *
    * @param {Object} request
    *   The request object that will be sent.
    * @param {string} request.name
    *   Required. The name of the API to retrieve.
-   *   Format: projects/* /locations/* /apis/*
+   *   Format: `projects/* /locations/* /apis/*`
    * @param {object} [options]
    *   Call options. See {@link https://googleapis.dev/nodejs/google-gax/latest/interfaces/CallOptions.html|CallOptions} for more details.
    * @returns {Promise} - The promise which resolves to an array.
@@ -671,18 +671,18 @@ export class RegistryClient {
     return this.innerApiCalls.getApi(request, options, callback);
   }
   /**
-   * CreateApi creates a specified API.
+   * Creates a specified API.
    *
    * @param {Object} request
    *   The request object that will be sent.
    * @param {string} request.parent
    *   Required. The parent, which owns this collection of APIs.
-   *   Format: projects/* /locations/*
+   *   Format: `projects/* /locations/*`
    * @param {google.cloud.apigeeregistry.v1.Api} request.api
    *   Required. The API to create.
    * @param {string} request.apiId
-   *   Required. The ID to use for the api, which will become the final component of
-   *   the api's resource name.
+   *   Required. The ID to use for the API, which will become the final component of
+   *   the API's resource name.
    *
    *   This value should be 4-63 characters, and valid characters
    *   are /{@link 0-9|a-z}-/.
@@ -773,7 +773,7 @@ export class RegistryClient {
     return this.innerApiCalls.createApi(request, options, callback);
   }
   /**
-   * UpdateApi can be used to modify a specified API.
+   * Used to modify a specified API.
    *
    * @param {Object} request
    *   The request object that will be sent.
@@ -781,14 +781,14 @@ export class RegistryClient {
    *   Required. The API to update.
    *
    *   The `name` field is used to identify the API to update.
-   *   Format: projects/* /locations/* /apis/*
+   *   Format: `projects/* /locations/* /apis/*`
    * @param {google.protobuf.FieldMask} request.updateMask
    *   The list of fields to be updated. If omitted, all fields are updated that
    *   are set in the request message (fields set to default values are ignored).
-   *   If a "*" is specified, all fields are updated, including fields that are
-   *   unspecified/default in the request.
+   *   If an asterisk "*" is specified, all fields are updated, including fields
+   *   that are unspecified/default in the request.
    * @param {boolean} request.allowMissing
-   *   If set to true, and the api is not found, a new api will be created.
+   *   If set to true, and the API is not found, a new API will be created.
    *   In this situation, `update_mask` is ignored.
    * @param {object} [options]
    *   Call options. See {@link https://googleapis.dev/nodejs/google-gax/latest/interfaces/CallOptions.html|CallOptions} for more details.
@@ -875,14 +875,17 @@ export class RegistryClient {
     return this.innerApiCalls.updateApi(request, options, callback);
   }
   /**
-   * DeleteApi removes a specified API and all of the resources that it
+   * Removes a specified API and all of the resources that it
    * owns.
    *
    * @param {Object} request
    *   The request object that will be sent.
    * @param {string} request.name
    *   Required. The name of the API to delete.
-   *   Format: projects/* /locations/* /apis/*
+   *   Format: `projects/* /locations/* /apis/*`
+   * @param {boolean} request.force
+   *   If set to true, any child resources will also be deleted.
+   *   (Otherwise, the request will only work if there are no child resources.)
    * @param {object} [options]
    *   Call options. See {@link https://googleapis.dev/nodejs/google-gax/latest/interfaces/CallOptions.html|CallOptions} for more details.
    * @returns {Promise} - The promise which resolves to an array.
@@ -968,13 +971,13 @@ export class RegistryClient {
     return this.innerApiCalls.deleteApi(request, options, callback);
   }
   /**
-   * GetApiVersion returns a specified version.
+   * Returns a specified version.
    *
    * @param {Object} request
    *   The request object that will be sent.
    * @param {string} request.name
    *   Required. The name of the version to retrieve.
-   *   Format: projects/* /locations/* /apis/* /versions/*
+   *   Format: `projects/* /locations/* /apis/* /versions/*`
    * @param {object} [options]
    *   Call options. See {@link https://googleapis.dev/nodejs/google-gax/latest/interfaces/CallOptions.html|CallOptions} for more details.
    * @returns {Promise} - The promise which resolves to an array.
@@ -1060,13 +1063,13 @@ export class RegistryClient {
     return this.innerApiCalls.getApiVersion(request, options, callback);
   }
   /**
-   * CreateApiVersion creates a specified version.
+   * Creates a specified version.
    *
    * @param {Object} request
    *   The request object that will be sent.
    * @param {string} request.parent
    *   Required. The parent, which owns this collection of versions.
-   *   Format: projects/* /locations/* /apis/*
+   *   Format: `projects/* /locations/* /apis/*`
    * @param {google.cloud.apigeeregistry.v1.ApiVersion} request.apiVersion
    *   Required. The version to create.
    * @param {string} request.apiVersionId
@@ -1168,7 +1171,7 @@ export class RegistryClient {
     return this.innerApiCalls.createApiVersion(request, options, callback);
   }
   /**
-   * UpdateApiVersion can be used to modify a specified version.
+   * Used to modify a specified version.
    *
    * @param {Object} request
    *   The request object that will be sent.
@@ -1176,12 +1179,12 @@ export class RegistryClient {
    *   Required. The version to update.
    *
    *   The `name` field is used to identify the version to update.
-   *   Format: projects/* /locations/* /apis/* /versions/*
+   *   Format: `projects/* /locations/* /apis/* /versions/*`
    * @param {google.protobuf.FieldMask} request.updateMask
    *   The list of fields to be updated. If omitted, all fields are updated that
    *   are set in the request message (fields set to default values are ignored).
-   *   If a "*" is specified, all fields are updated, including fields that are
-   *   unspecified/default in the request.
+   *   If an asterisk "*" is specified, all fields are updated, including fields
+   *   that are unspecified/default in the request.
    * @param {boolean} request.allowMissing
    *   If set to true, and the version is not found, a new version will be
    *   created. In this situation, `update_mask` is ignored.
@@ -1276,14 +1279,17 @@ export class RegistryClient {
     return this.innerApiCalls.updateApiVersion(request, options, callback);
   }
   /**
-   * DeleteApiVersion removes a specified version and all of the resources that
+   * Removes a specified version and all of the resources that
    * it owns.
    *
    * @param {Object} request
    *   The request object that will be sent.
    * @param {string} request.name
    *   Required. The name of the version to delete.
-   *   Format: projects/* /locations/* /apis/* /versions/*
+   *   Format: `projects/* /locations/* /apis/* /versions/*`
+   * @param {boolean} request.force
+   *   If set to true, any child resources will also be deleted.
+   *   (Otherwise, the request will only work if there are no child resources.)
    * @param {object} [options]
    *   Call options. See {@link https://googleapis.dev/nodejs/google-gax/latest/interfaces/CallOptions.html|CallOptions} for more details.
    * @returns {Promise} - The promise which resolves to an array.
@@ -1375,13 +1381,13 @@ export class RegistryClient {
     return this.innerApiCalls.deleteApiVersion(request, options, callback);
   }
   /**
-   * GetApiSpec returns a specified spec.
+   * Returns a specified spec.
    *
    * @param {Object} request
    *   The request object that will be sent.
    * @param {string} request.name
    *   Required. The name of the spec to retrieve.
-   *   Format: projects/* /locations/* /apis/* /versions/* /specs/*
+   *   Format: `projects/* /locations/* /apis/* /versions/* /specs/*`
    * @param {object} [options]
    *   Call options. See {@link https://googleapis.dev/nodejs/google-gax/latest/interfaces/CallOptions.html|CallOptions} for more details.
    * @returns {Promise} - The promise which resolves to an array.
@@ -1467,7 +1473,7 @@ export class RegistryClient {
     return this.innerApiCalls.getApiSpec(request, options, callback);
   }
   /**
-   * GetApiSpecContents returns the contents of a specified spec.
+   * Returns the contents of a specified spec.
    * If specs are stored with GZip compression, the default behavior
    * is to return the spec uncompressed (the mime_type response field
    * indicates the exact format returned).
@@ -1476,7 +1482,7 @@ export class RegistryClient {
    *   The request object that will be sent.
    * @param {string} request.name
    *   Required. The name of the spec whose contents should be retrieved.
-   *   Format: projects/* /locations/* /apis/* /versions/* /specs/*
+   *   Format: `projects/* /locations/* /apis/* /versions/* /specs/*`
    * @param {object} [options]
    *   Call options. See {@link https://googleapis.dev/nodejs/google-gax/latest/interfaces/CallOptions.html|CallOptions} for more details.
    * @returns {Promise} - The promise which resolves to an array.
@@ -1568,13 +1574,13 @@ export class RegistryClient {
     return this.innerApiCalls.getApiSpecContents(request, options, callback);
   }
   /**
-   * CreateApiSpec creates a specified spec.
+   * Creates a specified spec.
    *
    * @param {Object} request
    *   The request object that will be sent.
    * @param {string} request.parent
    *   Required. The parent, which owns this collection of specs.
-   *   Format: projects/* /locations/* /apis/* /versions/*
+   *   Format: `projects/* /locations/* /apis/* /versions/*`
    * @param {google.cloud.apigeeregistry.v1.ApiSpec} request.apiSpec
    *   Required. The spec to create.
    * @param {string} request.apiSpecId
@@ -1670,7 +1676,7 @@ export class RegistryClient {
     return this.innerApiCalls.createApiSpec(request, options, callback);
   }
   /**
-   * UpdateApiSpec can be used to modify a specified spec.
+   * Used to modify a specified spec.
    *
    * @param {Object} request
    *   The request object that will be sent.
@@ -1678,12 +1684,12 @@ export class RegistryClient {
    *   Required. The spec to update.
    *
    *   The `name` field is used to identify the spec to update.
-   *   Format: projects/* /locations/* /apis/* /versions/* /specs/*
+   *   Format: `projects/* /locations/* /apis/* /versions/* /specs/*`
    * @param {google.protobuf.FieldMask} request.updateMask
    *   The list of fields to be updated. If omitted, all fields are updated that
    *   are set in the request message (fields set to default values are ignored).
-   *   If a "*" is specified, all fields are updated, including fields that are
-   *   unspecified/default in the request.
+   *   If an asterisk "*" is specified, all fields are updated, including fields
+   *   that are unspecified/default in the request.
    * @param {boolean} request.allowMissing
    *   If set to true, and the spec is not found, a new spec will be created.
    *   In this situation, `update_mask` is ignored.
@@ -1772,14 +1778,14 @@ export class RegistryClient {
     return this.innerApiCalls.updateApiSpec(request, options, callback);
   }
   /**
-   * DeleteApiSpec removes a specified spec, all revisions, and all child
-   * resources (e.g. artifacts).
+   * Removes a specified spec, all revisions, and all child
+   * resources (e.g., artifacts).
    *
    * @param {Object} request
    *   The request object that will be sent.
    * @param {string} request.name
    *   Required. The name of the spec to delete.
-   *   Format: projects/* /locations/* /apis/* /versions/* /specs/*
+   *   Format: `projects/* /locations/* /apis/* /versions/* /specs/*`
    * @param {boolean} request.force
    *   If set to true, any child resources will also be deleted.
    *   (Otherwise, the request will only work if there are no child resources.)
@@ -1868,7 +1874,7 @@ export class RegistryClient {
     return this.innerApiCalls.deleteApiSpec(request, options, callback);
   }
   /**
-   * TagApiSpecRevision adds a tag to a specified revision of a spec.
+   * Adds a tag to a specified revision of a spec.
    *
    * @param {Object} request
    *   The request object that will be sent.
@@ -1968,7 +1974,7 @@ export class RegistryClient {
     return this.innerApiCalls.tagApiSpecRevision(request, options, callback);
   }
   /**
-   * RollbackApiSpec sets the current revision to a specified prior revision.
+   * Sets the current revision to a specified prior revision.
    * Note that this creates a new revision with a new revision ID.
    *
    * @param {Object} request
@@ -1979,7 +1985,7 @@ export class RegistryClient {
    *   Required. The revision ID to roll back to.
    *   It must be a revision of the same spec.
    *
-   *     Example: c7cfa2a8
+   *     Example: `c7cfa2a8`
    * @param {object} [options]
    *   Call options. See {@link https://googleapis.dev/nodejs/google-gax/latest/interfaces/CallOptions.html|CallOptions} for more details.
    * @returns {Promise} - The promise which resolves to an array.
@@ -2065,7 +2071,7 @@ export class RegistryClient {
     return this.innerApiCalls.rollbackApiSpec(request, options, callback);
   }
   /**
-   * DeleteApiSpecRevision deletes a revision of a spec.
+   * Deletes a revision of a spec.
    *
    * @param {Object} request
    *   The request object that will be sent.
@@ -2074,7 +2080,7 @@ export class RegistryClient {
    *   with a revision ID explicitly included.
    *
    *   Example:
-   *   projects/sample/locations/global/apis/petstore/versions/1.0.0/specs/openapi.yaml@c7cfa2a8
+   *   `projects/sample/locations/global/apis/petstore/versions/1.0.0/specs/openapi.yaml@c7cfa2a8`
    * @param {object} [options]
    *   Call options. See {@link https://googleapis.dev/nodejs/google-gax/latest/interfaces/CallOptions.html|CallOptions} for more details.
    * @returns {Promise} - The promise which resolves to an array.
@@ -2166,13 +2172,13 @@ export class RegistryClient {
     return this.innerApiCalls.deleteApiSpecRevision(request, options, callback);
   }
   /**
-   * GetApiDeployment returns a specified deployment.
+   * Returns a specified deployment.
    *
    * @param {Object} request
    *   The request object that will be sent.
    * @param {string} request.name
    *   Required. The name of the deployment to retrieve.
-   *   Format: projects/* /locations/* /apis/* /deployments/*
+   *   Format: `projects/* /locations/* /apis/* /deployments/*`
    * @param {object} [options]
    *   Call options. See {@link https://googleapis.dev/nodejs/google-gax/latest/interfaces/CallOptions.html|CallOptions} for more details.
    * @returns {Promise} - The promise which resolves to an array.
@@ -2264,13 +2270,13 @@ export class RegistryClient {
     return this.innerApiCalls.getApiDeployment(request, options, callback);
   }
   /**
-   * CreateApiDeployment creates a specified deployment.
+   * Creates a specified deployment.
    *
    * @param {Object} request
    *   The request object that will be sent.
    * @param {string} request.parent
    *   Required. The parent, which owns this collection of deployments.
-   *   Format: projects/* /locations/* /apis/*
+   *   Format: `projects/* /locations/* /apis/*`
    * @param {google.cloud.apigeeregistry.v1.ApiDeployment} request.apiDeployment
    *   Required. The deployment to create.
    * @param {string} request.apiDeploymentId
@@ -2372,7 +2378,7 @@ export class RegistryClient {
     return this.innerApiCalls.createApiDeployment(request, options, callback);
   }
   /**
-   * UpdateApiDeployment can be used to modify a specified deployment.
+   * Used to modify a specified deployment.
    *
    * @param {Object} request
    *   The request object that will be sent.
@@ -2380,12 +2386,12 @@ export class RegistryClient {
    *   Required. The deployment to update.
    *
    *   The `name` field is used to identify the deployment to update.
-   *   Format: projects/* /locations/* /apis/* /deployments/*
+   *   Format: `projects/* /locations/* /apis/* /deployments/*`
    * @param {google.protobuf.FieldMask} request.updateMask
    *   The list of fields to be updated. If omitted, all fields are updated that
    *   are set in the request message (fields set to default values are ignored).
-   *   If a "*" is specified, all fields are updated, including fields that are
-   *   unspecified/default in the request.
+   *   If an asterisk "*" is specified, all fields are updated, including fields
+   *   that are unspecified/default in the request.
    * @param {boolean} request.allowMissing
    *   If set to true, and the deployment is not found, a new deployment will be
    *   created. In this situation, `update_mask` is ignored.
@@ -2480,14 +2486,14 @@ export class RegistryClient {
     return this.innerApiCalls.updateApiDeployment(request, options, callback);
   }
   /**
-   * DeleteApiDeployment removes a specified deployment, all revisions, and all
-   * child resources (e.g. artifacts).
+   * Removes a specified deployment, all revisions, and all
+   * child resources (e.g., artifacts).
    *
    * @param {Object} request
    *   The request object that will be sent.
    * @param {string} request.name
    *   Required. The name of the deployment to delete.
-   *   Format: projects/* /locations/* /apis/* /deployments/*
+   *   Format: `projects/* /locations/* /apis/* /deployments/*`
    * @param {boolean} request.force
    *   If set to true, any child resources will also be deleted.
    *   (Otherwise, the request will only work if there are no child resources.)
@@ -2582,7 +2588,7 @@ export class RegistryClient {
     return this.innerApiCalls.deleteApiDeployment(request, options, callback);
   }
   /**
-   * TagApiDeploymentRevision adds a tag to a specified revision of a
+   * Adds a tag to a specified revision of a
    * deployment.
    *
    * @param {Object} request
@@ -2687,7 +2693,7 @@ export class RegistryClient {
     );
   }
   /**
-   * RollbackApiDeployment sets the current revision to a specified prior
+   * Sets the current revision to a specified prior
    * revision. Note that this creates a new revision with a new revision ID.
    *
    * @param {Object} request
@@ -2698,7 +2704,7 @@ export class RegistryClient {
    *   Required. The revision ID to roll back to.
    *   It must be a revision of the same deployment.
    *
-   *     Example: c7cfa2a8
+   *     Example: `c7cfa2a8`
    * @param {object} [options]
    *   Call options. See {@link https://googleapis.dev/nodejs/google-gax/latest/interfaces/CallOptions.html|CallOptions} for more details.
    * @returns {Promise} - The promise which resolves to an array.
@@ -2790,7 +2796,7 @@ export class RegistryClient {
     return this.innerApiCalls.rollbackApiDeployment(request, options, callback);
   }
   /**
-   * DeleteApiDeploymentRevision deletes a revision of a deployment.
+   * Deletes a revision of a deployment.
    *
    * @param {Object} request
    *   The request object that will be sent.
@@ -2799,7 +2805,7 @@ export class RegistryClient {
    *   with a revision ID explicitly included.
    *
    *   Example:
-   *   projects/sample/locations/global/apis/petstore/deployments/prod@c7cfa2a8
+   *   `projects/sample/locations/global/apis/petstore/deployments/prod@c7cfa2a8`
    * @param {object} [options]
    *   Call options. See {@link https://googleapis.dev/nodejs/google-gax/latest/interfaces/CallOptions.html|CallOptions} for more details.
    * @returns {Promise} - The promise which resolves to an array.
@@ -2895,13 +2901,13 @@ export class RegistryClient {
     );
   }
   /**
-   * GetArtifact returns a specified artifact.
+   * Returns a specified artifact.
    *
    * @param {Object} request
    *   The request object that will be sent.
    * @param {string} request.name
    *   Required. The name of the artifact to retrieve.
-   *   Format: {parent}/artifacts/*
+   *   Format: `{parent}/artifacts/*`
    * @param {object} [options]
    *   Call options. See {@link https://googleapis.dev/nodejs/google-gax/latest/interfaces/CallOptions.html|CallOptions} for more details.
    * @returns {Promise} - The promise which resolves to an array.
@@ -2987,7 +2993,7 @@ export class RegistryClient {
     return this.innerApiCalls.getArtifact(request, options, callback);
   }
   /**
-   * GetArtifactContents returns the contents of a specified artifact.
+   * Returns the contents of a specified artifact.
    * If artifacts are stored with GZip compression, the default behavior
    * is to return the artifact uncompressed (the mime_type response field
    * indicates the exact format returned).
@@ -2996,7 +3002,7 @@ export class RegistryClient {
    *   The request object that will be sent.
    * @param {string} request.name
    *   Required. The name of the artifact whose contents should be retrieved.
-   *   Format: {parent}/artifacts/*
+   *   Format: `{parent}/artifacts/*`
    * @param {object} [options]
    *   Call options. See {@link https://googleapis.dev/nodejs/google-gax/latest/interfaces/CallOptions.html|CallOptions} for more details.
    * @returns {Promise} - The promise which resolves to an array.
@@ -3088,13 +3094,13 @@ export class RegistryClient {
     return this.innerApiCalls.getArtifactContents(request, options, callback);
   }
   /**
-   * CreateArtifact creates a specified artifact.
+   * Creates a specified artifact.
    *
    * @param {Object} request
    *   The request object that will be sent.
    * @param {string} request.parent
    *   Required. The parent, which owns this collection of artifacts.
-   *   Format: {parent}
+   *   Format: `{parent}`
    * @param {google.cloud.apigeeregistry.v1.Artifact} request.artifact
    *   Required. The artifact to create.
    * @param {string} request.artifactId
@@ -3190,7 +3196,7 @@ export class RegistryClient {
     return this.innerApiCalls.createArtifact(request, options, callback);
   }
   /**
-   * ReplaceArtifact can be used to replace a specified artifact.
+   * Used to replace a specified artifact.
    *
    * @param {Object} request
    *   The request object that will be sent.
@@ -3198,7 +3204,7 @@ export class RegistryClient {
    *   Required. The artifact to replace.
    *
    *   The `name` field is used to identify the artifact to replace.
-   *   Format: {parent}/artifacts/*
+   *   Format: `{parent}/artifacts/*`
    * @param {object} [options]
    *   Call options. See {@link https://googleapis.dev/nodejs/google-gax/latest/interfaces/CallOptions.html|CallOptions} for more details.
    * @returns {Promise} - The promise which resolves to an array.
@@ -3284,13 +3290,13 @@ export class RegistryClient {
     return this.innerApiCalls.replaceArtifact(request, options, callback);
   }
   /**
-   * DeleteArtifact removes a specified artifact.
+   * Removes a specified artifact.
    *
    * @param {Object} request
    *   The request object that will be sent.
    * @param {string} request.name
    *   Required. The name of the artifact to delete.
-   *   Format: {parent}/artifacts/*
+   *   Format: `{parent}/artifacts/*`
    * @param {object} [options]
    *   Call options. See {@link https://googleapis.dev/nodejs/google-gax/latest/interfaces/CallOptions.html|CallOptions} for more details.
    * @returns {Promise} - The promise which resolves to an array.
@@ -3377,13 +3383,13 @@ export class RegistryClient {
   }
 
   /**
-   * ListApis returns matching APIs.
+   * Returns matching APIs.
    *
    * @param {Object} request
    *   The request object that will be sent.
    * @param {string} request.parent
    *   Required. The parent, which owns this collection of APIs.
-   *   Format: projects/* /locations/*
+   *   Format: `projects/* /locations/*`
    * @param {number} request.pageSize
    *   The maximum number of APIs to return.
    *   The service may return fewer than this value.
@@ -3492,7 +3498,7 @@ export class RegistryClient {
    *   The request object that will be sent.
    * @param {string} request.parent
    *   Required. The parent, which owns this collection of APIs.
-   *   Format: projects/* /locations/*
+   *   Format: `projects/* /locations/*`
    * @param {number} request.pageSize
    *   The maximum number of APIs to return.
    *   The service may return fewer than this value.
@@ -3549,7 +3555,7 @@ export class RegistryClient {
    *   The request object that will be sent.
    * @param {string} request.parent
    *   Required. The parent, which owns this collection of APIs.
-   *   Format: projects/* /locations/*
+   *   Format: `projects/* /locations/*`
    * @param {number} request.pageSize
    *   The maximum number of APIs to return.
    *   The service may return fewer than this value.
@@ -3599,13 +3605,13 @@ export class RegistryClient {
     ) as AsyncIterable<protos.google.cloud.apigeeregistry.v1.IApi>;
   }
   /**
-   * ListApiVersions returns matching versions.
+   * Returns matching versions.
    *
    * @param {Object} request
    *   The request object that will be sent.
    * @param {string} request.parent
    *   Required. The parent, which owns this collection of versions.
-   *   Format: projects/* /locations/* /apis/*
+   *   Format: `projects/* /locations/* /apis/*`
    * @param {number} request.pageSize
    *   The maximum number of versions to return.
    *   The service may return fewer than this value.
@@ -3714,7 +3720,7 @@ export class RegistryClient {
    *   The request object that will be sent.
    * @param {string} request.parent
    *   Required. The parent, which owns this collection of versions.
-   *   Format: projects/* /locations/* /apis/*
+   *   Format: `projects/* /locations/* /apis/*`
    * @param {number} request.pageSize
    *   The maximum number of versions to return.
    *   The service may return fewer than this value.
@@ -3771,7 +3777,7 @@ export class RegistryClient {
    *   The request object that will be sent.
    * @param {string} request.parent
    *   Required. The parent, which owns this collection of versions.
-   *   Format: projects/* /locations/* /apis/*
+   *   Format: `projects/* /locations/* /apis/*`
    * @param {number} request.pageSize
    *   The maximum number of versions to return.
    *   The service may return fewer than this value.
@@ -3821,13 +3827,13 @@ export class RegistryClient {
     ) as AsyncIterable<protos.google.cloud.apigeeregistry.v1.IApiVersion>;
   }
   /**
-   * ListApiSpecs returns matching specs.
+   * Returns matching specs.
    *
    * @param {Object} request
    *   The request object that will be sent.
    * @param {string} request.parent
    *   Required. The parent, which owns this collection of specs.
-   *   Format: projects/* /locations/* /apis/* /versions/*
+   *   Format: `projects/* /locations/* /apis/* /versions/*`
    * @param {number} request.pageSize
    *   The maximum number of specs to return.
    *   The service may return fewer than this value.
@@ -3936,7 +3942,7 @@ export class RegistryClient {
    *   The request object that will be sent.
    * @param {string} request.parent
    *   Required. The parent, which owns this collection of specs.
-   *   Format: projects/* /locations/* /apis/* /versions/*
+   *   Format: `projects/* /locations/* /apis/* /versions/*`
    * @param {number} request.pageSize
    *   The maximum number of specs to return.
    *   The service may return fewer than this value.
@@ -3993,7 +3999,7 @@ export class RegistryClient {
    *   The request object that will be sent.
    * @param {string} request.parent
    *   Required. The parent, which owns this collection of specs.
-   *   Format: projects/* /locations/* /apis/* /versions/*
+   *   Format: `projects/* /locations/* /apis/* /versions/*`
    * @param {number} request.pageSize
    *   The maximum number of specs to return.
    *   The service may return fewer than this value.
@@ -4043,7 +4049,7 @@ export class RegistryClient {
     ) as AsyncIterable<protos.google.cloud.apigeeregistry.v1.IApiSpec>;
   }
   /**
-   * ListApiSpecRevisions lists all revisions of a spec.
+   * Lists all revisions of a spec.
    * Revisions are returned in descending order of revision creation time.
    *
    * @param {Object} request
@@ -4236,13 +4242,13 @@ export class RegistryClient {
     ) as AsyncIterable<protos.google.cloud.apigeeregistry.v1.IApiSpec>;
   }
   /**
-   * ListApiDeployments returns matching deployments.
+   * Returns matching deployments.
    *
    * @param {Object} request
    *   The request object that will be sent.
    * @param {string} request.parent
    *   Required. The parent, which owns this collection of deployments.
-   *   Format: projects/* /locations/* /apis/*
+   *   Format: `projects/* /locations/* /apis/*`
    * @param {number} request.pageSize
    *   The maximum number of deployments to return.
    *   The service may return fewer than this value.
@@ -4351,7 +4357,7 @@ export class RegistryClient {
    *   The request object that will be sent.
    * @param {string} request.parent
    *   Required. The parent, which owns this collection of deployments.
-   *   Format: projects/* /locations/* /apis/*
+   *   Format: `projects/* /locations/* /apis/*`
    * @param {number} request.pageSize
    *   The maximum number of deployments to return.
    *   The service may return fewer than this value.
@@ -4408,7 +4414,7 @@ export class RegistryClient {
    *   The request object that will be sent.
    * @param {string} request.parent
    *   Required. The parent, which owns this collection of deployments.
-   *   Format: projects/* /locations/* /apis/*
+   *   Format: `projects/* /locations/* /apis/*`
    * @param {number} request.pageSize
    *   The maximum number of deployments to return.
    *   The service may return fewer than this value.
@@ -4458,7 +4464,7 @@ export class RegistryClient {
     ) as AsyncIterable<protos.google.cloud.apigeeregistry.v1.IApiDeployment>;
   }
   /**
-   * ListApiDeploymentRevisions lists all revisions of a deployment.
+   * Lists all revisions of a deployment.
    * Revisions are returned in descending order of revision creation time.
    *
    * @param {Object} request
@@ -4655,13 +4661,13 @@ export class RegistryClient {
     ) as AsyncIterable<protos.google.cloud.apigeeregistry.v1.IApiDeployment>;
   }
   /**
-   * ListArtifacts returns matching artifacts.
+   * Returns matching artifacts.
    *
    * @param {Object} request
    *   The request object that will be sent.
    * @param {string} request.parent
    *   Required. The parent, which owns this collection of artifacts.
-   *   Format: {parent}
+   *   Format: `{parent}`
    * @param {number} request.pageSize
    *   The maximum number of artifacts to return.
    *   The service may return fewer than this value.
@@ -4770,7 +4776,7 @@ export class RegistryClient {
    *   The request object that will be sent.
    * @param {string} request.parent
    *   Required. The parent, which owns this collection of artifacts.
-   *   Format: {parent}
+   *   Format: `{parent}`
    * @param {number} request.pageSize
    *   The maximum number of artifacts to return.
    *   The service may return fewer than this value.
@@ -4827,7 +4833,7 @@ export class RegistryClient {
    *   The request object that will be sent.
    * @param {string} request.parent
    *   Required. The parent, which owns this collection of artifacts.
-   *   Format: {parent}
+   *   Format: `{parent}`
    * @param {number} request.pageSize
    *   The maximum number of artifacts to return.
    *   The service may return fewer than this value.

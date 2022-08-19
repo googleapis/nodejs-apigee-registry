@@ -27,7 +27,7 @@ function main(parent, artifact, artifactId) {
    */
   /**
    *  Required. The parent, which owns this collection of artifacts.
-   *  Format: {parent}
+   *  Format: `{parent}`
    */
   // const parent = 'abc123'
   /**

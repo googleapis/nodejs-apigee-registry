@@ -27,7 +27,7 @@ function main(parent, apiVersion, apiVersionId) {
    */
   /**
    *  Required. The parent, which owns this collection of versions.
-   *  Format: projects/* /locations/* /apis/*
+   *  Format: `projects/* /locations/* /apis/*`
    */
   // const parent = 'abc123'
   /**

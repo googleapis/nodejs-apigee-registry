@@ -28,14 +28,14 @@ function main(apiDeployment) {
   /**
    *  Required. The deployment to update.
    *  The `name` field is used to identify the deployment to update.
-   *  Format: projects/* /locations/* /apis/* /deployments/*
+   *  Format: `projects/* /locations/* /apis/* /deployments/*`
    */
   // const apiDeployment = {}
   /**
    *  The list of fields to be updated. If omitted, all fields are updated that
    *  are set in the request message (fields set to default values are ignored).
-   *  If a "*" is specified, all fields are updated, including fields that are
-   *  unspecified/default in the request.
+   *  If an asterisk "*" is specified, all fields are updated, including fields
+   *  that are unspecified/default in the request.
    */
   // const updateMask = {}
   /**

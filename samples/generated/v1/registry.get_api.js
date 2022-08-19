@@ -27,7 +27,7 @@ function main(name) {
    */
   /**
    *  Required. The name of the API to retrieve.
-   *  Format: projects/* /locations/* /apis/*
+   *  Format: `projects/* /locations/* /apis/*`
    */
   // const name = 'abc123'
 

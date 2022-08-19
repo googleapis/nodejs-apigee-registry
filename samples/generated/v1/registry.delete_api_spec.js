@@ -27,7 +27,7 @@ function main(name) {
    */
   /**
    *  Required. The name of the spec to delete.
-   *  Format: projects/* /locations/* /apis/* /versions/* /specs/*
+   *  Format: `projects/* /locations/* /apis/* /versions/* /specs/*`
    */
   // const name = 'abc123'
   /**

@@ -32,7 +32,7 @@ function main(name, revisionId) {
   /**
    *  Required. The revision ID to roll back to.
    *  It must be a revision of the same deployment.
-   *    Example: c7cfa2a8
+   *    Example: `c7cfa2a8`
    */
   // const revisionId = 'abc123'
 

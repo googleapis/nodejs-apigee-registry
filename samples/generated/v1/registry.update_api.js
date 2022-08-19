@@ -28,18 +28,18 @@ function main(api) {
   /**
    *  Required. The API to update.
    *  The `name` field is used to identify the API to update.
-   *  Format: projects/* /locations/* /apis/*
+   *  Format: `projects/* /locations/* /apis/*`
    */
   // const api = {}
   /**
    *  The list of fields to be updated. If omitted, all fields are updated that
    *  are set in the request message (fields set to default values are ignored).
-   *  If a "*" is specified, all fields are updated, including fields that are
-   *  unspecified/default in the request.
+   *  If an asterisk "*" is specified, all fields are updated, including fields
+   *  that are unspecified/default in the request.
    */
   // const updateMask = {}
   /**
-   *  If set to true, and the api is not found, a new api will be created.
+   *  If set to true, and the API is not found, a new API will be created.
    *  In this situation, `update_mask` is ignored.
    */
   // const allowMissing = true

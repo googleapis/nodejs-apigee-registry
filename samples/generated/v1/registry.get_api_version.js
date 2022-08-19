@@ -27,7 +27,7 @@ function main(name) {
    */
   /**
    *  Required. The name of the version to retrieve.
-   *  Format: projects/* /locations/* /apis/* /versions/*
+   *  Format: `projects/* /locations/* /apis/* /versions/*`
    */
   // const name = 'abc123'
 

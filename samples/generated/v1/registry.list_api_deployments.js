@@ -27,7 +27,7 @@ function main(parent) {
    */
   /**
    *  Required. The parent, which owns this collection of deployments.
-   *  Format: projects/* /locations/* /apis/*
+   *  Format: `projects/* /locations/* /apis/*`
    */
   // const parent = 'abc123'
   /**

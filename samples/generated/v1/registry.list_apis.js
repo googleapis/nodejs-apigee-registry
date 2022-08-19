@@ -27,7 +27,7 @@ function main(parent) {
    */
   /**
    *  Required. The parent, which owns this collection of APIs.
-   *  Format: projects/* /locations/*
+   *  Format: `projects/* /locations/*`
    */
   // const parent = 'abc123'
   /**

@@ -29,7 +29,7 @@ function main(name) {
    *  Required. The name of the deployment revision to be deleted,
    *  with a revision ID explicitly included.
    *  Example:
-   *  projects/sample/locations/global/apis/petstore/deployments/prod@c7cfa2a8
+   *  `projects/sample/locations/global/apis/petstore/deployments/prod@c7cfa2a8`
    */
   // const name = 'abc123'
 

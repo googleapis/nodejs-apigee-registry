@@ -27,7 +27,7 @@ function main(parent) {
    */
   /**
    *  Required. The parent, which owns this collection of specs.
-   *  Format: projects/* /locations/* /apis/* /versions/*
+   *  Format: `projects/* /locations/* /apis/* /versions/*`
    */
   // const parent = 'abc123'
   /**
