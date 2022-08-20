@@ -33,7 +33,6 @@ import {
 } from 'google-gax';
 
 import {Transform} from 'stream';
-import {RequestType} from 'google-gax/build/src/apitypes';
 import * as protos from '../../protos/protos';
 import jsonProtos = require('../../protos/protos.json');
 /**
@@ -42,7 +41,7 @@ import jsonProtos = require('../../protos/protos.json');
  * This file defines retry strategy and timeouts for all API methods in this library.
  */
 import * as gapicConfig from './registry_client_config.json';
-import {operationsProtos} from 'google-gax';
+
 const version = require('../../../package.json').version;
 
 /**
@@ -522,7 +521,8 @@ export class RegistryClient {
       const apiCall = this._gaxModule.createApiCall(
         callPromise,
         this._defaults[methodName],
-        descriptor
+        descriptor,
+        this._opts.fallback
       );
 
       this.innerApiCalls[methodName] = apiCall;
@@ -3541,7 +3541,7 @@ export class RegistryClient {
     const callSettings = defaultCallSettings.merge(options);
     this.initialize();
     return this.descriptors.page.listApis.createStream(
-      this.innerApiCalls.listApis as gax.GaxCall,
+      this.innerApiCalls.listApis as GaxCall,
       request,
       callSettings
     );
@@ -3600,7 +3600,7 @@ export class RegistryClient {
     this.initialize();
     return this.descriptors.page.listApis.asyncIterate(
       this.innerApiCalls['listApis'] as GaxCall,
-      request as unknown as RequestType,
+      request as {},
       callSettings
     ) as AsyncIterable<protos.google.cloud.apigeeregistry.v1.IApi>;
   }
@@ -3763,7 +3763,7 @@ export class RegistryClient {
     const callSettings = defaultCallSettings.merge(options);
     this.initialize();
     return this.descriptors.page.listApiVersions.createStream(
-      this.innerApiCalls.listApiVersions as gax.GaxCall,
+      this.innerApiCalls.listApiVersions as GaxCall,
       request,
       callSettings
     );
@@ -3822,7 +3822,7 @@ export class RegistryClient {
     this.initialize();
     return this.descriptors.page.listApiVersions.asyncIterate(
       this.innerApiCalls['listApiVersions'] as GaxCall,
-      request as unknown as RequestType,
+      request as {},
       callSettings
     ) as AsyncIterable<protos.google.cloud.apigeeregistry.v1.IApiVersion>;
   }
@@ -3985,7 +3985,7 @@ export class RegistryClient {
     const callSettings = defaultCallSettings.merge(options);
     this.initialize();
     return this.descriptors.page.listApiSpecs.createStream(
-      this.innerApiCalls.listApiSpecs as gax.GaxCall,
+      this.innerApiCalls.listApiSpecs as GaxCall,
       request,
       callSettings
     );
@@ -4044,7 +4044,7 @@ export class RegistryClient {
     this.initialize();
     return this.descriptors.page.listApiSpecs.asyncIterate(
       this.innerApiCalls['listApiSpecs'] as GaxCall,
-      request as unknown as RequestType,
+      request as {},
       callSettings
     ) as AsyncIterable<protos.google.cloud.apigeeregistry.v1.IApiSpec>;
   }
@@ -4188,7 +4188,7 @@ export class RegistryClient {
     const callSettings = defaultCallSettings.merge(options);
     this.initialize();
     return this.descriptors.page.listApiSpecRevisions.createStream(
-      this.innerApiCalls.listApiSpecRevisions as gax.GaxCall,
+      this.innerApiCalls.listApiSpecRevisions as GaxCall,
       request,
       callSettings
     );
@@ -4237,7 +4237,7 @@ export class RegistryClient {
     this.initialize();
     return this.descriptors.page.listApiSpecRevisions.asyncIterate(
       this.innerApiCalls['listApiSpecRevisions'] as GaxCall,
-      request as unknown as RequestType,
+      request as {},
       callSettings
     ) as AsyncIterable<protos.google.cloud.apigeeregistry.v1.IApiSpec>;
   }
@@ -4400,7 +4400,7 @@ export class RegistryClient {
     const callSettings = defaultCallSettings.merge(options);
     this.initialize();
     return this.descriptors.page.listApiDeployments.createStream(
-      this.innerApiCalls.listApiDeployments as gax.GaxCall,
+      this.innerApiCalls.listApiDeployments as GaxCall,
       request,
       callSettings
     );
@@ -4459,7 +4459,7 @@ export class RegistryClient {
     this.initialize();
     return this.descriptors.page.listApiDeployments.asyncIterate(
       this.innerApiCalls['listApiDeployments'] as GaxCall,
-      request as unknown as RequestType,
+      request as {},
       callSettings
     ) as AsyncIterable<protos.google.cloud.apigeeregistry.v1.IApiDeployment>;
   }
@@ -4607,7 +4607,7 @@ export class RegistryClient {
     const callSettings = defaultCallSettings.merge(options);
     this.initialize();
     return this.descriptors.page.listApiDeploymentRevisions.createStream(
-      this.innerApiCalls.listApiDeploymentRevisions as gax.GaxCall,
+      this.innerApiCalls.listApiDeploymentRevisions as GaxCall,
       request,
       callSettings
     );
@@ -4656,7 +4656,7 @@ export class RegistryClient {
     this.initialize();
     return this.descriptors.page.listApiDeploymentRevisions.asyncIterate(
       this.innerApiCalls['listApiDeploymentRevisions'] as GaxCall,
-      request as unknown as RequestType,
+      request as {},
       callSettings
     ) as AsyncIterable<protos.google.cloud.apigeeregistry.v1.IApiDeployment>;
   }
@@ -4819,7 +4819,7 @@ export class RegistryClient {
     const callSettings = defaultCallSettings.merge(options);
     this.initialize();
     return this.descriptors.page.listArtifacts.createStream(
-      this.innerApiCalls.listArtifacts as gax.GaxCall,
+      this.innerApiCalls.listArtifacts as GaxCall,
       request,
       callSettings
     );
@@ -4878,7 +4878,7 @@ export class RegistryClient {
     this.initialize();
     return this.descriptors.page.listArtifacts.asyncIterate(
       this.innerApiCalls['listArtifacts'] as GaxCall,
-      request as unknown as RequestType,
+      request as {},
       callSettings
     ) as AsyncIterable<protos.google.cloud.apigeeregistry.v1.IArtifact>;
   }

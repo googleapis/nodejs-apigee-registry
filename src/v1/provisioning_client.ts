@@ -467,7 +467,8 @@ export class ProvisioningClient {
       const apiCall = this._gaxModule.createApiCall(
         callPromise,
         this._defaults[methodName],
-        descriptor
+        descriptor,
+        this._opts.fallback
       );
 
       this.innerApiCalls[methodName] = apiCall;
@@ -757,7 +758,7 @@ export class ProvisioningClient {
     const decodeOperation = new gax.Operation(
       operation,
       this.descriptors.longrunning.createInstance,
-      gax.createDefaultBackoffSettings()
+      this._gaxModule.createDefaultBackoffSettings()
     );
     return decodeOperation as LROperation<
       protos.google.cloud.apigeeregistry.v1.Instance,
@@ -895,7 +896,7 @@ export class ProvisioningClient {
     const decodeOperation = new gax.Operation(
       operation,
       this.descriptors.longrunning.deleteInstance,
-      gax.createDefaultBackoffSettings()
+      this._gaxModule.createDefaultBackoffSettings()
     );
     return decodeOperation as LROperation<
       protos.google.protobuf.Empty,
