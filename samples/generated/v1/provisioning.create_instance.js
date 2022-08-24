@@ -43,7 +43,7 @@ function main(parent, instanceId, instance) {
   // const instance = {}
 
   // Imports the Apigeeregistry library
-  const {ProvisioningClient} = require('@google-cloud/apigeeregistry').v1;
+  const {ProvisioningClient} = require('@google-cloud/apigee-registry').v1;
 
   // Instantiates a client
   const apigeeregistryClient = new ProvisioningClient();

@@ -47,7 +47,7 @@ function main(parent, artifact, artifactId) {
   // const artifactId = 'abc123'
 
   // Imports the Apigeeregistry library
-  const {RegistryClient} = require('@google-cloud/apigeeregistry').v1;
+  const {RegistryClient} = require('@google-cloud/apigee-registry').v1;
 
   // Instantiates a client
   const apigeeregistryClient = new RegistryClient();
