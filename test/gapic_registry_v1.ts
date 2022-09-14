@@ -32,6 +32,21 @@ import {
   LocationProtos,
 } from 'google-gax';
 
+// Dynamically loaded proto JSON is needed to get the type information
+// to fill in default values for request objects
+const root = protobuf.Root.fromJSON(
+  require('../protos/protos.json')
+).resolveAll();
+
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+function getTypeDefaultValue(typeName: string, fields: string[]) {
+  let type = root.lookupType(typeName) as protobuf.Type;
+  for (const field of fields.slice(0, -1)) {
+    type = type.fields[field]?.resolvedType as protobuf.Type;
+  }
+  return type.fields[fields[fields.length - 1]]?.defaultValue;
+}
+
 function generateSampleMessage<T extends object>(instance: T) {
   const filledObject = (
     instance.constructor as typeof protobuf.Message
@@ -225,26 +240,23 @@ describe('v1.RegistryClient', () => {
       const request = generateSampleMessage(
         new protos.google.cloud.apigeeregistry.v1.GetApiRequest()
       );
-      request.name = '';
-      const expectedHeaderRequestParams = 'name=';
-      const expectedOptions = {
-        otherArgs: {
-          headers: {
-            'x-goog-request-params': expectedHeaderRequestParams,
-          },
-        },
-      };
+      const defaultValue1 = getTypeDefaultValue('GetApiRequest', ['name']);
+      request.name = defaultValue1;
+      const expectedHeaderRequestParams = `name=${defaultValue1}`;
       const expectedResponse = generateSampleMessage(
         new protos.google.cloud.apigeeregistry.v1.Api()
       );
       client.innerApiCalls.getApi = stubSimpleCall(expectedResponse);
       const [response] = await client.getApi(request);
       assert.deepStrictEqual(response, expectedResponse);
-      assert(
-        (client.innerApiCalls.getApi as SinonStub)
-          .getCall(0)
-          .calledWith(request, expectedOptions, undefined)
-      );
+      const actualRequest = (client.innerApiCalls.getApi as SinonStub).getCall(
+        0
+      ).args[0];
+      assert.deepStrictEqual(actualRequest, request);
+      const actualHeaderRequestParams = (
+        client.innerApiCalls.getApi as SinonStub
+      ).getCall(0).args[1].otherArgs.headers['x-goog-request-params'];
+      assert(actualHeaderRequestParams.includes(expectedHeaderRequestParams));
     });
 
     it('invokes getApi without error using callback', async () => {
@@ -256,15 +268,9 @@ describe('v1.RegistryClient', () => {
       const request = generateSampleMessage(
         new protos.google.cloud.apigeeregistry.v1.GetApiRequest()
       );
-      request.name = '';
-      const expectedHeaderRequestParams = 'name=';
-      const expectedOptions = {
-        otherArgs: {
-          headers: {
-            'x-goog-request-params': expectedHeaderRequestParams,
-          },
-        },
-      };
+      const defaultValue1 = getTypeDefaultValue('GetApiRequest', ['name']);
+      request.name = defaultValue1;
+      const expectedHeaderRequestParams = `name=${defaultValue1}`;
       const expectedResponse = generateSampleMessage(
         new protos.google.cloud.apigeeregistry.v1.Api()
       );
@@ -287,11 +293,14 @@ describe('v1.RegistryClient', () => {
       });
       const response = await promise;
       assert.deepStrictEqual(response, expectedResponse);
-      assert(
-        (client.innerApiCalls.getApi as SinonStub)
-          .getCall(0)
-          .calledWith(request, expectedOptions /*, callback defined above */)
-      );
+      const actualRequest = (client.innerApiCalls.getApi as SinonStub).getCall(
+        0
+      ).args[0];
+      assert.deepStrictEqual(actualRequest, request);
+      const actualHeaderRequestParams = (
+        client.innerApiCalls.getApi as SinonStub
+      ).getCall(0).args[1].otherArgs.headers['x-goog-request-params'];
+      assert(actualHeaderRequestParams.includes(expectedHeaderRequestParams));
     });
 
     it('invokes getApi with error', async () => {
@@ -303,23 +312,20 @@ describe('v1.RegistryClient', () => {
       const request = generateSampleMessage(
         new protos.google.cloud.apigeeregistry.v1.GetApiRequest()
       );
-      request.name = '';
-      const expectedHeaderRequestParams = 'name=';
-      const expectedOptions = {
-        otherArgs: {
-          headers: {
-            'x-goog-request-params': expectedHeaderRequestParams,
-          },
-        },
-      };
+      const defaultValue1 = getTypeDefaultValue('GetApiRequest', ['name']);
+      request.name = defaultValue1;
+      const expectedHeaderRequestParams = `name=${defaultValue1}`;
       const expectedError = new Error('expected');
       client.innerApiCalls.getApi = stubSimpleCall(undefined, expectedError);
       await assert.rejects(client.getApi(request), expectedError);
-      assert(
-        (client.innerApiCalls.getApi as SinonStub)
-          .getCall(0)
-          .calledWith(request, expectedOptions, undefined)
-      );
+      const actualRequest = (client.innerApiCalls.getApi as SinonStub).getCall(
+        0
+      ).args[0];
+      assert.deepStrictEqual(actualRequest, request);
+      const actualHeaderRequestParams = (
+        client.innerApiCalls.getApi as SinonStub
+      ).getCall(0).args[1].otherArgs.headers['x-goog-request-params'];
+      assert(actualHeaderRequestParams.includes(expectedHeaderRequestParams));
     });
 
     it('invokes getApi with closed client', async () => {
@@ -331,7 +337,8 @@ describe('v1.RegistryClient', () => {
       const request = generateSampleMessage(
         new protos.google.cloud.apigeeregistry.v1.GetApiRequest()
       );
-      request.name = '';
+      const defaultValue1 = getTypeDefaultValue('GetApiRequest', ['name']);
+      request.name = defaultValue1;
       const expectedError = new Error('The client has already been closed.');
       client.close();
       await assert.rejects(client.getApi(request), expectedError);
@@ -348,26 +355,23 @@ describe('v1.RegistryClient', () => {
       const request = generateSampleMessage(
         new protos.google.cloud.apigeeregistry.v1.CreateApiRequest()
       );
-      request.parent = '';
-      const expectedHeaderRequestParams = 'parent=';
-      const expectedOptions = {
-        otherArgs: {
-          headers: {
-            'x-goog-request-params': expectedHeaderRequestParams,
-          },
-        },
-      };
+      const defaultValue1 = getTypeDefaultValue('CreateApiRequest', ['parent']);
+      request.parent = defaultValue1;
+      const expectedHeaderRequestParams = `parent=${defaultValue1}`;
       const expectedResponse = generateSampleMessage(
         new protos.google.cloud.apigeeregistry.v1.Api()
       );
       client.innerApiCalls.createApi = stubSimpleCall(expectedResponse);
       const [response] = await client.createApi(request);
       assert.deepStrictEqual(response, expectedResponse);
-      assert(
-        (client.innerApiCalls.createApi as SinonStub)
-          .getCall(0)
-          .calledWith(request, expectedOptions, undefined)
-      );
+      const actualRequest = (
+        client.innerApiCalls.createApi as SinonStub
+      ).getCall(0).args[0];
+      assert.deepStrictEqual(actualRequest, request);
+      const actualHeaderRequestParams = (
+        client.innerApiCalls.createApi as SinonStub
+      ).getCall(0).args[1].otherArgs.headers['x-goog-request-params'];
+      assert(actualHeaderRequestParams.includes(expectedHeaderRequestParams));
     });
 
     it('invokes createApi without error using callback', async () => {
@@ -379,15 +383,9 @@ describe('v1.RegistryClient', () => {
       const request = generateSampleMessage(
         new protos.google.cloud.apigeeregistry.v1.CreateApiRequest()
       );
-      request.parent = '';
-      const expectedHeaderRequestParams = 'parent=';
-      const expectedOptions = {
-        otherArgs: {
-          headers: {
-            'x-goog-request-params': expectedHeaderRequestParams,
-          },
-        },
-      };
+      const defaultValue1 = getTypeDefaultValue('CreateApiRequest', ['parent']);
+      request.parent = defaultValue1;
+      const expectedHeaderRequestParams = `parent=${defaultValue1}`;
       const expectedResponse = generateSampleMessage(
         new protos.google.cloud.apigeeregistry.v1.Api()
       );
@@ -410,11 +408,14 @@ describe('v1.RegistryClient', () => {
       });
       const response = await promise;
       assert.deepStrictEqual(response, expectedResponse);
-      assert(
-        (client.innerApiCalls.createApi as SinonStub)
-          .getCall(0)
-          .calledWith(request, expectedOptions /*, callback defined above */)
-      );
+      const actualRequest = (
+        client.innerApiCalls.createApi as SinonStub
+      ).getCall(0).args[0];
+      assert.deepStrictEqual(actualRequest, request);
+      const actualHeaderRequestParams = (
+        client.innerApiCalls.createApi as SinonStub
+      ).getCall(0).args[1].otherArgs.headers['x-goog-request-params'];
+      assert(actualHeaderRequestParams.includes(expectedHeaderRequestParams));
     });
 
     it('invokes createApi with error', async () => {
@@ -426,23 +427,20 @@ describe('v1.RegistryClient', () => {
       const request = generateSampleMessage(
         new protos.google.cloud.apigeeregistry.v1.CreateApiRequest()
       );
-      request.parent = '';
-      const expectedHeaderRequestParams = 'parent=';
-      const expectedOptions = {
-        otherArgs: {
-          headers: {
-            'x-goog-request-params': expectedHeaderRequestParams,
-          },
-        },
-      };
+      const defaultValue1 = getTypeDefaultValue('CreateApiRequest', ['parent']);
+      request.parent = defaultValue1;
+      const expectedHeaderRequestParams = `parent=${defaultValue1}`;
       const expectedError = new Error('expected');
       client.innerApiCalls.createApi = stubSimpleCall(undefined, expectedError);
       await assert.rejects(client.createApi(request), expectedError);
-      assert(
-        (client.innerApiCalls.createApi as SinonStub)
-          .getCall(0)
-          .calledWith(request, expectedOptions, undefined)
-      );
+      const actualRequest = (
+        client.innerApiCalls.createApi as SinonStub
+      ).getCall(0).args[0];
+      assert.deepStrictEqual(actualRequest, request);
+      const actualHeaderRequestParams = (
+        client.innerApiCalls.createApi as SinonStub
+      ).getCall(0).args[1].otherArgs.headers['x-goog-request-params'];
+      assert(actualHeaderRequestParams.includes(expectedHeaderRequestParams));
     });
 
     it('invokes createApi with closed client', async () => {
@@ -454,7 +452,8 @@ describe('v1.RegistryClient', () => {
       const request = generateSampleMessage(
         new protos.google.cloud.apigeeregistry.v1.CreateApiRequest()
       );
-      request.parent = '';
+      const defaultValue1 = getTypeDefaultValue('CreateApiRequest', ['parent']);
+      request.parent = defaultValue1;
       const expectedError = new Error('The client has already been closed.');
       client.close();
       await assert.rejects(client.createApi(request), expectedError);
@@ -471,27 +470,27 @@ describe('v1.RegistryClient', () => {
       const request = generateSampleMessage(
         new protos.google.cloud.apigeeregistry.v1.UpdateApiRequest()
       );
-      request.api = {};
-      request.api.name = '';
-      const expectedHeaderRequestParams = 'api.name=';
-      const expectedOptions = {
-        otherArgs: {
-          headers: {
-            'x-goog-request-params': expectedHeaderRequestParams,
-          },
-        },
-      };
+      request.api ??= {};
+      const defaultValue1 = getTypeDefaultValue('UpdateApiRequest', [
+        'api',
+        'name',
+      ]);
+      request.api.name = defaultValue1;
+      const expectedHeaderRequestParams = `api.name=${defaultValue1}`;
       const expectedResponse = generateSampleMessage(
         new protos.google.cloud.apigeeregistry.v1.Api()
       );
       client.innerApiCalls.updateApi = stubSimpleCall(expectedResponse);
       const [response] = await client.updateApi(request);
       assert.deepStrictEqual(response, expectedResponse);
-      assert(
-        (client.innerApiCalls.updateApi as SinonStub)
-          .getCall(0)
-          .calledWith(request, expectedOptions, undefined)
-      );
+      const actualRequest = (
+        client.innerApiCalls.updateApi as SinonStub
+      ).getCall(0).args[0];
+      assert.deepStrictEqual(actualRequest, request);
+      const actualHeaderRequestParams = (
+        client.innerApiCalls.updateApi as SinonStub
+      ).getCall(0).args[1].otherArgs.headers['x-goog-request-params'];
+      assert(actualHeaderRequestParams.includes(expectedHeaderRequestParams));
     });
 
     it('invokes updateApi without error using callback', async () => {
@@ -503,16 +502,13 @@ describe('v1.RegistryClient', () => {
       const request = generateSampleMessage(
         new protos.google.cloud.apigeeregistry.v1.UpdateApiRequest()
       );
-      request.api = {};
-      request.api.name = '';
-      const expectedHeaderRequestParams = 'api.name=';
-      const expectedOptions = {
-        otherArgs: {
-          headers: {
-            'x-goog-request-params': expectedHeaderRequestParams,
-          },
-        },
-      };
+      request.api ??= {};
+      const defaultValue1 = getTypeDefaultValue('UpdateApiRequest', [
+        'api',
+        'name',
+      ]);
+      request.api.name = defaultValue1;
+      const expectedHeaderRequestParams = `api.name=${defaultValue1}`;
       const expectedResponse = generateSampleMessage(
         new protos.google.cloud.apigeeregistry.v1.Api()
       );
@@ -535,11 +531,14 @@ describe('v1.RegistryClient', () => {
       });
       const response = await promise;
       assert.deepStrictEqual(response, expectedResponse);
-      assert(
-        (client.innerApiCalls.updateApi as SinonStub)
-          .getCall(0)
-          .calledWith(request, expectedOptions /*, callback defined above */)
-      );
+      const actualRequest = (
+        client.innerApiCalls.updateApi as SinonStub
+      ).getCall(0).args[0];
+      assert.deepStrictEqual(actualRequest, request);
+      const actualHeaderRequestParams = (
+        client.innerApiCalls.updateApi as SinonStub
+      ).getCall(0).args[1].otherArgs.headers['x-goog-request-params'];
+      assert(actualHeaderRequestParams.includes(expectedHeaderRequestParams));
     });
 
     it('invokes updateApi with error', async () => {
@@ -551,24 +550,24 @@ describe('v1.RegistryClient', () => {
       const request = generateSampleMessage(
         new protos.google.cloud.apigeeregistry.v1.UpdateApiRequest()
       );
-      request.api = {};
-      request.api.name = '';
-      const expectedHeaderRequestParams = 'api.name=';
-      const expectedOptions = {
-        otherArgs: {
-          headers: {
-            'x-goog-request-params': expectedHeaderRequestParams,
-          },
-        },
-      };
+      request.api ??= {};
+      const defaultValue1 = getTypeDefaultValue('UpdateApiRequest', [
+        'api',
+        'name',
+      ]);
+      request.api.name = defaultValue1;
+      const expectedHeaderRequestParams = `api.name=${defaultValue1}`;
       const expectedError = new Error('expected');
       client.innerApiCalls.updateApi = stubSimpleCall(undefined, expectedError);
       await assert.rejects(client.updateApi(request), expectedError);
-      assert(
-        (client.innerApiCalls.updateApi as SinonStub)
-          .getCall(0)
-          .calledWith(request, expectedOptions, undefined)
-      );
+      const actualRequest = (
+        client.innerApiCalls.updateApi as SinonStub
+      ).getCall(0).args[0];
+      assert.deepStrictEqual(actualRequest, request);
+      const actualHeaderRequestParams = (
+        client.innerApiCalls.updateApi as SinonStub
+      ).getCall(0).args[1].otherArgs.headers['x-goog-request-params'];
+      assert(actualHeaderRequestParams.includes(expectedHeaderRequestParams));
     });
 
     it('invokes updateApi with closed client', async () => {
@@ -580,8 +579,12 @@ describe('v1.RegistryClient', () => {
       const request = generateSampleMessage(
         new protos.google.cloud.apigeeregistry.v1.UpdateApiRequest()
       );
-      request.api = {};
-      request.api.name = '';
+      request.api ??= {};
+      const defaultValue1 = getTypeDefaultValue('UpdateApiRequest', [
+        'api',
+        'name',
+      ]);
+      request.api.name = defaultValue1;
       const expectedError = new Error('The client has already been closed.');
       client.close();
       await assert.rejects(client.updateApi(request), expectedError);
@@ -598,26 +601,23 @@ describe('v1.RegistryClient', () => {
       const request = generateSampleMessage(
         new protos.google.cloud.apigeeregistry.v1.DeleteApiRequest()
       );
-      request.name = '';
-      const expectedHeaderRequestParams = 'name=';
-      const expectedOptions = {
-        otherArgs: {
-          headers: {
-            'x-goog-request-params': expectedHeaderRequestParams,
-          },
-        },
-      };
+      const defaultValue1 = getTypeDefaultValue('DeleteApiRequest', ['name']);
+      request.name = defaultValue1;
+      const expectedHeaderRequestParams = `name=${defaultValue1}`;
       const expectedResponse = generateSampleMessage(
         new protos.google.protobuf.Empty()
       );
       client.innerApiCalls.deleteApi = stubSimpleCall(expectedResponse);
       const [response] = await client.deleteApi(request);
       assert.deepStrictEqual(response, expectedResponse);
-      assert(
-        (client.innerApiCalls.deleteApi as SinonStub)
-          .getCall(0)
-          .calledWith(request, expectedOptions, undefined)
-      );
+      const actualRequest = (
+        client.innerApiCalls.deleteApi as SinonStub
+      ).getCall(0).args[0];
+      assert.deepStrictEqual(actualRequest, request);
+      const actualHeaderRequestParams = (
+        client.innerApiCalls.deleteApi as SinonStub
+      ).getCall(0).args[1].otherArgs.headers['x-goog-request-params'];
+      assert(actualHeaderRequestParams.includes(expectedHeaderRequestParams));
     });
 
     it('invokes deleteApi without error using callback', async () => {
@@ -629,15 +629,9 @@ describe('v1.RegistryClient', () => {
       const request = generateSampleMessage(
         new protos.google.cloud.apigeeregistry.v1.DeleteApiRequest()
       );
-      request.name = '';
-      const expectedHeaderRequestParams = 'name=';
-      const expectedOptions = {
-        otherArgs: {
-          headers: {
-            'x-goog-request-params': expectedHeaderRequestParams,
-          },
-        },
-      };
+      const defaultValue1 = getTypeDefaultValue('DeleteApiRequest', ['name']);
+      request.name = defaultValue1;
+      const expectedHeaderRequestParams = `name=${defaultValue1}`;
       const expectedResponse = generateSampleMessage(
         new protos.google.protobuf.Empty()
       );
@@ -660,11 +654,14 @@ describe('v1.RegistryClient', () => {
       });
       const response = await promise;
       assert.deepStrictEqual(response, expectedResponse);
-      assert(
-        (client.innerApiCalls.deleteApi as SinonStub)
-          .getCall(0)
-          .calledWith(request, expectedOptions /*, callback defined above */)
-      );
+      const actualRequest = (
+        client.innerApiCalls.deleteApi as SinonStub
+      ).getCall(0).args[0];
+      assert.deepStrictEqual(actualRequest, request);
+      const actualHeaderRequestParams = (
+        client.innerApiCalls.deleteApi as SinonStub
+      ).getCall(0).args[1].otherArgs.headers['x-goog-request-params'];
+      assert(actualHeaderRequestParams.includes(expectedHeaderRequestParams));
     });
 
     it('invokes deleteApi with error', async () => {
@@ -676,23 +673,20 @@ describe('v1.RegistryClient', () => {
       const request = generateSampleMessage(
         new protos.google.cloud.apigeeregistry.v1.DeleteApiRequest()
       );
-      request.name = '';
-      const expectedHeaderRequestParams = 'name=';
-      const expectedOptions = {
-        otherArgs: {
-          headers: {
-            'x-goog-request-params': expectedHeaderRequestParams,
-          },
-        },
-      };
+      const defaultValue1 = getTypeDefaultValue('DeleteApiRequest', ['name']);
+      request.name = defaultValue1;
+      const expectedHeaderRequestParams = `name=${defaultValue1}`;
       const expectedError = new Error('expected');
       client.innerApiCalls.deleteApi = stubSimpleCall(undefined, expectedError);
       await assert.rejects(client.deleteApi(request), expectedError);
-      assert(
-        (client.innerApiCalls.deleteApi as SinonStub)
-          .getCall(0)
-          .calledWith(request, expectedOptions, undefined)
-      );
+      const actualRequest = (
+        client.innerApiCalls.deleteApi as SinonStub
+      ).getCall(0).args[0];
+      assert.deepStrictEqual(actualRequest, request);
+      const actualHeaderRequestParams = (
+        client.innerApiCalls.deleteApi as SinonStub
+      ).getCall(0).args[1].otherArgs.headers['x-goog-request-params'];
+      assert(actualHeaderRequestParams.includes(expectedHeaderRequestParams));
     });
 
     it('invokes deleteApi with closed client', async () => {
@@ -704,7 +698,8 @@ describe('v1.RegistryClient', () => {
       const request = generateSampleMessage(
         new protos.google.cloud.apigeeregistry.v1.DeleteApiRequest()
       );
-      request.name = '';
+      const defaultValue1 = getTypeDefaultValue('DeleteApiRequest', ['name']);
+      request.name = defaultValue1;
       const expectedError = new Error('The client has already been closed.');
       client.close();
       await assert.rejects(client.deleteApi(request), expectedError);
@@ -721,26 +716,25 @@ describe('v1.RegistryClient', () => {
       const request = generateSampleMessage(
         new protos.google.cloud.apigeeregistry.v1.GetApiVersionRequest()
       );
-      request.name = '';
-      const expectedHeaderRequestParams = 'name=';
-      const expectedOptions = {
-        otherArgs: {
-          headers: {
-            'x-goog-request-params': expectedHeaderRequestParams,
-          },
-        },
-      };
+      const defaultValue1 = getTypeDefaultValue('GetApiVersionRequest', [
+        'name',
+      ]);
+      request.name = defaultValue1;
+      const expectedHeaderRequestParams = `name=${defaultValue1}`;
       const expectedResponse = generateSampleMessage(
         new protos.google.cloud.apigeeregistry.v1.ApiVersion()
       );
       client.innerApiCalls.getApiVersion = stubSimpleCall(expectedResponse);
       const [response] = await client.getApiVersion(request);
       assert.deepStrictEqual(response, expectedResponse);
-      assert(
-        (client.innerApiCalls.getApiVersion as SinonStub)
-          .getCall(0)
-          .calledWith(request, expectedOptions, undefined)
-      );
+      const actualRequest = (
+        client.innerApiCalls.getApiVersion as SinonStub
+      ).getCall(0).args[0];
+      assert.deepStrictEqual(actualRequest, request);
+      const actualHeaderRequestParams = (
+        client.innerApiCalls.getApiVersion as SinonStub
+      ).getCall(0).args[1].otherArgs.headers['x-goog-request-params'];
+      assert(actualHeaderRequestParams.includes(expectedHeaderRequestParams));
     });
 
     it('invokes getApiVersion without error using callback', async () => {
@@ -752,15 +746,11 @@ describe('v1.RegistryClient', () => {
       const request = generateSampleMessage(
         new protos.google.cloud.apigeeregistry.v1.GetApiVersionRequest()
       );
-      request.name = '';
-      const expectedHeaderRequestParams = 'name=';
-      const expectedOptions = {
-        otherArgs: {
-          headers: {
-            'x-goog-request-params': expectedHeaderRequestParams,
-          },
-        },
-      };
+      const defaultValue1 = getTypeDefaultValue('GetApiVersionRequest', [
+        'name',
+      ]);
+      request.name = defaultValue1;
+      const expectedHeaderRequestParams = `name=${defaultValue1}`;
       const expectedResponse = generateSampleMessage(
         new protos.google.cloud.apigeeregistry.v1.ApiVersion()
       );
@@ -783,11 +773,14 @@ describe('v1.RegistryClient', () => {
       });
       const response = await promise;
       assert.deepStrictEqual(response, expectedResponse);
-      assert(
-        (client.innerApiCalls.getApiVersion as SinonStub)
-          .getCall(0)
-          .calledWith(request, expectedOptions /*, callback defined above */)
-      );
+      const actualRequest = (
+        client.innerApiCalls.getApiVersion as SinonStub
+      ).getCall(0).args[0];
+      assert.deepStrictEqual(actualRequest, request);
+      const actualHeaderRequestParams = (
+        client.innerApiCalls.getApiVersion as SinonStub
+      ).getCall(0).args[1].otherArgs.headers['x-goog-request-params'];
+      assert(actualHeaderRequestParams.includes(expectedHeaderRequestParams));
     });
 
     it('invokes getApiVersion with error', async () => {
@@ -799,26 +792,25 @@ describe('v1.RegistryClient', () => {
       const request = generateSampleMessage(
         new protos.google.cloud.apigeeregistry.v1.GetApiVersionRequest()
       );
-      request.name = '';
-      const expectedHeaderRequestParams = 'name=';
-      const expectedOptions = {
-        otherArgs: {
-          headers: {
-            'x-goog-request-params': expectedHeaderRequestParams,
-          },
-        },
-      };
+      const defaultValue1 = getTypeDefaultValue('GetApiVersionRequest', [
+        'name',
+      ]);
+      request.name = defaultValue1;
+      const expectedHeaderRequestParams = `name=${defaultValue1}`;
       const expectedError = new Error('expected');
       client.innerApiCalls.getApiVersion = stubSimpleCall(
         undefined,
         expectedError
       );
       await assert.rejects(client.getApiVersion(request), expectedError);
-      assert(
-        (client.innerApiCalls.getApiVersion as SinonStub)
-          .getCall(0)
-          .calledWith(request, expectedOptions, undefined)
-      );
+      const actualRequest = (
+        client.innerApiCalls.getApiVersion as SinonStub
+      ).getCall(0).args[0];
+      assert.deepStrictEqual(actualRequest, request);
+      const actualHeaderRequestParams = (
+        client.innerApiCalls.getApiVersion as SinonStub
+      ).getCall(0).args[1].otherArgs.headers['x-goog-request-params'];
+      assert(actualHeaderRequestParams.includes(expectedHeaderRequestParams));
     });
 
     it('invokes getApiVersion with closed client', async () => {
@@ -830,7 +822,10 @@ describe('v1.RegistryClient', () => {
       const request = generateSampleMessage(
         new protos.google.cloud.apigeeregistry.v1.GetApiVersionRequest()
       );
-      request.name = '';
+      const defaultValue1 = getTypeDefaultValue('GetApiVersionRequest', [
+        'name',
+      ]);
+      request.name = defaultValue1;
       const expectedError = new Error('The client has already been closed.');
       client.close();
       await assert.rejects(client.getApiVersion(request), expectedError);
@@ -847,26 +842,25 @@ describe('v1.RegistryClient', () => {
       const request = generateSampleMessage(
         new protos.google.cloud.apigeeregistry.v1.CreateApiVersionRequest()
       );
-      request.parent = '';
-      const expectedHeaderRequestParams = 'parent=';
-      const expectedOptions = {
-        otherArgs: {
-          headers: {
-            'x-goog-request-params': expectedHeaderRequestParams,
-          },
-        },
-      };
+      const defaultValue1 = getTypeDefaultValue('CreateApiVersionRequest', [
+        'parent',
+      ]);
+      request.parent = defaultValue1;
+      const expectedHeaderRequestParams = `parent=${defaultValue1}`;
       const expectedResponse = generateSampleMessage(
         new protos.google.cloud.apigeeregistry.v1.ApiVersion()
       );
       client.innerApiCalls.createApiVersion = stubSimpleCall(expectedResponse);
       const [response] = await client.createApiVersion(request);
       assert.deepStrictEqual(response, expectedResponse);
-      assert(
-        (client.innerApiCalls.createApiVersion as SinonStub)
-          .getCall(0)
-          .calledWith(request, expectedOptions, undefined)
-      );
+      const actualRequest = (
+        client.innerApiCalls.createApiVersion as SinonStub
+      ).getCall(0).args[0];
+      assert.deepStrictEqual(actualRequest, request);
+      const actualHeaderRequestParams = (
+        client.innerApiCalls.createApiVersion as SinonStub
+      ).getCall(0).args[1].otherArgs.headers['x-goog-request-params'];
+      assert(actualHeaderRequestParams.includes(expectedHeaderRequestParams));
     });
 
     it('invokes createApiVersion without error using callback', async () => {
@@ -878,15 +872,11 @@ describe('v1.RegistryClient', () => {
       const request = generateSampleMessage(
         new protos.google.cloud.apigeeregistry.v1.CreateApiVersionRequest()
       );
-      request.parent = '';
-      const expectedHeaderRequestParams = 'parent=';
-      const expectedOptions = {
-        otherArgs: {
-          headers: {
-            'x-goog-request-params': expectedHeaderRequestParams,
-          },
-        },
-      };
+      const defaultValue1 = getTypeDefaultValue('CreateApiVersionRequest', [
+        'parent',
+      ]);
+      request.parent = defaultValue1;
+      const expectedHeaderRequestParams = `parent=${defaultValue1}`;
       const expectedResponse = generateSampleMessage(
         new protos.google.cloud.apigeeregistry.v1.ApiVersion()
       );
@@ -909,11 +899,14 @@ describe('v1.RegistryClient', () => {
       });
       const response = await promise;
       assert.deepStrictEqual(response, expectedResponse);
-      assert(
-        (client.innerApiCalls.createApiVersion as SinonStub)
-          .getCall(0)
-          .calledWith(request, expectedOptions /*, callback defined above */)
-      );
+      const actualRequest = (
+        client.innerApiCalls.createApiVersion as SinonStub
+      ).getCall(0).args[0];
+      assert.deepStrictEqual(actualRequest, request);
+      const actualHeaderRequestParams = (
+        client.innerApiCalls.createApiVersion as SinonStub
+      ).getCall(0).args[1].otherArgs.headers['x-goog-request-params'];
+      assert(actualHeaderRequestParams.includes(expectedHeaderRequestParams));
     });
 
     it('invokes createApiVersion with error', async () => {
@@ -925,26 +918,25 @@ describe('v1.RegistryClient', () => {
       const request = generateSampleMessage(
         new protos.google.cloud.apigeeregistry.v1.CreateApiVersionRequest()
       );
-      request.parent = '';
-      const expectedHeaderRequestParams = 'parent=';
-      const expectedOptions = {
-        otherArgs: {
-          headers: {
-            'x-goog-request-params': expectedHeaderRequestParams,
-          },
-        },
-      };
+      const defaultValue1 = getTypeDefaultValue('CreateApiVersionRequest', [
+        'parent',
+      ]);
+      request.parent = defaultValue1;
+      const expectedHeaderRequestParams = `parent=${defaultValue1}`;
       const expectedError = new Error('expected');
       client.innerApiCalls.createApiVersion = stubSimpleCall(
         undefined,
         expectedError
       );
       await assert.rejects(client.createApiVersion(request), expectedError);
-      assert(
-        (client.innerApiCalls.createApiVersion as SinonStub)
-          .getCall(0)
-          .calledWith(request, expectedOptions, undefined)
-      );
+      const actualRequest = (
+        client.innerApiCalls.createApiVersion as SinonStub
+      ).getCall(0).args[0];
+      assert.deepStrictEqual(actualRequest, request);
+      const actualHeaderRequestParams = (
+        client.innerApiCalls.createApiVersion as SinonStub
+      ).getCall(0).args[1].otherArgs.headers['x-goog-request-params'];
+      assert(actualHeaderRequestParams.includes(expectedHeaderRequestParams));
     });
 
     it('invokes createApiVersion with closed client', async () => {
@@ -956,7 +948,10 @@ describe('v1.RegistryClient', () => {
       const request = generateSampleMessage(
         new protos.google.cloud.apigeeregistry.v1.CreateApiVersionRequest()
       );
-      request.parent = '';
+      const defaultValue1 = getTypeDefaultValue('CreateApiVersionRequest', [
+        'parent',
+      ]);
+      request.parent = defaultValue1;
       const expectedError = new Error('The client has already been closed.');
       client.close();
       await assert.rejects(client.createApiVersion(request), expectedError);
@@ -973,27 +968,27 @@ describe('v1.RegistryClient', () => {
       const request = generateSampleMessage(
         new protos.google.cloud.apigeeregistry.v1.UpdateApiVersionRequest()
       );
-      request.apiVersion = {};
-      request.apiVersion.name = '';
-      const expectedHeaderRequestParams = 'api_version.name=';
-      const expectedOptions = {
-        otherArgs: {
-          headers: {
-            'x-goog-request-params': expectedHeaderRequestParams,
-          },
-        },
-      };
+      request.apiVersion ??= {};
+      const defaultValue1 = getTypeDefaultValue('UpdateApiVersionRequest', [
+        'apiVersion',
+        'name',
+      ]);
+      request.apiVersion.name = defaultValue1;
+      const expectedHeaderRequestParams = `api_version.name=${defaultValue1}`;
       const expectedResponse = generateSampleMessage(
         new protos.google.cloud.apigeeregistry.v1.ApiVersion()
       );
       client.innerApiCalls.updateApiVersion = stubSimpleCall(expectedResponse);
       const [response] = await client.updateApiVersion(request);
       assert.deepStrictEqual(response, expectedResponse);
-      assert(
-        (client.innerApiCalls.updateApiVersion as SinonStub)
-          .getCall(0)
-          .calledWith(request, expectedOptions, undefined)
-      );
+      const actualRequest = (
+        client.innerApiCalls.updateApiVersion as SinonStub
+      ).getCall(0).args[0];
+      assert.deepStrictEqual(actualRequest, request);
+      const actualHeaderRequestParams = (
+        client.innerApiCalls.updateApiVersion as SinonStub
+      ).getCall(0).args[1].otherArgs.headers['x-goog-request-params'];
+      assert(actualHeaderRequestParams.includes(expectedHeaderRequestParams));
     });
 
     it('invokes updateApiVersion without error using callback', async () => {
@@ -1005,16 +1000,13 @@ describe('v1.RegistryClient', () => {
       const request = generateSampleMessage(
         new protos.google.cloud.apigeeregistry.v1.UpdateApiVersionRequest()
       );
-      request.apiVersion = {};
-      request.apiVersion.name = '';
-      const expectedHeaderRequestParams = 'api_version.name=';
-      const expectedOptions = {
-        otherArgs: {
-          headers: {
-            'x-goog-request-params': expectedHeaderRequestParams,
-          },
-        },
-      };
+      request.apiVersion ??= {};
+      const defaultValue1 = getTypeDefaultValue('UpdateApiVersionRequest', [
+        'apiVersion',
+        'name',
+      ]);
+      request.apiVersion.name = defaultValue1;
+      const expectedHeaderRequestParams = `api_version.name=${defaultValue1}`;
       const expectedResponse = generateSampleMessage(
         new protos.google.cloud.apigeeregistry.v1.ApiVersion()
       );
@@ -1037,11 +1029,14 @@ describe('v1.RegistryClient', () => {
       });
       const response = await promise;
       assert.deepStrictEqual(response, expectedResponse);
-      assert(
-        (client.innerApiCalls.updateApiVersion as SinonStub)
-          .getCall(0)
-          .calledWith(request, expectedOptions /*, callback defined above */)
-      );
+      const actualRequest = (
+        client.innerApiCalls.updateApiVersion as SinonStub
+      ).getCall(0).args[0];
+      assert.deepStrictEqual(actualRequest, request);
+      const actualHeaderRequestParams = (
+        client.innerApiCalls.updateApiVersion as SinonStub
+      ).getCall(0).args[1].otherArgs.headers['x-goog-request-params'];
+      assert(actualHeaderRequestParams.includes(expectedHeaderRequestParams));
     });
 
     it('invokes updateApiVersion with error', async () => {
@@ -1053,27 +1048,27 @@ describe('v1.RegistryClient', () => {
       const request = generateSampleMessage(
         new protos.google.cloud.apigeeregistry.v1.UpdateApiVersionRequest()
       );
-      request.apiVersion = {};
-      request.apiVersion.name = '';
-      const expectedHeaderRequestParams = 'api_version.name=';
-      const expectedOptions = {
-        otherArgs: {
-          headers: {
-            'x-goog-request-params': expectedHeaderRequestParams,
-          },
-        },
-      };
+      request.apiVersion ??= {};
+      const defaultValue1 = getTypeDefaultValue('UpdateApiVersionRequest', [
+        'apiVersion',
+        'name',
+      ]);
+      request.apiVersion.name = defaultValue1;
+      const expectedHeaderRequestParams = `api_version.name=${defaultValue1}`;
       const expectedError = new Error('expected');
       client.innerApiCalls.updateApiVersion = stubSimpleCall(
         undefined,
         expectedError
       );
       await assert.rejects(client.updateApiVersion(request), expectedError);
-      assert(
-        (client.innerApiCalls.updateApiVersion as SinonStub)
-          .getCall(0)
-          .calledWith(request, expectedOptions, undefined)
-      );
+      const actualRequest = (
+        client.innerApiCalls.updateApiVersion as SinonStub
+      ).getCall(0).args[0];
+      assert.deepStrictEqual(actualRequest, request);
+      const actualHeaderRequestParams = (
+        client.innerApiCalls.updateApiVersion as SinonStub
+      ).getCall(0).args[1].otherArgs.headers['x-goog-request-params'];
+      assert(actualHeaderRequestParams.includes(expectedHeaderRequestParams));
     });
 
     it('invokes updateApiVersion with closed client', async () => {
@@ -1085,8 +1080,12 @@ describe('v1.RegistryClient', () => {
       const request = generateSampleMessage(
         new protos.google.cloud.apigeeregistry.v1.UpdateApiVersionRequest()
       );
-      request.apiVersion = {};
-      request.apiVersion.name = '';
+      request.apiVersion ??= {};
+      const defaultValue1 = getTypeDefaultValue('UpdateApiVersionRequest', [
+        'apiVersion',
+        'name',
+      ]);
+      request.apiVersion.name = defaultValue1;
       const expectedError = new Error('The client has already been closed.');
       client.close();
       await assert.rejects(client.updateApiVersion(request), expectedError);
@@ -1103,26 +1102,25 @@ describe('v1.RegistryClient', () => {
       const request = generateSampleMessage(
         new protos.google.cloud.apigeeregistry.v1.DeleteApiVersionRequest()
       );
-      request.name = '';
-      const expectedHeaderRequestParams = 'name=';
-      const expectedOptions = {
-        otherArgs: {
-          headers: {
-            'x-goog-request-params': expectedHeaderRequestParams,
-          },
-        },
-      };
+      const defaultValue1 = getTypeDefaultValue('DeleteApiVersionRequest', [
+        'name',
+      ]);
+      request.name = defaultValue1;
+      const expectedHeaderRequestParams = `name=${defaultValue1}`;
       const expectedResponse = generateSampleMessage(
         new protos.google.protobuf.Empty()
       );
       client.innerApiCalls.deleteApiVersion = stubSimpleCall(expectedResponse);
       const [response] = await client.deleteApiVersion(request);
       assert.deepStrictEqual(response, expectedResponse);
-      assert(
-        (client.innerApiCalls.deleteApiVersion as SinonStub)
-          .getCall(0)
-          .calledWith(request, expectedOptions, undefined)
-      );
+      const actualRequest = (
+        client.innerApiCalls.deleteApiVersion as SinonStub
+      ).getCall(0).args[0];
+      assert.deepStrictEqual(actualRequest, request);
+      const actualHeaderRequestParams = (
+        client.innerApiCalls.deleteApiVersion as SinonStub
+      ).getCall(0).args[1].otherArgs.headers['x-goog-request-params'];
+      assert(actualHeaderRequestParams.includes(expectedHeaderRequestParams));
     });
 
     it('invokes deleteApiVersion without error using callback', async () => {
@@ -1134,15 +1132,11 @@ describe('v1.RegistryClient', () => {
       const request = generateSampleMessage(
         new protos.google.cloud.apigeeregistry.v1.DeleteApiVersionRequest()
       );
-      request.name = '';
-      const expectedHeaderRequestParams = 'name=';
-      const expectedOptions = {
-        otherArgs: {
-          headers: {
-            'x-goog-request-params': expectedHeaderRequestParams,
-          },
-        },
-      };
+      const defaultValue1 = getTypeDefaultValue('DeleteApiVersionRequest', [
+        'name',
+      ]);
+      request.name = defaultValue1;
+      const expectedHeaderRequestParams = `name=${defaultValue1}`;
       const expectedResponse = generateSampleMessage(
         new protos.google.protobuf.Empty()
       );
@@ -1165,11 +1159,14 @@ describe('v1.RegistryClient', () => {
       });
       const response = await promise;
       assert.deepStrictEqual(response, expectedResponse);
-      assert(
-        (client.innerApiCalls.deleteApiVersion as SinonStub)
-          .getCall(0)
-          .calledWith(request, expectedOptions /*, callback defined above */)
-      );
+      const actualRequest = (
+        client.innerApiCalls.deleteApiVersion as SinonStub
+      ).getCall(0).args[0];
+      assert.deepStrictEqual(actualRequest, request);
+      const actualHeaderRequestParams = (
+        client.innerApiCalls.deleteApiVersion as SinonStub
+      ).getCall(0).args[1].otherArgs.headers['x-goog-request-params'];
+      assert(actualHeaderRequestParams.includes(expectedHeaderRequestParams));
     });
 
     it('invokes deleteApiVersion with error', async () => {
@@ -1181,26 +1178,25 @@ describe('v1.RegistryClient', () => {
       const request = generateSampleMessage(
         new protos.google.cloud.apigeeregistry.v1.DeleteApiVersionRequest()
       );
-      request.name = '';
-      const expectedHeaderRequestParams = 'name=';
-      const expectedOptions = {
-        otherArgs: {
-          headers: {
-            'x-goog-request-params': expectedHeaderRequestParams,
-          },
-        },
-      };
+      const defaultValue1 = getTypeDefaultValue('DeleteApiVersionRequest', [
+        'name',
+      ]);
+      request.name = defaultValue1;
+      const expectedHeaderRequestParams = `name=${defaultValue1}`;
       const expectedError = new Error('expected');
       client.innerApiCalls.deleteApiVersion = stubSimpleCall(
         undefined,
         expectedError
       );
       await assert.rejects(client.deleteApiVersion(request), expectedError);
-      assert(
-        (client.innerApiCalls.deleteApiVersion as SinonStub)
-          .getCall(0)
-          .calledWith(request, expectedOptions, undefined)
-      );
+      const actualRequest = (
+        client.innerApiCalls.deleteApiVersion as SinonStub
+      ).getCall(0).args[0];
+      assert.deepStrictEqual(actualRequest, request);
+      const actualHeaderRequestParams = (
+        client.innerApiCalls.deleteApiVersion as SinonStub
+      ).getCall(0).args[1].otherArgs.headers['x-goog-request-params'];
+      assert(actualHeaderRequestParams.includes(expectedHeaderRequestParams));
     });
 
     it('invokes deleteApiVersion with closed client', async () => {
@@ -1212,7 +1208,10 @@ describe('v1.RegistryClient', () => {
       const request = generateSampleMessage(
         new protos.google.cloud.apigeeregistry.v1.DeleteApiVersionRequest()
       );
-      request.name = '';
+      const defaultValue1 = getTypeDefaultValue('DeleteApiVersionRequest', [
+        'name',
+      ]);
+      request.name = defaultValue1;
       const expectedError = new Error('The client has already been closed.');
       client.close();
       await assert.rejects(client.deleteApiVersion(request), expectedError);
@@ -1229,26 +1228,23 @@ describe('v1.RegistryClient', () => {
       const request = generateSampleMessage(
         new protos.google.cloud.apigeeregistry.v1.GetApiSpecRequest()
       );
-      request.name = '';
-      const expectedHeaderRequestParams = 'name=';
-      const expectedOptions = {
-        otherArgs: {
-          headers: {
-            'x-goog-request-params': expectedHeaderRequestParams,
-          },
-        },
-      };
+      const defaultValue1 = getTypeDefaultValue('GetApiSpecRequest', ['name']);
+      request.name = defaultValue1;
+      const expectedHeaderRequestParams = `name=${defaultValue1}`;
       const expectedResponse = generateSampleMessage(
         new protos.google.cloud.apigeeregistry.v1.ApiSpec()
       );
       client.innerApiCalls.getApiSpec = stubSimpleCall(expectedResponse);
       const [response] = await client.getApiSpec(request);
       assert.deepStrictEqual(response, expectedResponse);
-      assert(
-        (client.innerApiCalls.getApiSpec as SinonStub)
-          .getCall(0)
-          .calledWith(request, expectedOptions, undefined)
-      );
+      const actualRequest = (
+        client.innerApiCalls.getApiSpec as SinonStub
+      ).getCall(0).args[0];
+      assert.deepStrictEqual(actualRequest, request);
+      const actualHeaderRequestParams = (
+        client.innerApiCalls.getApiSpec as SinonStub
+      ).getCall(0).args[1].otherArgs.headers['x-goog-request-params'];
+      assert(actualHeaderRequestParams.includes(expectedHeaderRequestParams));
     });
 
     it('invokes getApiSpec without error using callback', async () => {
@@ -1260,15 +1256,9 @@ describe('v1.RegistryClient', () => {
       const request = generateSampleMessage(
         new protos.google.cloud.apigeeregistry.v1.GetApiSpecRequest()
       );
-      request.name = '';
-      const expectedHeaderRequestParams = 'name=';
-      const expectedOptions = {
-        otherArgs: {
-          headers: {
-            'x-goog-request-params': expectedHeaderRequestParams,
-          },
-        },
-      };
+      const defaultValue1 = getTypeDefaultValue('GetApiSpecRequest', ['name']);
+      request.name = defaultValue1;
+      const expectedHeaderRequestParams = `name=${defaultValue1}`;
       const expectedResponse = generateSampleMessage(
         new protos.google.cloud.apigeeregistry.v1.ApiSpec()
       );
@@ -1291,11 +1281,14 @@ describe('v1.RegistryClient', () => {
       });
       const response = await promise;
       assert.deepStrictEqual(response, expectedResponse);
-      assert(
-        (client.innerApiCalls.getApiSpec as SinonStub)
-          .getCall(0)
-          .calledWith(request, expectedOptions /*, callback defined above */)
-      );
+      const actualRequest = (
+        client.innerApiCalls.getApiSpec as SinonStub
+      ).getCall(0).args[0];
+      assert.deepStrictEqual(actualRequest, request);
+      const actualHeaderRequestParams = (
+        client.innerApiCalls.getApiSpec as SinonStub
+      ).getCall(0).args[1].otherArgs.headers['x-goog-request-params'];
+      assert(actualHeaderRequestParams.includes(expectedHeaderRequestParams));
     });
 
     it('invokes getApiSpec with error', async () => {
@@ -1307,26 +1300,23 @@ describe('v1.RegistryClient', () => {
       const request = generateSampleMessage(
         new protos.google.cloud.apigeeregistry.v1.GetApiSpecRequest()
       );
-      request.name = '';
-      const expectedHeaderRequestParams = 'name=';
-      const expectedOptions = {
-        otherArgs: {
-          headers: {
-            'x-goog-request-params': expectedHeaderRequestParams,
-          },
-        },
-      };
+      const defaultValue1 = getTypeDefaultValue('GetApiSpecRequest', ['name']);
+      request.name = defaultValue1;
+      const expectedHeaderRequestParams = `name=${defaultValue1}`;
       const expectedError = new Error('expected');
       client.innerApiCalls.getApiSpec = stubSimpleCall(
         undefined,
         expectedError
       );
       await assert.rejects(client.getApiSpec(request), expectedError);
-      assert(
-        (client.innerApiCalls.getApiSpec as SinonStub)
-          .getCall(0)
-          .calledWith(request, expectedOptions, undefined)
-      );
+      const actualRequest = (
+        client.innerApiCalls.getApiSpec as SinonStub
+      ).getCall(0).args[0];
+      assert.deepStrictEqual(actualRequest, request);
+      const actualHeaderRequestParams = (
+        client.innerApiCalls.getApiSpec as SinonStub
+      ).getCall(0).args[1].otherArgs.headers['x-goog-request-params'];
+      assert(actualHeaderRequestParams.includes(expectedHeaderRequestParams));
     });
 
     it('invokes getApiSpec with closed client', async () => {
@@ -1338,7 +1328,8 @@ describe('v1.RegistryClient', () => {
       const request = generateSampleMessage(
         new protos.google.cloud.apigeeregistry.v1.GetApiSpecRequest()
       );
-      request.name = '';
+      const defaultValue1 = getTypeDefaultValue('GetApiSpecRequest', ['name']);
+      request.name = defaultValue1;
       const expectedError = new Error('The client has already been closed.');
       client.close();
       await assert.rejects(client.getApiSpec(request), expectedError);
@@ -1355,15 +1346,11 @@ describe('v1.RegistryClient', () => {
       const request = generateSampleMessage(
         new protos.google.cloud.apigeeregistry.v1.GetApiSpecContentsRequest()
       );
-      request.name = '';
-      const expectedHeaderRequestParams = 'name=';
-      const expectedOptions = {
-        otherArgs: {
-          headers: {
-            'x-goog-request-params': expectedHeaderRequestParams,
-          },
-        },
-      };
+      const defaultValue1 = getTypeDefaultValue('GetApiSpecContentsRequest', [
+        'name',
+      ]);
+      request.name = defaultValue1;
+      const expectedHeaderRequestParams = `name=${defaultValue1}`;
       const expectedResponse = generateSampleMessage(
         new protos.google.api.HttpBody()
       );
@@ -1371,11 +1358,14 @@ describe('v1.RegistryClient', () => {
         stubSimpleCall(expectedResponse);
       const [response] = await client.getApiSpecContents(request);
       assert.deepStrictEqual(response, expectedResponse);
-      assert(
-        (client.innerApiCalls.getApiSpecContents as SinonStub)
-          .getCall(0)
-          .calledWith(request, expectedOptions, undefined)
-      );
+      const actualRequest = (
+        client.innerApiCalls.getApiSpecContents as SinonStub
+      ).getCall(0).args[0];
+      assert.deepStrictEqual(actualRequest, request);
+      const actualHeaderRequestParams = (
+        client.innerApiCalls.getApiSpecContents as SinonStub
+      ).getCall(0).args[1].otherArgs.headers['x-goog-request-params'];
+      assert(actualHeaderRequestParams.includes(expectedHeaderRequestParams));
     });
 
     it('invokes getApiSpecContents without error using callback', async () => {
@@ -1387,15 +1377,11 @@ describe('v1.RegistryClient', () => {
       const request = generateSampleMessage(
         new protos.google.cloud.apigeeregistry.v1.GetApiSpecContentsRequest()
       );
-      request.name = '';
-      const expectedHeaderRequestParams = 'name=';
-      const expectedOptions = {
-        otherArgs: {
-          headers: {
-            'x-goog-request-params': expectedHeaderRequestParams,
-          },
-        },
-      };
+      const defaultValue1 = getTypeDefaultValue('GetApiSpecContentsRequest', [
+        'name',
+      ]);
+      request.name = defaultValue1;
+      const expectedHeaderRequestParams = `name=${defaultValue1}`;
       const expectedResponse = generateSampleMessage(
         new protos.google.api.HttpBody()
       );
@@ -1415,11 +1401,14 @@ describe('v1.RegistryClient', () => {
       });
       const response = await promise;
       assert.deepStrictEqual(response, expectedResponse);
-      assert(
-        (client.innerApiCalls.getApiSpecContents as SinonStub)
-          .getCall(0)
-          .calledWith(request, expectedOptions /*, callback defined above */)
-      );
+      const actualRequest = (
+        client.innerApiCalls.getApiSpecContents as SinonStub
+      ).getCall(0).args[0];
+      assert.deepStrictEqual(actualRequest, request);
+      const actualHeaderRequestParams = (
+        client.innerApiCalls.getApiSpecContents as SinonStub
+      ).getCall(0).args[1].otherArgs.headers['x-goog-request-params'];
+      assert(actualHeaderRequestParams.includes(expectedHeaderRequestParams));
     });
 
     it('invokes getApiSpecContents with error', async () => {
@@ -1431,26 +1420,25 @@ describe('v1.RegistryClient', () => {
       const request = generateSampleMessage(
         new protos.google.cloud.apigeeregistry.v1.GetApiSpecContentsRequest()
       );
-      request.name = '';
-      const expectedHeaderRequestParams = 'name=';
-      const expectedOptions = {
-        otherArgs: {
-          headers: {
-            'x-goog-request-params': expectedHeaderRequestParams,
-          },
-        },
-      };
+      const defaultValue1 = getTypeDefaultValue('GetApiSpecContentsRequest', [
+        'name',
+      ]);
+      request.name = defaultValue1;
+      const expectedHeaderRequestParams = `name=${defaultValue1}`;
       const expectedError = new Error('expected');
       client.innerApiCalls.getApiSpecContents = stubSimpleCall(
         undefined,
         expectedError
       );
       await assert.rejects(client.getApiSpecContents(request), expectedError);
-      assert(
-        (client.innerApiCalls.getApiSpecContents as SinonStub)
-          .getCall(0)
-          .calledWith(request, expectedOptions, undefined)
-      );
+      const actualRequest = (
+        client.innerApiCalls.getApiSpecContents as SinonStub
+      ).getCall(0).args[0];
+      assert.deepStrictEqual(actualRequest, request);
+      const actualHeaderRequestParams = (
+        client.innerApiCalls.getApiSpecContents as SinonStub
+      ).getCall(0).args[1].otherArgs.headers['x-goog-request-params'];
+      assert(actualHeaderRequestParams.includes(expectedHeaderRequestParams));
     });
 
     it('invokes getApiSpecContents with closed client', async () => {
@@ -1462,7 +1450,10 @@ describe('v1.RegistryClient', () => {
       const request = generateSampleMessage(
         new protos.google.cloud.apigeeregistry.v1.GetApiSpecContentsRequest()
       );
-      request.name = '';
+      const defaultValue1 = getTypeDefaultValue('GetApiSpecContentsRequest', [
+        'name',
+      ]);
+      request.name = defaultValue1;
       const expectedError = new Error('The client has already been closed.');
       client.close();
       await assert.rejects(client.getApiSpecContents(request), expectedError);
@@ -1479,26 +1470,25 @@ describe('v1.RegistryClient', () => {
       const request = generateSampleMessage(
         new protos.google.cloud.apigeeregistry.v1.CreateApiSpecRequest()
       );
-      request.parent = '';
-      const expectedHeaderRequestParams = 'parent=';
-      const expectedOptions = {
-        otherArgs: {
-          headers: {
-            'x-goog-request-params': expectedHeaderRequestParams,
-          },
-        },
-      };
+      const defaultValue1 = getTypeDefaultValue('CreateApiSpecRequest', [
+        'parent',
+      ]);
+      request.parent = defaultValue1;
+      const expectedHeaderRequestParams = `parent=${defaultValue1}`;
       const expectedResponse = generateSampleMessage(
         new protos.google.cloud.apigeeregistry.v1.ApiSpec()
       );
       client.innerApiCalls.createApiSpec = stubSimpleCall(expectedResponse);
       const [response] = await client.createApiSpec(request);
       assert.deepStrictEqual(response, expectedResponse);
-      assert(
-        (client.innerApiCalls.createApiSpec as SinonStub)
-          .getCall(0)
-          .calledWith(request, expectedOptions, undefined)
-      );
+      const actualRequest = (
+        client.innerApiCalls.createApiSpec as SinonStub
+      ).getCall(0).args[0];
+      assert.deepStrictEqual(actualRequest, request);
+      const actualHeaderRequestParams = (
+        client.innerApiCalls.createApiSpec as SinonStub
+      ).getCall(0).args[1].otherArgs.headers['x-goog-request-params'];
+      assert(actualHeaderRequestParams.includes(expectedHeaderRequestParams));
     });
 
     it('invokes createApiSpec without error using callback', async () => {
@@ -1510,15 +1500,11 @@ describe('v1.RegistryClient', () => {
       const request = generateSampleMessage(
         new protos.google.cloud.apigeeregistry.v1.CreateApiSpecRequest()
       );
-      request.parent = '';
-      const expectedHeaderRequestParams = 'parent=';
-      const expectedOptions = {
-        otherArgs: {
-          headers: {
-            'x-goog-request-params': expectedHeaderRequestParams,
-          },
-        },
-      };
+      const defaultValue1 = getTypeDefaultValue('CreateApiSpecRequest', [
+        'parent',
+      ]);
+      request.parent = defaultValue1;
+      const expectedHeaderRequestParams = `parent=${defaultValue1}`;
       const expectedResponse = generateSampleMessage(
         new protos.google.cloud.apigeeregistry.v1.ApiSpec()
       );
@@ -1541,11 +1527,14 @@ describe('v1.RegistryClient', () => {
       });
       const response = await promise;
       assert.deepStrictEqual(response, expectedResponse);
-      assert(
-        (client.innerApiCalls.createApiSpec as SinonStub)
-          .getCall(0)
-          .calledWith(request, expectedOptions /*, callback defined above */)
-      );
+      const actualRequest = (
+        client.innerApiCalls.createApiSpec as SinonStub
+      ).getCall(0).args[0];
+      assert.deepStrictEqual(actualRequest, request);
+      const actualHeaderRequestParams = (
+        client.innerApiCalls.createApiSpec as SinonStub
+      ).getCall(0).args[1].otherArgs.headers['x-goog-request-params'];
+      assert(actualHeaderRequestParams.includes(expectedHeaderRequestParams));
     });
 
     it('invokes createApiSpec with error', async () => {
@@ -1557,26 +1546,25 @@ describe('v1.RegistryClient', () => {
       const request = generateSampleMessage(
         new protos.google.cloud.apigeeregistry.v1.CreateApiSpecRequest()
       );
-      request.parent = '';
-      const expectedHeaderRequestParams = 'parent=';
-      const expectedOptions = {
-        otherArgs: {
-          headers: {
-            'x-goog-request-params': expectedHeaderRequestParams,
-          },
-        },
-      };
+      const defaultValue1 = getTypeDefaultValue('CreateApiSpecRequest', [
+        'parent',
+      ]);
+      request.parent = defaultValue1;
+      const expectedHeaderRequestParams = `parent=${defaultValue1}`;
       const expectedError = new Error('expected');
       client.innerApiCalls.createApiSpec = stubSimpleCall(
         undefined,
         expectedError
       );
       await assert.rejects(client.createApiSpec(request), expectedError);
-      assert(
-        (client.innerApiCalls.createApiSpec as SinonStub)
-          .getCall(0)
-          .calledWith(request, expectedOptions, undefined)
-      );
+      const actualRequest = (
+        client.innerApiCalls.createApiSpec as SinonStub
+      ).getCall(0).args[0];
+      assert.deepStrictEqual(actualRequest, request);
+      const actualHeaderRequestParams = (
+        client.innerApiCalls.createApiSpec as SinonStub
+      ).getCall(0).args[1].otherArgs.headers['x-goog-request-params'];
+      assert(actualHeaderRequestParams.includes(expectedHeaderRequestParams));
     });
 
     it('invokes createApiSpec with closed client', async () => {
@@ -1588,7 +1576,10 @@ describe('v1.RegistryClient', () => {
       const request = generateSampleMessage(
         new protos.google.cloud.apigeeregistry.v1.CreateApiSpecRequest()
       );
-      request.parent = '';
+      const defaultValue1 = getTypeDefaultValue('CreateApiSpecRequest', [
+        'parent',
+      ]);
+      request.parent = defaultValue1;
       const expectedError = new Error('The client has already been closed.');
       client.close();
       await assert.rejects(client.createApiSpec(request), expectedError);
@@ -1605,27 +1596,27 @@ describe('v1.RegistryClient', () => {
       const request = generateSampleMessage(
         new protos.google.cloud.apigeeregistry.v1.UpdateApiSpecRequest()
       );
-      request.apiSpec = {};
-      request.apiSpec.name = '';
-      const expectedHeaderRequestParams = 'api_spec.name=';
-      const expectedOptions = {
-        otherArgs: {
-          headers: {
-            'x-goog-request-params': expectedHeaderRequestParams,
-          },
-        },
-      };
+      request.apiSpec ??= {};
+      const defaultValue1 = getTypeDefaultValue('UpdateApiSpecRequest', [
+        'apiSpec',
+        'name',
+      ]);
+      request.apiSpec.name = defaultValue1;
+      const expectedHeaderRequestParams = `api_spec.name=${defaultValue1}`;
       const expectedResponse = generateSampleMessage(
         new protos.google.cloud.apigeeregistry.v1.ApiSpec()
       );
       client.innerApiCalls.updateApiSpec = stubSimpleCall(expectedResponse);
       const [response] = await client.updateApiSpec(request);
       assert.deepStrictEqual(response, expectedResponse);
-      assert(
-        (client.innerApiCalls.updateApiSpec as SinonStub)
-          .getCall(0)
-          .calledWith(request, expectedOptions, undefined)
-      );
+      const actualRequest = (
+        client.innerApiCalls.updateApiSpec as SinonStub
+      ).getCall(0).args[0];
+      assert.deepStrictEqual(actualRequest, request);
+      const actualHeaderRequestParams = (
+        client.innerApiCalls.updateApiSpec as SinonStub
+      ).getCall(0).args[1].otherArgs.headers['x-goog-request-params'];
+      assert(actualHeaderRequestParams.includes(expectedHeaderRequestParams));
     });
 
     it('invokes updateApiSpec without error using callback', async () => {
@@ -1637,16 +1628,13 @@ describe('v1.RegistryClient', () => {
       const request = generateSampleMessage(
         new protos.google.cloud.apigeeregistry.v1.UpdateApiSpecRequest()
       );
-      request.apiSpec = {};
-      request.apiSpec.name = '';
-      const expectedHeaderRequestParams = 'api_spec.name=';
-      const expectedOptions = {
-        otherArgs: {
-          headers: {
-            'x-goog-request-params': expectedHeaderRequestParams,
-          },
-        },
-      };
+      request.apiSpec ??= {};
+      const defaultValue1 = getTypeDefaultValue('UpdateApiSpecRequest', [
+        'apiSpec',
+        'name',
+      ]);
+      request.apiSpec.name = defaultValue1;
+      const expectedHeaderRequestParams = `api_spec.name=${defaultValue1}`;
       const expectedResponse = generateSampleMessage(
         new protos.google.cloud.apigeeregistry.v1.ApiSpec()
       );
@@ -1669,11 +1657,14 @@ describe('v1.RegistryClient', () => {
       });
       const response = await promise;
       assert.deepStrictEqual(response, expectedResponse);
-      assert(
-        (client.innerApiCalls.updateApiSpec as SinonStub)
-          .getCall(0)
-          .calledWith(request, expectedOptions /*, callback defined above */)
-      );
+      const actualRequest = (
+        client.innerApiCalls.updateApiSpec as SinonStub
+      ).getCall(0).args[0];
+      assert.deepStrictEqual(actualRequest, request);
+      const actualHeaderRequestParams = (
+        client.innerApiCalls.updateApiSpec as SinonStub
+      ).getCall(0).args[1].otherArgs.headers['x-goog-request-params'];
+      assert(actualHeaderRequestParams.includes(expectedHeaderRequestParams));
     });
 
     it('invokes updateApiSpec with error', async () => {
@@ -1685,27 +1676,27 @@ describe('v1.RegistryClient', () => {
       const request = generateSampleMessage(
         new protos.google.cloud.apigeeregistry.v1.UpdateApiSpecRequest()
       );
-      request.apiSpec = {};
-      request.apiSpec.name = '';
-      const expectedHeaderRequestParams = 'api_spec.name=';
-      const expectedOptions = {
-        otherArgs: {
-          headers: {
-            'x-goog-request-params': expectedHeaderRequestParams,
-          },
-        },
-      };
+      request.apiSpec ??= {};
+      const defaultValue1 = getTypeDefaultValue('UpdateApiSpecRequest', [
+        'apiSpec',
+        'name',
+      ]);
+      request.apiSpec.name = defaultValue1;
+      const expectedHeaderRequestParams = `api_spec.name=${defaultValue1}`;
       const expectedError = new Error('expected');
       client.innerApiCalls.updateApiSpec = stubSimpleCall(
         undefined,
         expectedError
       );
       await assert.rejects(client.updateApiSpec(request), expectedError);
-      assert(
-        (client.innerApiCalls.updateApiSpec as SinonStub)
-          .getCall(0)
-          .calledWith(request, expectedOptions, undefined)
-      );
+      const actualRequest = (
+        client.innerApiCalls.updateApiSpec as SinonStub
+      ).getCall(0).args[0];
+      assert.deepStrictEqual(actualRequest, request);
+      const actualHeaderRequestParams = (
+        client.innerApiCalls.updateApiSpec as SinonStub
+      ).getCall(0).args[1].otherArgs.headers['x-goog-request-params'];
+      assert(actualHeaderRequestParams.includes(expectedHeaderRequestParams));
     });
 
     it('invokes updateApiSpec with closed client', async () => {
@@ -1717,8 +1708,12 @@ describe('v1.RegistryClient', () => {
       const request = generateSampleMessage(
         new protos.google.cloud.apigeeregistry.v1.UpdateApiSpecRequest()
       );
-      request.apiSpec = {};
-      request.apiSpec.name = '';
+      request.apiSpec ??= {};
+      const defaultValue1 = getTypeDefaultValue('UpdateApiSpecRequest', [
+        'apiSpec',
+        'name',
+      ]);
+      request.apiSpec.name = defaultValue1;
       const expectedError = new Error('The client has already been closed.');
       client.close();
       await assert.rejects(client.updateApiSpec(request), expectedError);
@@ -1735,26 +1730,25 @@ describe('v1.RegistryClient', () => {
       const request = generateSampleMessage(
         new protos.google.cloud.apigeeregistry.v1.DeleteApiSpecRequest()
       );
-      request.name = '';
-      const expectedHeaderRequestParams = 'name=';
-      const expectedOptions = {
-        otherArgs: {
-          headers: {
-            'x-goog-request-params': expectedHeaderRequestParams,
-          },
-        },
-      };
+      const defaultValue1 = getTypeDefaultValue('DeleteApiSpecRequest', [
+        'name',
+      ]);
+      request.name = defaultValue1;
+      const expectedHeaderRequestParams = `name=${defaultValue1}`;
       const expectedResponse = generateSampleMessage(
         new protos.google.protobuf.Empty()
       );
       client.innerApiCalls.deleteApiSpec = stubSimpleCall(expectedResponse);
       const [response] = await client.deleteApiSpec(request);
       assert.deepStrictEqual(response, expectedResponse);
-      assert(
-        (client.innerApiCalls.deleteApiSpec as SinonStub)
-          .getCall(0)
-          .calledWith(request, expectedOptions, undefined)
-      );
+      const actualRequest = (
+        client.innerApiCalls.deleteApiSpec as SinonStub
+      ).getCall(0).args[0];
+      assert.deepStrictEqual(actualRequest, request);
+      const actualHeaderRequestParams = (
+        client.innerApiCalls.deleteApiSpec as SinonStub
+      ).getCall(0).args[1].otherArgs.headers['x-goog-request-params'];
+      assert(actualHeaderRequestParams.includes(expectedHeaderRequestParams));
     });
 
     it('invokes deleteApiSpec without error using callback', async () => {
@@ -1766,15 +1760,11 @@ describe('v1.RegistryClient', () => {
       const request = generateSampleMessage(
         new protos.google.cloud.apigeeregistry.v1.DeleteApiSpecRequest()
       );
-      request.name = '';
-      const expectedHeaderRequestParams = 'name=';
-      const expectedOptions = {
-        otherArgs: {
-          headers: {
-            'x-goog-request-params': expectedHeaderRequestParams,
-          },
-        },
-      };
+      const defaultValue1 = getTypeDefaultValue('DeleteApiSpecRequest', [
+        'name',
+      ]);
+      request.name = defaultValue1;
+      const expectedHeaderRequestParams = `name=${defaultValue1}`;
       const expectedResponse = generateSampleMessage(
         new protos.google.protobuf.Empty()
       );
@@ -1797,11 +1787,14 @@ describe('v1.RegistryClient', () => {
       });
       const response = await promise;
       assert.deepStrictEqual(response, expectedResponse);
-      assert(
-        (client.innerApiCalls.deleteApiSpec as SinonStub)
-          .getCall(0)
-          .calledWith(request, expectedOptions /*, callback defined above */)
-      );
+      const actualRequest = (
+        client.innerApiCalls.deleteApiSpec as SinonStub
+      ).getCall(0).args[0];
+      assert.deepStrictEqual(actualRequest, request);
+      const actualHeaderRequestParams = (
+        client.innerApiCalls.deleteApiSpec as SinonStub
+      ).getCall(0).args[1].otherArgs.headers['x-goog-request-params'];
+      assert(actualHeaderRequestParams.includes(expectedHeaderRequestParams));
     });
 
     it('invokes deleteApiSpec with error', async () => {
@@ -1813,26 +1806,25 @@ describe('v1.RegistryClient', () => {
       const request = generateSampleMessage(
         new protos.google.cloud.apigeeregistry.v1.DeleteApiSpecRequest()
       );
-      request.name = '';
-      const expectedHeaderRequestParams = 'name=';
-      const expectedOptions = {
-        otherArgs: {
-          headers: {
-            'x-goog-request-params': expectedHeaderRequestParams,
-          },
-        },
-      };
+      const defaultValue1 = getTypeDefaultValue('DeleteApiSpecRequest', [
+        'name',
+      ]);
+      request.name = defaultValue1;
+      const expectedHeaderRequestParams = `name=${defaultValue1}`;
       const expectedError = new Error('expected');
       client.innerApiCalls.deleteApiSpec = stubSimpleCall(
         undefined,
         expectedError
       );
       await assert.rejects(client.deleteApiSpec(request), expectedError);
-      assert(
-        (client.innerApiCalls.deleteApiSpec as SinonStub)
-          .getCall(0)
-          .calledWith(request, expectedOptions, undefined)
-      );
+      const actualRequest = (
+        client.innerApiCalls.deleteApiSpec as SinonStub
+      ).getCall(0).args[0];
+      assert.deepStrictEqual(actualRequest, request);
+      const actualHeaderRequestParams = (
+        client.innerApiCalls.deleteApiSpec as SinonStub
+      ).getCall(0).args[1].otherArgs.headers['x-goog-request-params'];
+      assert(actualHeaderRequestParams.includes(expectedHeaderRequestParams));
     });
 
     it('invokes deleteApiSpec with closed client', async () => {
@@ -1844,7 +1836,10 @@ describe('v1.RegistryClient', () => {
       const request = generateSampleMessage(
         new protos.google.cloud.apigeeregistry.v1.DeleteApiSpecRequest()
       );
-      request.name = '';
+      const defaultValue1 = getTypeDefaultValue('DeleteApiSpecRequest', [
+        'name',
+      ]);
+      request.name = defaultValue1;
       const expectedError = new Error('The client has already been closed.');
       client.close();
       await assert.rejects(client.deleteApiSpec(request), expectedError);
@@ -1861,15 +1856,11 @@ describe('v1.RegistryClient', () => {
       const request = generateSampleMessage(
         new protos.google.cloud.apigeeregistry.v1.TagApiSpecRevisionRequest()
       );
-      request.name = '';
-      const expectedHeaderRequestParams = 'name=';
-      const expectedOptions = {
-        otherArgs: {
-          headers: {
-            'x-goog-request-params': expectedHeaderRequestParams,
-          },
-        },
-      };
+      const defaultValue1 = getTypeDefaultValue('TagApiSpecRevisionRequest', [
+        'name',
+      ]);
+      request.name = defaultValue1;
+      const expectedHeaderRequestParams = `name=${defaultValue1}`;
       const expectedResponse = generateSampleMessage(
         new protos.google.cloud.apigeeregistry.v1.ApiSpec()
       );
@@ -1877,11 +1868,14 @@ describe('v1.RegistryClient', () => {
         stubSimpleCall(expectedResponse);
       const [response] = await client.tagApiSpecRevision(request);
       assert.deepStrictEqual(response, expectedResponse);
-      assert(
-        (client.innerApiCalls.tagApiSpecRevision as SinonStub)
-          .getCall(0)
-          .calledWith(request, expectedOptions, undefined)
-      );
+      const actualRequest = (
+        client.innerApiCalls.tagApiSpecRevision as SinonStub
+      ).getCall(0).args[0];
+      assert.deepStrictEqual(actualRequest, request);
+      const actualHeaderRequestParams = (
+        client.innerApiCalls.tagApiSpecRevision as SinonStub
+      ).getCall(0).args[1].otherArgs.headers['x-goog-request-params'];
+      assert(actualHeaderRequestParams.includes(expectedHeaderRequestParams));
     });
 
     it('invokes tagApiSpecRevision without error using callback', async () => {
@@ -1893,15 +1887,11 @@ describe('v1.RegistryClient', () => {
       const request = generateSampleMessage(
         new protos.google.cloud.apigeeregistry.v1.TagApiSpecRevisionRequest()
       );
-      request.name = '';
-      const expectedHeaderRequestParams = 'name=';
-      const expectedOptions = {
-        otherArgs: {
-          headers: {
-            'x-goog-request-params': expectedHeaderRequestParams,
-          },
-        },
-      };
+      const defaultValue1 = getTypeDefaultValue('TagApiSpecRevisionRequest', [
+        'name',
+      ]);
+      request.name = defaultValue1;
+      const expectedHeaderRequestParams = `name=${defaultValue1}`;
       const expectedResponse = generateSampleMessage(
         new protos.google.cloud.apigeeregistry.v1.ApiSpec()
       );
@@ -1924,11 +1914,14 @@ describe('v1.RegistryClient', () => {
       });
       const response = await promise;
       assert.deepStrictEqual(response, expectedResponse);
-      assert(
-        (client.innerApiCalls.tagApiSpecRevision as SinonStub)
-          .getCall(0)
-          .calledWith(request, expectedOptions /*, callback defined above */)
-      );
+      const actualRequest = (
+        client.innerApiCalls.tagApiSpecRevision as SinonStub
+      ).getCall(0).args[0];
+      assert.deepStrictEqual(actualRequest, request);
+      const actualHeaderRequestParams = (
+        client.innerApiCalls.tagApiSpecRevision as SinonStub
+      ).getCall(0).args[1].otherArgs.headers['x-goog-request-params'];
+      assert(actualHeaderRequestParams.includes(expectedHeaderRequestParams));
     });
 
     it('invokes tagApiSpecRevision with error', async () => {
@@ -1940,26 +1933,25 @@ describe('v1.RegistryClient', () => {
       const request = generateSampleMessage(
         new protos.google.cloud.apigeeregistry.v1.TagApiSpecRevisionRequest()
       );
-      request.name = '';
-      const expectedHeaderRequestParams = 'name=';
-      const expectedOptions = {
-        otherArgs: {
-          headers: {
-            'x-goog-request-params': expectedHeaderRequestParams,
-          },
-        },
-      };
+      const defaultValue1 = getTypeDefaultValue('TagApiSpecRevisionRequest', [
+        'name',
+      ]);
+      request.name = defaultValue1;
+      const expectedHeaderRequestParams = `name=${defaultValue1}`;
       const expectedError = new Error('expected');
       client.innerApiCalls.tagApiSpecRevision = stubSimpleCall(
         undefined,
         expectedError
       );
       await assert.rejects(client.tagApiSpecRevision(request), expectedError);
-      assert(
-        (client.innerApiCalls.tagApiSpecRevision as SinonStub)
-          .getCall(0)
-          .calledWith(request, expectedOptions, undefined)
-      );
+      const actualRequest = (
+        client.innerApiCalls.tagApiSpecRevision as SinonStub
+      ).getCall(0).args[0];
+      assert.deepStrictEqual(actualRequest, request);
+      const actualHeaderRequestParams = (
+        client.innerApiCalls.tagApiSpecRevision as SinonStub
+      ).getCall(0).args[1].otherArgs.headers['x-goog-request-params'];
+      assert(actualHeaderRequestParams.includes(expectedHeaderRequestParams));
     });
 
     it('invokes tagApiSpecRevision with closed client', async () => {
@@ -1971,7 +1963,10 @@ describe('v1.RegistryClient', () => {
       const request = generateSampleMessage(
         new protos.google.cloud.apigeeregistry.v1.TagApiSpecRevisionRequest()
       );
-      request.name = '';
+      const defaultValue1 = getTypeDefaultValue('TagApiSpecRevisionRequest', [
+        'name',
+      ]);
+      request.name = defaultValue1;
       const expectedError = new Error('The client has already been closed.');
       client.close();
       await assert.rejects(client.tagApiSpecRevision(request), expectedError);
@@ -1988,26 +1983,25 @@ describe('v1.RegistryClient', () => {
       const request = generateSampleMessage(
         new protos.google.cloud.apigeeregistry.v1.RollbackApiSpecRequest()
       );
-      request.name = '';
-      const expectedHeaderRequestParams = 'name=';
-      const expectedOptions = {
-        otherArgs: {
-          headers: {
-            'x-goog-request-params': expectedHeaderRequestParams,
-          },
-        },
-      };
+      const defaultValue1 = getTypeDefaultValue('RollbackApiSpecRequest', [
+        'name',
+      ]);
+      request.name = defaultValue1;
+      const expectedHeaderRequestParams = `name=${defaultValue1}`;
       const expectedResponse = generateSampleMessage(
         new protos.google.cloud.apigeeregistry.v1.ApiSpec()
       );
       client.innerApiCalls.rollbackApiSpec = stubSimpleCall(expectedResponse);
       const [response] = await client.rollbackApiSpec(request);
       assert.deepStrictEqual(response, expectedResponse);
-      assert(
-        (client.innerApiCalls.rollbackApiSpec as SinonStub)
-          .getCall(0)
-          .calledWith(request, expectedOptions, undefined)
-      );
+      const actualRequest = (
+        client.innerApiCalls.rollbackApiSpec as SinonStub
+      ).getCall(0).args[0];
+      assert.deepStrictEqual(actualRequest, request);
+      const actualHeaderRequestParams = (
+        client.innerApiCalls.rollbackApiSpec as SinonStub
+      ).getCall(0).args[1].otherArgs.headers['x-goog-request-params'];
+      assert(actualHeaderRequestParams.includes(expectedHeaderRequestParams));
     });
 
     it('invokes rollbackApiSpec without error using callback', async () => {
@@ -2019,15 +2013,11 @@ describe('v1.RegistryClient', () => {
       const request = generateSampleMessage(
         new protos.google.cloud.apigeeregistry.v1.RollbackApiSpecRequest()
       );
-      request.name = '';
-      const expectedHeaderRequestParams = 'name=';
-      const expectedOptions = {
-        otherArgs: {
-          headers: {
-            'x-goog-request-params': expectedHeaderRequestParams,
-          },
-        },
-      };
+      const defaultValue1 = getTypeDefaultValue('RollbackApiSpecRequest', [
+        'name',
+      ]);
+      request.name = defaultValue1;
+      const expectedHeaderRequestParams = `name=${defaultValue1}`;
       const expectedResponse = generateSampleMessage(
         new protos.google.cloud.apigeeregistry.v1.ApiSpec()
       );
@@ -2050,11 +2040,14 @@ describe('v1.RegistryClient', () => {
       });
       const response = await promise;
       assert.deepStrictEqual(response, expectedResponse);
-      assert(
-        (client.innerApiCalls.rollbackApiSpec as SinonStub)
-          .getCall(0)
-          .calledWith(request, expectedOptions /*, callback defined above */)
-      );
+      const actualRequest = (
+        client.innerApiCalls.rollbackApiSpec as SinonStub
+      ).getCall(0).args[0];
+      assert.deepStrictEqual(actualRequest, request);
+      const actualHeaderRequestParams = (
+        client.innerApiCalls.rollbackApiSpec as SinonStub
+      ).getCall(0).args[1].otherArgs.headers['x-goog-request-params'];
+      assert(actualHeaderRequestParams.includes(expectedHeaderRequestParams));
     });
 
     it('invokes rollbackApiSpec with error', async () => {
@@ -2066,26 +2059,25 @@ describe('v1.RegistryClient', () => {
       const request = generateSampleMessage(
         new protos.google.cloud.apigeeregistry.v1.RollbackApiSpecRequest()
       );
-      request.name = '';
-      const expectedHeaderRequestParams = 'name=';
-      const expectedOptions = {
-        otherArgs: {
-          headers: {
-            'x-goog-request-params': expectedHeaderRequestParams,
-          },
-        },
-      };
+      const defaultValue1 = getTypeDefaultValue('RollbackApiSpecRequest', [
+        'name',
+      ]);
+      request.name = defaultValue1;
+      const expectedHeaderRequestParams = `name=${defaultValue1}`;
       const expectedError = new Error('expected');
       client.innerApiCalls.rollbackApiSpec = stubSimpleCall(
         undefined,
         expectedError
       );
       await assert.rejects(client.rollbackApiSpec(request), expectedError);
-      assert(
-        (client.innerApiCalls.rollbackApiSpec as SinonStub)
-          .getCall(0)
-          .calledWith(request, expectedOptions, undefined)
-      );
+      const actualRequest = (
+        client.innerApiCalls.rollbackApiSpec as SinonStub
+      ).getCall(0).args[0];
+      assert.deepStrictEqual(actualRequest, request);
+      const actualHeaderRequestParams = (
+        client.innerApiCalls.rollbackApiSpec as SinonStub
+      ).getCall(0).args[1].otherArgs.headers['x-goog-request-params'];
+      assert(actualHeaderRequestParams.includes(expectedHeaderRequestParams));
     });
 
     it('invokes rollbackApiSpec with closed client', async () => {
@@ -2097,7 +2089,10 @@ describe('v1.RegistryClient', () => {
       const request = generateSampleMessage(
         new protos.google.cloud.apigeeregistry.v1.RollbackApiSpecRequest()
       );
-      request.name = '';
+      const defaultValue1 = getTypeDefaultValue('RollbackApiSpecRequest', [
+        'name',
+      ]);
+      request.name = defaultValue1;
       const expectedError = new Error('The client has already been closed.');
       client.close();
       await assert.rejects(client.rollbackApiSpec(request), expectedError);
@@ -2114,15 +2109,12 @@ describe('v1.RegistryClient', () => {
       const request = generateSampleMessage(
         new protos.google.cloud.apigeeregistry.v1.DeleteApiSpecRevisionRequest()
       );
-      request.name = '';
-      const expectedHeaderRequestParams = 'name=';
-      const expectedOptions = {
-        otherArgs: {
-          headers: {
-            'x-goog-request-params': expectedHeaderRequestParams,
-          },
-        },
-      };
+      const defaultValue1 = getTypeDefaultValue(
+        'DeleteApiSpecRevisionRequest',
+        ['name']
+      );
+      request.name = defaultValue1;
+      const expectedHeaderRequestParams = `name=${defaultValue1}`;
       const expectedResponse = generateSampleMessage(
         new protos.google.cloud.apigeeregistry.v1.ApiSpec()
       );
@@ -2130,11 +2122,14 @@ describe('v1.RegistryClient', () => {
         stubSimpleCall(expectedResponse);
       const [response] = await client.deleteApiSpecRevision(request);
       assert.deepStrictEqual(response, expectedResponse);
-      assert(
-        (client.innerApiCalls.deleteApiSpecRevision as SinonStub)
-          .getCall(0)
-          .calledWith(request, expectedOptions, undefined)
-      );
+      const actualRequest = (
+        client.innerApiCalls.deleteApiSpecRevision as SinonStub
+      ).getCall(0).args[0];
+      assert.deepStrictEqual(actualRequest, request);
+      const actualHeaderRequestParams = (
+        client.innerApiCalls.deleteApiSpecRevision as SinonStub
+      ).getCall(0).args[1].otherArgs.headers['x-goog-request-params'];
+      assert(actualHeaderRequestParams.includes(expectedHeaderRequestParams));
     });
 
     it('invokes deleteApiSpecRevision without error using callback', async () => {
@@ -2146,15 +2141,12 @@ describe('v1.RegistryClient', () => {
       const request = generateSampleMessage(
         new protos.google.cloud.apigeeregistry.v1.DeleteApiSpecRevisionRequest()
       );
-      request.name = '';
-      const expectedHeaderRequestParams = 'name=';
-      const expectedOptions = {
-        otherArgs: {
-          headers: {
-            'x-goog-request-params': expectedHeaderRequestParams,
-          },
-        },
-      };
+      const defaultValue1 = getTypeDefaultValue(
+        'DeleteApiSpecRevisionRequest',
+        ['name']
+      );
+      request.name = defaultValue1;
+      const expectedHeaderRequestParams = `name=${defaultValue1}`;
       const expectedResponse = generateSampleMessage(
         new protos.google.cloud.apigeeregistry.v1.ApiSpec()
       );
@@ -2177,11 +2169,14 @@ describe('v1.RegistryClient', () => {
       });
       const response = await promise;
       assert.deepStrictEqual(response, expectedResponse);
-      assert(
-        (client.innerApiCalls.deleteApiSpecRevision as SinonStub)
-          .getCall(0)
-          .calledWith(request, expectedOptions /*, callback defined above */)
-      );
+      const actualRequest = (
+        client.innerApiCalls.deleteApiSpecRevision as SinonStub
+      ).getCall(0).args[0];
+      assert.deepStrictEqual(actualRequest, request);
+      const actualHeaderRequestParams = (
+        client.innerApiCalls.deleteApiSpecRevision as SinonStub
+      ).getCall(0).args[1].otherArgs.headers['x-goog-request-params'];
+      assert(actualHeaderRequestParams.includes(expectedHeaderRequestParams));
     });
 
     it('invokes deleteApiSpecRevision with error', async () => {
@@ -2193,15 +2188,12 @@ describe('v1.RegistryClient', () => {
       const request = generateSampleMessage(
         new protos.google.cloud.apigeeregistry.v1.DeleteApiSpecRevisionRequest()
       );
-      request.name = '';
-      const expectedHeaderRequestParams = 'name=';
-      const expectedOptions = {
-        otherArgs: {
-          headers: {
-            'x-goog-request-params': expectedHeaderRequestParams,
-          },
-        },
-      };
+      const defaultValue1 = getTypeDefaultValue(
+        'DeleteApiSpecRevisionRequest',
+        ['name']
+      );
+      request.name = defaultValue1;
+      const expectedHeaderRequestParams = `name=${defaultValue1}`;
       const expectedError = new Error('expected');
       client.innerApiCalls.deleteApiSpecRevision = stubSimpleCall(
         undefined,
@@ -2211,11 +2203,14 @@ describe('v1.RegistryClient', () => {
         client.deleteApiSpecRevision(request),
         expectedError
       );
-      assert(
-        (client.innerApiCalls.deleteApiSpecRevision as SinonStub)
-          .getCall(0)
-          .calledWith(request, expectedOptions, undefined)
-      );
+      const actualRequest = (
+        client.innerApiCalls.deleteApiSpecRevision as SinonStub
+      ).getCall(0).args[0];
+      assert.deepStrictEqual(actualRequest, request);
+      const actualHeaderRequestParams = (
+        client.innerApiCalls.deleteApiSpecRevision as SinonStub
+      ).getCall(0).args[1].otherArgs.headers['x-goog-request-params'];
+      assert(actualHeaderRequestParams.includes(expectedHeaderRequestParams));
     });
 
     it('invokes deleteApiSpecRevision with closed client', async () => {
@@ -2227,7 +2222,11 @@ describe('v1.RegistryClient', () => {
       const request = generateSampleMessage(
         new protos.google.cloud.apigeeregistry.v1.DeleteApiSpecRevisionRequest()
       );
-      request.name = '';
+      const defaultValue1 = getTypeDefaultValue(
+        'DeleteApiSpecRevisionRequest',
+        ['name']
+      );
+      request.name = defaultValue1;
       const expectedError = new Error('The client has already been closed.');
       client.close();
       await assert.rejects(
@@ -2247,26 +2246,25 @@ describe('v1.RegistryClient', () => {
       const request = generateSampleMessage(
         new protos.google.cloud.apigeeregistry.v1.GetApiDeploymentRequest()
       );
-      request.name = '';
-      const expectedHeaderRequestParams = 'name=';
-      const expectedOptions = {
-        otherArgs: {
-          headers: {
-            'x-goog-request-params': expectedHeaderRequestParams,
-          },
-        },
-      };
+      const defaultValue1 = getTypeDefaultValue('GetApiDeploymentRequest', [
+        'name',
+      ]);
+      request.name = defaultValue1;
+      const expectedHeaderRequestParams = `name=${defaultValue1}`;
       const expectedResponse = generateSampleMessage(
         new protos.google.cloud.apigeeregistry.v1.ApiDeployment()
       );
       client.innerApiCalls.getApiDeployment = stubSimpleCall(expectedResponse);
       const [response] = await client.getApiDeployment(request);
       assert.deepStrictEqual(response, expectedResponse);
-      assert(
-        (client.innerApiCalls.getApiDeployment as SinonStub)
-          .getCall(0)
-          .calledWith(request, expectedOptions, undefined)
-      );
+      const actualRequest = (
+        client.innerApiCalls.getApiDeployment as SinonStub
+      ).getCall(0).args[0];
+      assert.deepStrictEqual(actualRequest, request);
+      const actualHeaderRequestParams = (
+        client.innerApiCalls.getApiDeployment as SinonStub
+      ).getCall(0).args[1].otherArgs.headers['x-goog-request-params'];
+      assert(actualHeaderRequestParams.includes(expectedHeaderRequestParams));
     });
 
     it('invokes getApiDeployment without error using callback', async () => {
@@ -2278,15 +2276,11 @@ describe('v1.RegistryClient', () => {
       const request = generateSampleMessage(
         new protos.google.cloud.apigeeregistry.v1.GetApiDeploymentRequest()
       );
-      request.name = '';
-      const expectedHeaderRequestParams = 'name=';
-      const expectedOptions = {
-        otherArgs: {
-          headers: {
-            'x-goog-request-params': expectedHeaderRequestParams,
-          },
-        },
-      };
+      const defaultValue1 = getTypeDefaultValue('GetApiDeploymentRequest', [
+        'name',
+      ]);
+      request.name = defaultValue1;
+      const expectedHeaderRequestParams = `name=${defaultValue1}`;
       const expectedResponse = generateSampleMessage(
         new protos.google.cloud.apigeeregistry.v1.ApiDeployment()
       );
@@ -2309,11 +2303,14 @@ describe('v1.RegistryClient', () => {
       });
       const response = await promise;
       assert.deepStrictEqual(response, expectedResponse);
-      assert(
-        (client.innerApiCalls.getApiDeployment as SinonStub)
-          .getCall(0)
-          .calledWith(request, expectedOptions /*, callback defined above */)
-      );
+      const actualRequest = (
+        client.innerApiCalls.getApiDeployment as SinonStub
+      ).getCall(0).args[0];
+      assert.deepStrictEqual(actualRequest, request);
+      const actualHeaderRequestParams = (
+        client.innerApiCalls.getApiDeployment as SinonStub
+      ).getCall(0).args[1].otherArgs.headers['x-goog-request-params'];
+      assert(actualHeaderRequestParams.includes(expectedHeaderRequestParams));
     });
 
     it('invokes getApiDeployment with error', async () => {
@@ -2325,26 +2322,25 @@ describe('v1.RegistryClient', () => {
       const request = generateSampleMessage(
         new protos.google.cloud.apigeeregistry.v1.GetApiDeploymentRequest()
       );
-      request.name = '';
-      const expectedHeaderRequestParams = 'name=';
-      const expectedOptions = {
-        otherArgs: {
-          headers: {
-            'x-goog-request-params': expectedHeaderRequestParams,
-          },
-        },
-      };
+      const defaultValue1 = getTypeDefaultValue('GetApiDeploymentRequest', [
+        'name',
+      ]);
+      request.name = defaultValue1;
+      const expectedHeaderRequestParams = `name=${defaultValue1}`;
       const expectedError = new Error('expected');
       client.innerApiCalls.getApiDeployment = stubSimpleCall(
         undefined,
         expectedError
       );
       await assert.rejects(client.getApiDeployment(request), expectedError);
-      assert(
-        (client.innerApiCalls.getApiDeployment as SinonStub)
-          .getCall(0)
-          .calledWith(request, expectedOptions, undefined)
-      );
+      const actualRequest = (
+        client.innerApiCalls.getApiDeployment as SinonStub
+      ).getCall(0).args[0];
+      assert.deepStrictEqual(actualRequest, request);
+      const actualHeaderRequestParams = (
+        client.innerApiCalls.getApiDeployment as SinonStub
+      ).getCall(0).args[1].otherArgs.headers['x-goog-request-params'];
+      assert(actualHeaderRequestParams.includes(expectedHeaderRequestParams));
     });
 
     it('invokes getApiDeployment with closed client', async () => {
@@ -2356,7 +2352,10 @@ describe('v1.RegistryClient', () => {
       const request = generateSampleMessage(
         new protos.google.cloud.apigeeregistry.v1.GetApiDeploymentRequest()
       );
-      request.name = '';
+      const defaultValue1 = getTypeDefaultValue('GetApiDeploymentRequest', [
+        'name',
+      ]);
+      request.name = defaultValue1;
       const expectedError = new Error('The client has already been closed.');
       client.close();
       await assert.rejects(client.getApiDeployment(request), expectedError);
@@ -2373,15 +2372,11 @@ describe('v1.RegistryClient', () => {
       const request = generateSampleMessage(
         new protos.google.cloud.apigeeregistry.v1.CreateApiDeploymentRequest()
       );
-      request.parent = '';
-      const expectedHeaderRequestParams = 'parent=';
-      const expectedOptions = {
-        otherArgs: {
-          headers: {
-            'x-goog-request-params': expectedHeaderRequestParams,
-          },
-        },
-      };
+      const defaultValue1 = getTypeDefaultValue('CreateApiDeploymentRequest', [
+        'parent',
+      ]);
+      request.parent = defaultValue1;
+      const expectedHeaderRequestParams = `parent=${defaultValue1}`;
       const expectedResponse = generateSampleMessage(
         new protos.google.cloud.apigeeregistry.v1.ApiDeployment()
       );
@@ -2389,11 +2384,14 @@ describe('v1.RegistryClient', () => {
         stubSimpleCall(expectedResponse);
       const [response] = await client.createApiDeployment(request);
       assert.deepStrictEqual(response, expectedResponse);
-      assert(
-        (client.innerApiCalls.createApiDeployment as SinonStub)
-          .getCall(0)
-          .calledWith(request, expectedOptions, undefined)
-      );
+      const actualRequest = (
+        client.innerApiCalls.createApiDeployment as SinonStub
+      ).getCall(0).args[0];
+      assert.deepStrictEqual(actualRequest, request);
+      const actualHeaderRequestParams = (
+        client.innerApiCalls.createApiDeployment as SinonStub
+      ).getCall(0).args[1].otherArgs.headers['x-goog-request-params'];
+      assert(actualHeaderRequestParams.includes(expectedHeaderRequestParams));
     });
 
     it('invokes createApiDeployment without error using callback', async () => {
@@ -2405,15 +2403,11 @@ describe('v1.RegistryClient', () => {
       const request = generateSampleMessage(
         new protos.google.cloud.apigeeregistry.v1.CreateApiDeploymentRequest()
       );
-      request.parent = '';
-      const expectedHeaderRequestParams = 'parent=';
-      const expectedOptions = {
-        otherArgs: {
-          headers: {
-            'x-goog-request-params': expectedHeaderRequestParams,
-          },
-        },
-      };
+      const defaultValue1 = getTypeDefaultValue('CreateApiDeploymentRequest', [
+        'parent',
+      ]);
+      request.parent = defaultValue1;
+      const expectedHeaderRequestParams = `parent=${defaultValue1}`;
       const expectedResponse = generateSampleMessage(
         new protos.google.cloud.apigeeregistry.v1.ApiDeployment()
       );
@@ -2436,11 +2430,14 @@ describe('v1.RegistryClient', () => {
       });
       const response = await promise;
       assert.deepStrictEqual(response, expectedResponse);
-      assert(
-        (client.innerApiCalls.createApiDeployment as SinonStub)
-          .getCall(0)
-          .calledWith(request, expectedOptions /*, callback defined above */)
-      );
+      const actualRequest = (
+        client.innerApiCalls.createApiDeployment as SinonStub
+      ).getCall(0).args[0];
+      assert.deepStrictEqual(actualRequest, request);
+      const actualHeaderRequestParams = (
+        client.innerApiCalls.createApiDeployment as SinonStub
+      ).getCall(0).args[1].otherArgs.headers['x-goog-request-params'];
+      assert(actualHeaderRequestParams.includes(expectedHeaderRequestParams));
     });
 
     it('invokes createApiDeployment with error', async () => {
@@ -2452,26 +2449,25 @@ describe('v1.RegistryClient', () => {
       const request = generateSampleMessage(
         new protos.google.cloud.apigeeregistry.v1.CreateApiDeploymentRequest()
       );
-      request.parent = '';
-      const expectedHeaderRequestParams = 'parent=';
-      const expectedOptions = {
-        otherArgs: {
-          headers: {
-            'x-goog-request-params': expectedHeaderRequestParams,
-          },
-        },
-      };
+      const defaultValue1 = getTypeDefaultValue('CreateApiDeploymentRequest', [
+        'parent',
+      ]);
+      request.parent = defaultValue1;
+      const expectedHeaderRequestParams = `parent=${defaultValue1}`;
       const expectedError = new Error('expected');
       client.innerApiCalls.createApiDeployment = stubSimpleCall(
         undefined,
         expectedError
       );
       await assert.rejects(client.createApiDeployment(request), expectedError);
-      assert(
-        (client.innerApiCalls.createApiDeployment as SinonStub)
-          .getCall(0)
-          .calledWith(request, expectedOptions, undefined)
-      );
+      const actualRequest = (
+        client.innerApiCalls.createApiDeployment as SinonStub
+      ).getCall(0).args[0];
+      assert.deepStrictEqual(actualRequest, request);
+      const actualHeaderRequestParams = (
+        client.innerApiCalls.createApiDeployment as SinonStub
+      ).getCall(0).args[1].otherArgs.headers['x-goog-request-params'];
+      assert(actualHeaderRequestParams.includes(expectedHeaderRequestParams));
     });
 
     it('invokes createApiDeployment with closed client', async () => {
@@ -2483,7 +2479,10 @@ describe('v1.RegistryClient', () => {
       const request = generateSampleMessage(
         new protos.google.cloud.apigeeregistry.v1.CreateApiDeploymentRequest()
       );
-      request.parent = '';
+      const defaultValue1 = getTypeDefaultValue('CreateApiDeploymentRequest', [
+        'parent',
+      ]);
+      request.parent = defaultValue1;
       const expectedError = new Error('The client has already been closed.');
       client.close();
       await assert.rejects(client.createApiDeployment(request), expectedError);
@@ -2500,16 +2499,13 @@ describe('v1.RegistryClient', () => {
       const request = generateSampleMessage(
         new protos.google.cloud.apigeeregistry.v1.UpdateApiDeploymentRequest()
       );
-      request.apiDeployment = {};
-      request.apiDeployment.name = '';
-      const expectedHeaderRequestParams = 'api_deployment.name=';
-      const expectedOptions = {
-        otherArgs: {
-          headers: {
-            'x-goog-request-params': expectedHeaderRequestParams,
-          },
-        },
-      };
+      request.apiDeployment ??= {};
+      const defaultValue1 = getTypeDefaultValue('UpdateApiDeploymentRequest', [
+        'apiDeployment',
+        'name',
+      ]);
+      request.apiDeployment.name = defaultValue1;
+      const expectedHeaderRequestParams = `api_deployment.name=${defaultValue1}`;
       const expectedResponse = generateSampleMessage(
         new protos.google.cloud.apigeeregistry.v1.ApiDeployment()
       );
@@ -2517,11 +2513,14 @@ describe('v1.RegistryClient', () => {
         stubSimpleCall(expectedResponse);
       const [response] = await client.updateApiDeployment(request);
       assert.deepStrictEqual(response, expectedResponse);
-      assert(
-        (client.innerApiCalls.updateApiDeployment as SinonStub)
-          .getCall(0)
-          .calledWith(request, expectedOptions, undefined)
-      );
+      const actualRequest = (
+        client.innerApiCalls.updateApiDeployment as SinonStub
+      ).getCall(0).args[0];
+      assert.deepStrictEqual(actualRequest, request);
+      const actualHeaderRequestParams = (
+        client.innerApiCalls.updateApiDeployment as SinonStub
+      ).getCall(0).args[1].otherArgs.headers['x-goog-request-params'];
+      assert(actualHeaderRequestParams.includes(expectedHeaderRequestParams));
     });
 
     it('invokes updateApiDeployment without error using callback', async () => {
@@ -2533,16 +2532,13 @@ describe('v1.RegistryClient', () => {
       const request = generateSampleMessage(
         new protos.google.cloud.apigeeregistry.v1.UpdateApiDeploymentRequest()
       );
-      request.apiDeployment = {};
-      request.apiDeployment.name = '';
-      const expectedHeaderRequestParams = 'api_deployment.name=';
-      const expectedOptions = {
-        otherArgs: {
-          headers: {
-            'x-goog-request-params': expectedHeaderRequestParams,
-          },
-        },
-      };
+      request.apiDeployment ??= {};
+      const defaultValue1 = getTypeDefaultValue('UpdateApiDeploymentRequest', [
+        'apiDeployment',
+        'name',
+      ]);
+      request.apiDeployment.name = defaultValue1;
+      const expectedHeaderRequestParams = `api_deployment.name=${defaultValue1}`;
       const expectedResponse = generateSampleMessage(
         new protos.google.cloud.apigeeregistry.v1.ApiDeployment()
       );
@@ -2565,11 +2561,14 @@ describe('v1.RegistryClient', () => {
       });
       const response = await promise;
       assert.deepStrictEqual(response, expectedResponse);
-      assert(
-        (client.innerApiCalls.updateApiDeployment as SinonStub)
-          .getCall(0)
-          .calledWith(request, expectedOptions /*, callback defined above */)
-      );
+      const actualRequest = (
+        client.innerApiCalls.updateApiDeployment as SinonStub
+      ).getCall(0).args[0];
+      assert.deepStrictEqual(actualRequest, request);
+      const actualHeaderRequestParams = (
+        client.innerApiCalls.updateApiDeployment as SinonStub
+      ).getCall(0).args[1].otherArgs.headers['x-goog-request-params'];
+      assert(actualHeaderRequestParams.includes(expectedHeaderRequestParams));
     });
 
     it('invokes updateApiDeployment with error', async () => {
@@ -2581,27 +2580,27 @@ describe('v1.RegistryClient', () => {
       const request = generateSampleMessage(
         new protos.google.cloud.apigeeregistry.v1.UpdateApiDeploymentRequest()
       );
-      request.apiDeployment = {};
-      request.apiDeployment.name = '';
-      const expectedHeaderRequestParams = 'api_deployment.name=';
-      const expectedOptions = {
-        otherArgs: {
-          headers: {
-            'x-goog-request-params': expectedHeaderRequestParams,
-          },
-        },
-      };
+      request.apiDeployment ??= {};
+      const defaultValue1 = getTypeDefaultValue('UpdateApiDeploymentRequest', [
+        'apiDeployment',
+        'name',
+      ]);
+      request.apiDeployment.name = defaultValue1;
+      const expectedHeaderRequestParams = `api_deployment.name=${defaultValue1}`;
       const expectedError = new Error('expected');
       client.innerApiCalls.updateApiDeployment = stubSimpleCall(
         undefined,
         expectedError
       );
       await assert.rejects(client.updateApiDeployment(request), expectedError);
-      assert(
-        (client.innerApiCalls.updateApiDeployment as SinonStub)
-          .getCall(0)
-          .calledWith(request, expectedOptions, undefined)
-      );
+      const actualRequest = (
+        client.innerApiCalls.updateApiDeployment as SinonStub
+      ).getCall(0).args[0];
+      assert.deepStrictEqual(actualRequest, request);
+      const actualHeaderRequestParams = (
+        client.innerApiCalls.updateApiDeployment as SinonStub
+      ).getCall(0).args[1].otherArgs.headers['x-goog-request-params'];
+      assert(actualHeaderRequestParams.includes(expectedHeaderRequestParams));
     });
 
     it('invokes updateApiDeployment with closed client', async () => {
@@ -2613,8 +2612,12 @@ describe('v1.RegistryClient', () => {
       const request = generateSampleMessage(
         new protos.google.cloud.apigeeregistry.v1.UpdateApiDeploymentRequest()
       );
-      request.apiDeployment = {};
-      request.apiDeployment.name = '';
+      request.apiDeployment ??= {};
+      const defaultValue1 = getTypeDefaultValue('UpdateApiDeploymentRequest', [
+        'apiDeployment',
+        'name',
+      ]);
+      request.apiDeployment.name = defaultValue1;
       const expectedError = new Error('The client has already been closed.');
       client.close();
       await assert.rejects(client.updateApiDeployment(request), expectedError);
@@ -2631,15 +2634,11 @@ describe('v1.RegistryClient', () => {
       const request = generateSampleMessage(
         new protos.google.cloud.apigeeregistry.v1.DeleteApiDeploymentRequest()
       );
-      request.name = '';
-      const expectedHeaderRequestParams = 'name=';
-      const expectedOptions = {
-        otherArgs: {
-          headers: {
-            'x-goog-request-params': expectedHeaderRequestParams,
-          },
-        },
-      };
+      const defaultValue1 = getTypeDefaultValue('DeleteApiDeploymentRequest', [
+        'name',
+      ]);
+      request.name = defaultValue1;
+      const expectedHeaderRequestParams = `name=${defaultValue1}`;
       const expectedResponse = generateSampleMessage(
         new protos.google.protobuf.Empty()
       );
@@ -2647,11 +2646,14 @@ describe('v1.RegistryClient', () => {
         stubSimpleCall(expectedResponse);
       const [response] = await client.deleteApiDeployment(request);
       assert.deepStrictEqual(response, expectedResponse);
-      assert(
-        (client.innerApiCalls.deleteApiDeployment as SinonStub)
-          .getCall(0)
-          .calledWith(request, expectedOptions, undefined)
-      );
+      const actualRequest = (
+        client.innerApiCalls.deleteApiDeployment as SinonStub
+      ).getCall(0).args[0];
+      assert.deepStrictEqual(actualRequest, request);
+      const actualHeaderRequestParams = (
+        client.innerApiCalls.deleteApiDeployment as SinonStub
+      ).getCall(0).args[1].otherArgs.headers['x-goog-request-params'];
+      assert(actualHeaderRequestParams.includes(expectedHeaderRequestParams));
     });
 
     it('invokes deleteApiDeployment without error using callback', async () => {
@@ -2663,15 +2665,11 @@ describe('v1.RegistryClient', () => {
       const request = generateSampleMessage(
         new protos.google.cloud.apigeeregistry.v1.DeleteApiDeploymentRequest()
       );
-      request.name = '';
-      const expectedHeaderRequestParams = 'name=';
-      const expectedOptions = {
-        otherArgs: {
-          headers: {
-            'x-goog-request-params': expectedHeaderRequestParams,
-          },
-        },
-      };
+      const defaultValue1 = getTypeDefaultValue('DeleteApiDeploymentRequest', [
+        'name',
+      ]);
+      request.name = defaultValue1;
+      const expectedHeaderRequestParams = `name=${defaultValue1}`;
       const expectedResponse = generateSampleMessage(
         new protos.google.protobuf.Empty()
       );
@@ -2694,11 +2692,14 @@ describe('v1.RegistryClient', () => {
       });
       const response = await promise;
       assert.deepStrictEqual(response, expectedResponse);
-      assert(
-        (client.innerApiCalls.deleteApiDeployment as SinonStub)
-          .getCall(0)
-          .calledWith(request, expectedOptions /*, callback defined above */)
-      );
+      const actualRequest = (
+        client.innerApiCalls.deleteApiDeployment as SinonStub
+      ).getCall(0).args[0];
+      assert.deepStrictEqual(actualRequest, request);
+      const actualHeaderRequestParams = (
+        client.innerApiCalls.deleteApiDeployment as SinonStub
+      ).getCall(0).args[1].otherArgs.headers['x-goog-request-params'];
+      assert(actualHeaderRequestParams.includes(expectedHeaderRequestParams));
     });
 
     it('invokes deleteApiDeployment with error', async () => {
@@ -2710,26 +2711,25 @@ describe('v1.RegistryClient', () => {
       const request = generateSampleMessage(
         new protos.google.cloud.apigeeregistry.v1.DeleteApiDeploymentRequest()
       );
-      request.name = '';
-      const expectedHeaderRequestParams = 'name=';
-      const expectedOptions = {
-        otherArgs: {
-          headers: {
-            'x-goog-request-params': expectedHeaderRequestParams,
-          },
-        },
-      };
+      const defaultValue1 = getTypeDefaultValue('DeleteApiDeploymentRequest', [
+        'name',
+      ]);
+      request.name = defaultValue1;
+      const expectedHeaderRequestParams = `name=${defaultValue1}`;
       const expectedError = new Error('expected');
       client.innerApiCalls.deleteApiDeployment = stubSimpleCall(
         undefined,
         expectedError
       );
       await assert.rejects(client.deleteApiDeployment(request), expectedError);
-      assert(
-        (client.innerApiCalls.deleteApiDeployment as SinonStub)
-          .getCall(0)
-          .calledWith(request, expectedOptions, undefined)
-      );
+      const actualRequest = (
+        client.innerApiCalls.deleteApiDeployment as SinonStub
+      ).getCall(0).args[0];
+      assert.deepStrictEqual(actualRequest, request);
+      const actualHeaderRequestParams = (
+        client.innerApiCalls.deleteApiDeployment as SinonStub
+      ).getCall(0).args[1].otherArgs.headers['x-goog-request-params'];
+      assert(actualHeaderRequestParams.includes(expectedHeaderRequestParams));
     });
 
     it('invokes deleteApiDeployment with closed client', async () => {
@@ -2741,7 +2741,10 @@ describe('v1.RegistryClient', () => {
       const request = generateSampleMessage(
         new protos.google.cloud.apigeeregistry.v1.DeleteApiDeploymentRequest()
       );
-      request.name = '';
+      const defaultValue1 = getTypeDefaultValue('DeleteApiDeploymentRequest', [
+        'name',
+      ]);
+      request.name = defaultValue1;
       const expectedError = new Error('The client has already been closed.');
       client.close();
       await assert.rejects(client.deleteApiDeployment(request), expectedError);
@@ -2758,15 +2761,12 @@ describe('v1.RegistryClient', () => {
       const request = generateSampleMessage(
         new protos.google.cloud.apigeeregistry.v1.TagApiDeploymentRevisionRequest()
       );
-      request.name = '';
-      const expectedHeaderRequestParams = 'name=';
-      const expectedOptions = {
-        otherArgs: {
-          headers: {
-            'x-goog-request-params': expectedHeaderRequestParams,
-          },
-        },
-      };
+      const defaultValue1 = getTypeDefaultValue(
+        'TagApiDeploymentRevisionRequest',
+        ['name']
+      );
+      request.name = defaultValue1;
+      const expectedHeaderRequestParams = `name=${defaultValue1}`;
       const expectedResponse = generateSampleMessage(
         new protos.google.cloud.apigeeregistry.v1.ApiDeployment()
       );
@@ -2774,11 +2774,14 @@ describe('v1.RegistryClient', () => {
         stubSimpleCall(expectedResponse);
       const [response] = await client.tagApiDeploymentRevision(request);
       assert.deepStrictEqual(response, expectedResponse);
-      assert(
-        (client.innerApiCalls.tagApiDeploymentRevision as SinonStub)
-          .getCall(0)
-          .calledWith(request, expectedOptions, undefined)
-      );
+      const actualRequest = (
+        client.innerApiCalls.tagApiDeploymentRevision as SinonStub
+      ).getCall(0).args[0];
+      assert.deepStrictEqual(actualRequest, request);
+      const actualHeaderRequestParams = (
+        client.innerApiCalls.tagApiDeploymentRevision as SinonStub
+      ).getCall(0).args[1].otherArgs.headers['x-goog-request-params'];
+      assert(actualHeaderRequestParams.includes(expectedHeaderRequestParams));
     });
 
     it('invokes tagApiDeploymentRevision without error using callback', async () => {
@@ -2790,15 +2793,12 @@ describe('v1.RegistryClient', () => {
       const request = generateSampleMessage(
         new protos.google.cloud.apigeeregistry.v1.TagApiDeploymentRevisionRequest()
       );
-      request.name = '';
-      const expectedHeaderRequestParams = 'name=';
-      const expectedOptions = {
-        otherArgs: {
-          headers: {
-            'x-goog-request-params': expectedHeaderRequestParams,
-          },
-        },
-      };
+      const defaultValue1 = getTypeDefaultValue(
+        'TagApiDeploymentRevisionRequest',
+        ['name']
+      );
+      request.name = defaultValue1;
+      const expectedHeaderRequestParams = `name=${defaultValue1}`;
       const expectedResponse = generateSampleMessage(
         new protos.google.cloud.apigeeregistry.v1.ApiDeployment()
       );
@@ -2821,11 +2821,14 @@ describe('v1.RegistryClient', () => {
       });
       const response = await promise;
       assert.deepStrictEqual(response, expectedResponse);
-      assert(
-        (client.innerApiCalls.tagApiDeploymentRevision as SinonStub)
-          .getCall(0)
-          .calledWith(request, expectedOptions /*, callback defined above */)
-      );
+      const actualRequest = (
+        client.innerApiCalls.tagApiDeploymentRevision as SinonStub
+      ).getCall(0).args[0];
+      assert.deepStrictEqual(actualRequest, request);
+      const actualHeaderRequestParams = (
+        client.innerApiCalls.tagApiDeploymentRevision as SinonStub
+      ).getCall(0).args[1].otherArgs.headers['x-goog-request-params'];
+      assert(actualHeaderRequestParams.includes(expectedHeaderRequestParams));
     });
 
     it('invokes tagApiDeploymentRevision with error', async () => {
@@ -2837,15 +2840,12 @@ describe('v1.RegistryClient', () => {
       const request = generateSampleMessage(
         new protos.google.cloud.apigeeregistry.v1.TagApiDeploymentRevisionRequest()
       );
-      request.name = '';
-      const expectedHeaderRequestParams = 'name=';
-      const expectedOptions = {
-        otherArgs: {
-          headers: {
-            'x-goog-request-params': expectedHeaderRequestParams,
-          },
-        },
-      };
+      const defaultValue1 = getTypeDefaultValue(
+        'TagApiDeploymentRevisionRequest',
+        ['name']
+      );
+      request.name = defaultValue1;
+      const expectedHeaderRequestParams = `name=${defaultValue1}`;
       const expectedError = new Error('expected');
       client.innerApiCalls.tagApiDeploymentRevision = stubSimpleCall(
         undefined,
@@ -2855,11 +2855,14 @@ describe('v1.RegistryClient', () => {
         client.tagApiDeploymentRevision(request),
         expectedError
       );
-      assert(
-        (client.innerApiCalls.tagApiDeploymentRevision as SinonStub)
-          .getCall(0)
-          .calledWith(request, expectedOptions, undefined)
-      );
+      const actualRequest = (
+        client.innerApiCalls.tagApiDeploymentRevision as SinonStub
+      ).getCall(0).args[0];
+      assert.deepStrictEqual(actualRequest, request);
+      const actualHeaderRequestParams = (
+        client.innerApiCalls.tagApiDeploymentRevision as SinonStub
+      ).getCall(0).args[1].otherArgs.headers['x-goog-request-params'];
+      assert(actualHeaderRequestParams.includes(expectedHeaderRequestParams));
     });
 
     it('invokes tagApiDeploymentRevision with closed client', async () => {
@@ -2871,7 +2874,11 @@ describe('v1.RegistryClient', () => {
       const request = generateSampleMessage(
         new protos.google.cloud.apigeeregistry.v1.TagApiDeploymentRevisionRequest()
       );
-      request.name = '';
+      const defaultValue1 = getTypeDefaultValue(
+        'TagApiDeploymentRevisionRequest',
+        ['name']
+      );
+      request.name = defaultValue1;
       const expectedError = new Error('The client has already been closed.');
       client.close();
       await assert.rejects(
@@ -2891,15 +2898,12 @@ describe('v1.RegistryClient', () => {
       const request = generateSampleMessage(
         new protos.google.cloud.apigeeregistry.v1.RollbackApiDeploymentRequest()
       );
-      request.name = '';
-      const expectedHeaderRequestParams = 'name=';
-      const expectedOptions = {
-        otherArgs: {
-          headers: {
-            'x-goog-request-params': expectedHeaderRequestParams,
-          },
-        },
-      };
+      const defaultValue1 = getTypeDefaultValue(
+        'RollbackApiDeploymentRequest',
+        ['name']
+      );
+      request.name = defaultValue1;
+      const expectedHeaderRequestParams = `name=${defaultValue1}`;
       const expectedResponse = generateSampleMessage(
         new protos.google.cloud.apigeeregistry.v1.ApiDeployment()
       );
@@ -2907,11 +2911,14 @@ describe('v1.RegistryClient', () => {
         stubSimpleCall(expectedResponse);
       const [response] = await client.rollbackApiDeployment(request);
       assert.deepStrictEqual(response, expectedResponse);
-      assert(
-        (client.innerApiCalls.rollbackApiDeployment as SinonStub)
-          .getCall(0)
-          .calledWith(request, expectedOptions, undefined)
-      );
+      const actualRequest = (
+        client.innerApiCalls.rollbackApiDeployment as SinonStub
+      ).getCall(0).args[0];
+      assert.deepStrictEqual(actualRequest, request);
+      const actualHeaderRequestParams = (
+        client.innerApiCalls.rollbackApiDeployment as SinonStub
+      ).getCall(0).args[1].otherArgs.headers['x-goog-request-params'];
+      assert(actualHeaderRequestParams.includes(expectedHeaderRequestParams));
     });
 
     it('invokes rollbackApiDeployment without error using callback', async () => {
@@ -2923,15 +2930,12 @@ describe('v1.RegistryClient', () => {
       const request = generateSampleMessage(
         new protos.google.cloud.apigeeregistry.v1.RollbackApiDeploymentRequest()
       );
-      request.name = '';
-      const expectedHeaderRequestParams = 'name=';
-      const expectedOptions = {
-        otherArgs: {
-          headers: {
-            'x-goog-request-params': expectedHeaderRequestParams,
-          },
-        },
-      };
+      const defaultValue1 = getTypeDefaultValue(
+        'RollbackApiDeploymentRequest',
+        ['name']
+      );
+      request.name = defaultValue1;
+      const expectedHeaderRequestParams = `name=${defaultValue1}`;
       const expectedResponse = generateSampleMessage(
         new protos.google.cloud.apigeeregistry.v1.ApiDeployment()
       );
@@ -2954,11 +2958,14 @@ describe('v1.RegistryClient', () => {
       });
       const response = await promise;
       assert.deepStrictEqual(response, expectedResponse);
-      assert(
-        (client.innerApiCalls.rollbackApiDeployment as SinonStub)
-          .getCall(0)
-          .calledWith(request, expectedOptions /*, callback defined above */)
-      );
+      const actualRequest = (
+        client.innerApiCalls.rollbackApiDeployment as SinonStub
+      ).getCall(0).args[0];
+      assert.deepStrictEqual(actualRequest, request);
+      const actualHeaderRequestParams = (
+        client.innerApiCalls.rollbackApiDeployment as SinonStub
+      ).getCall(0).args[1].otherArgs.headers['x-goog-request-params'];
+      assert(actualHeaderRequestParams.includes(expectedHeaderRequestParams));
     });
 
     it('invokes rollbackApiDeployment with error', async () => {
@@ -2970,15 +2977,12 @@ describe('v1.RegistryClient', () => {
       const request = generateSampleMessage(
         new protos.google.cloud.apigeeregistry.v1.RollbackApiDeploymentRequest()
       );
-      request.name = '';
-      const expectedHeaderRequestParams = 'name=';
-      const expectedOptions = {
-        otherArgs: {
-          headers: {
-            'x-goog-request-params': expectedHeaderRequestParams,
-          },
-        },
-      };
+      const defaultValue1 = getTypeDefaultValue(
+        'RollbackApiDeploymentRequest',
+        ['name']
+      );
+      request.name = defaultValue1;
+      const expectedHeaderRequestParams = `name=${defaultValue1}`;
       const expectedError = new Error('expected');
       client.innerApiCalls.rollbackApiDeployment = stubSimpleCall(
         undefined,
@@ -2988,11 +2992,14 @@ describe('v1.RegistryClient', () => {
         client.rollbackApiDeployment(request),
         expectedError
       );
-      assert(
-        (client.innerApiCalls.rollbackApiDeployment as SinonStub)
-          .getCall(0)
-          .calledWith(request, expectedOptions, undefined)
-      );
+      const actualRequest = (
+        client.innerApiCalls.rollbackApiDeployment as SinonStub
+      ).getCall(0).args[0];
+      assert.deepStrictEqual(actualRequest, request);
+      const actualHeaderRequestParams = (
+        client.innerApiCalls.rollbackApiDeployment as SinonStub
+      ).getCall(0).args[1].otherArgs.headers['x-goog-request-params'];
+      assert(actualHeaderRequestParams.includes(expectedHeaderRequestParams));
     });
 
     it('invokes rollbackApiDeployment with closed client', async () => {
@@ -3004,7 +3011,11 @@ describe('v1.RegistryClient', () => {
       const request = generateSampleMessage(
         new protos.google.cloud.apigeeregistry.v1.RollbackApiDeploymentRequest()
       );
-      request.name = '';
+      const defaultValue1 = getTypeDefaultValue(
+        'RollbackApiDeploymentRequest',
+        ['name']
+      );
+      request.name = defaultValue1;
       const expectedError = new Error('The client has already been closed.');
       client.close();
       await assert.rejects(
@@ -3024,15 +3035,12 @@ describe('v1.RegistryClient', () => {
       const request = generateSampleMessage(
         new protos.google.cloud.apigeeregistry.v1.DeleteApiDeploymentRevisionRequest()
       );
-      request.name = '';
-      const expectedHeaderRequestParams = 'name=';
-      const expectedOptions = {
-        otherArgs: {
-          headers: {
-            'x-goog-request-params': expectedHeaderRequestParams,
-          },
-        },
-      };
+      const defaultValue1 = getTypeDefaultValue(
+        'DeleteApiDeploymentRevisionRequest',
+        ['name']
+      );
+      request.name = defaultValue1;
+      const expectedHeaderRequestParams = `name=${defaultValue1}`;
       const expectedResponse = generateSampleMessage(
         new protos.google.cloud.apigeeregistry.v1.ApiDeployment()
       );
@@ -3040,11 +3048,14 @@ describe('v1.RegistryClient', () => {
         stubSimpleCall(expectedResponse);
       const [response] = await client.deleteApiDeploymentRevision(request);
       assert.deepStrictEqual(response, expectedResponse);
-      assert(
-        (client.innerApiCalls.deleteApiDeploymentRevision as SinonStub)
-          .getCall(0)
-          .calledWith(request, expectedOptions, undefined)
-      );
+      const actualRequest = (
+        client.innerApiCalls.deleteApiDeploymentRevision as SinonStub
+      ).getCall(0).args[0];
+      assert.deepStrictEqual(actualRequest, request);
+      const actualHeaderRequestParams = (
+        client.innerApiCalls.deleteApiDeploymentRevision as SinonStub
+      ).getCall(0).args[1].otherArgs.headers['x-goog-request-params'];
+      assert(actualHeaderRequestParams.includes(expectedHeaderRequestParams));
     });
 
     it('invokes deleteApiDeploymentRevision without error using callback', async () => {
@@ -3056,15 +3067,12 @@ describe('v1.RegistryClient', () => {
       const request = generateSampleMessage(
         new protos.google.cloud.apigeeregistry.v1.DeleteApiDeploymentRevisionRequest()
       );
-      request.name = '';
-      const expectedHeaderRequestParams = 'name=';
-      const expectedOptions = {
-        otherArgs: {
-          headers: {
-            'x-goog-request-params': expectedHeaderRequestParams,
-          },
-        },
-      };
+      const defaultValue1 = getTypeDefaultValue(
+        'DeleteApiDeploymentRevisionRequest',
+        ['name']
+      );
+      request.name = defaultValue1;
+      const expectedHeaderRequestParams = `name=${defaultValue1}`;
       const expectedResponse = generateSampleMessage(
         new protos.google.cloud.apigeeregistry.v1.ApiDeployment()
       );
@@ -3087,11 +3095,14 @@ describe('v1.RegistryClient', () => {
       });
       const response = await promise;
       assert.deepStrictEqual(response, expectedResponse);
-      assert(
-        (client.innerApiCalls.deleteApiDeploymentRevision as SinonStub)
-          .getCall(0)
-          .calledWith(request, expectedOptions /*, callback defined above */)
-      );
+      const actualRequest = (
+        client.innerApiCalls.deleteApiDeploymentRevision as SinonStub
+      ).getCall(0).args[0];
+      assert.deepStrictEqual(actualRequest, request);
+      const actualHeaderRequestParams = (
+        client.innerApiCalls.deleteApiDeploymentRevision as SinonStub
+      ).getCall(0).args[1].otherArgs.headers['x-goog-request-params'];
+      assert(actualHeaderRequestParams.includes(expectedHeaderRequestParams));
     });
 
     it('invokes deleteApiDeploymentRevision with error', async () => {
@@ -3103,15 +3114,12 @@ describe('v1.RegistryClient', () => {
       const request = generateSampleMessage(
         new protos.google.cloud.apigeeregistry.v1.DeleteApiDeploymentRevisionRequest()
       );
-      request.name = '';
-      const expectedHeaderRequestParams = 'name=';
-      const expectedOptions = {
-        otherArgs: {
-          headers: {
-            'x-goog-request-params': expectedHeaderRequestParams,
-          },
-        },
-      };
+      const defaultValue1 = getTypeDefaultValue(
+        'DeleteApiDeploymentRevisionRequest',
+        ['name']
+      );
+      request.name = defaultValue1;
+      const expectedHeaderRequestParams = `name=${defaultValue1}`;
       const expectedError = new Error('expected');
       client.innerApiCalls.deleteApiDeploymentRevision = stubSimpleCall(
         undefined,
@@ -3121,11 +3129,14 @@ describe('v1.RegistryClient', () => {
         client.deleteApiDeploymentRevision(request),
         expectedError
       );
-      assert(
-        (client.innerApiCalls.deleteApiDeploymentRevision as SinonStub)
-          .getCall(0)
-          .calledWith(request, expectedOptions, undefined)
-      );
+      const actualRequest = (
+        client.innerApiCalls.deleteApiDeploymentRevision as SinonStub
+      ).getCall(0).args[0];
+      assert.deepStrictEqual(actualRequest, request);
+      const actualHeaderRequestParams = (
+        client.innerApiCalls.deleteApiDeploymentRevision as SinonStub
+      ).getCall(0).args[1].otherArgs.headers['x-goog-request-params'];
+      assert(actualHeaderRequestParams.includes(expectedHeaderRequestParams));
     });
 
     it('invokes deleteApiDeploymentRevision with closed client', async () => {
@@ -3137,7 +3148,11 @@ describe('v1.RegistryClient', () => {
       const request = generateSampleMessage(
         new protos.google.cloud.apigeeregistry.v1.DeleteApiDeploymentRevisionRequest()
       );
-      request.name = '';
+      const defaultValue1 = getTypeDefaultValue(
+        'DeleteApiDeploymentRevisionRequest',
+        ['name']
+      );
+      request.name = defaultValue1;
       const expectedError = new Error('The client has already been closed.');
       client.close();
       await assert.rejects(
@@ -3157,26 +3172,23 @@ describe('v1.RegistryClient', () => {
       const request = generateSampleMessage(
         new protos.google.cloud.apigeeregistry.v1.GetArtifactRequest()
       );
-      request.name = '';
-      const expectedHeaderRequestParams = 'name=';
-      const expectedOptions = {
-        otherArgs: {
-          headers: {
-            'x-goog-request-params': expectedHeaderRequestParams,
-          },
-        },
-      };
+      const defaultValue1 = getTypeDefaultValue('GetArtifactRequest', ['name']);
+      request.name = defaultValue1;
+      const expectedHeaderRequestParams = `name=${defaultValue1}`;
       const expectedResponse = generateSampleMessage(
         new protos.google.cloud.apigeeregistry.v1.Artifact()
       );
       client.innerApiCalls.getArtifact = stubSimpleCall(expectedResponse);
       const [response] = await client.getArtifact(request);
       assert.deepStrictEqual(response, expectedResponse);
-      assert(
-        (client.innerApiCalls.getArtifact as SinonStub)
-          .getCall(0)
-          .calledWith(request, expectedOptions, undefined)
-      );
+      const actualRequest = (
+        client.innerApiCalls.getArtifact as SinonStub
+      ).getCall(0).args[0];
+      assert.deepStrictEqual(actualRequest, request);
+      const actualHeaderRequestParams = (
+        client.innerApiCalls.getArtifact as SinonStub
+      ).getCall(0).args[1].otherArgs.headers['x-goog-request-params'];
+      assert(actualHeaderRequestParams.includes(expectedHeaderRequestParams));
     });
 
     it('invokes getArtifact without error using callback', async () => {
@@ -3188,15 +3200,9 @@ describe('v1.RegistryClient', () => {
       const request = generateSampleMessage(
         new protos.google.cloud.apigeeregistry.v1.GetArtifactRequest()
       );
-      request.name = '';
-      const expectedHeaderRequestParams = 'name=';
-      const expectedOptions = {
-        otherArgs: {
-          headers: {
-            'x-goog-request-params': expectedHeaderRequestParams,
-          },
-        },
-      };
+      const defaultValue1 = getTypeDefaultValue('GetArtifactRequest', ['name']);
+      request.name = defaultValue1;
+      const expectedHeaderRequestParams = `name=${defaultValue1}`;
       const expectedResponse = generateSampleMessage(
         new protos.google.cloud.apigeeregistry.v1.Artifact()
       );
@@ -3219,11 +3225,14 @@ describe('v1.RegistryClient', () => {
       });
       const response = await promise;
       assert.deepStrictEqual(response, expectedResponse);
-      assert(
-        (client.innerApiCalls.getArtifact as SinonStub)
-          .getCall(0)
-          .calledWith(request, expectedOptions /*, callback defined above */)
-      );
+      const actualRequest = (
+        client.innerApiCalls.getArtifact as SinonStub
+      ).getCall(0).args[0];
+      assert.deepStrictEqual(actualRequest, request);
+      const actualHeaderRequestParams = (
+        client.innerApiCalls.getArtifact as SinonStub
+      ).getCall(0).args[1].otherArgs.headers['x-goog-request-params'];
+      assert(actualHeaderRequestParams.includes(expectedHeaderRequestParams));
     });
 
     it('invokes getArtifact with error', async () => {
@@ -3235,26 +3244,23 @@ describe('v1.RegistryClient', () => {
       const request = generateSampleMessage(
         new protos.google.cloud.apigeeregistry.v1.GetArtifactRequest()
       );
-      request.name = '';
-      const expectedHeaderRequestParams = 'name=';
-      const expectedOptions = {
-        otherArgs: {
-          headers: {
-            'x-goog-request-params': expectedHeaderRequestParams,
-          },
-        },
-      };
+      const defaultValue1 = getTypeDefaultValue('GetArtifactRequest', ['name']);
+      request.name = defaultValue1;
+      const expectedHeaderRequestParams = `name=${defaultValue1}`;
       const expectedError = new Error('expected');
       client.innerApiCalls.getArtifact = stubSimpleCall(
         undefined,
         expectedError
       );
       await assert.rejects(client.getArtifact(request), expectedError);
-      assert(
-        (client.innerApiCalls.getArtifact as SinonStub)
-          .getCall(0)
-          .calledWith(request, expectedOptions, undefined)
-      );
+      const actualRequest = (
+        client.innerApiCalls.getArtifact as SinonStub
+      ).getCall(0).args[0];
+      assert.deepStrictEqual(actualRequest, request);
+      const actualHeaderRequestParams = (
+        client.innerApiCalls.getArtifact as SinonStub
+      ).getCall(0).args[1].otherArgs.headers['x-goog-request-params'];
+      assert(actualHeaderRequestParams.includes(expectedHeaderRequestParams));
     });
 
     it('invokes getArtifact with closed client', async () => {
@@ -3266,7 +3272,8 @@ describe('v1.RegistryClient', () => {
       const request = generateSampleMessage(
         new protos.google.cloud.apigeeregistry.v1.GetArtifactRequest()
       );
-      request.name = '';
+      const defaultValue1 = getTypeDefaultValue('GetArtifactRequest', ['name']);
+      request.name = defaultValue1;
       const expectedError = new Error('The client has already been closed.');
       client.close();
       await assert.rejects(client.getArtifact(request), expectedError);
@@ -3283,15 +3290,11 @@ describe('v1.RegistryClient', () => {
       const request = generateSampleMessage(
         new protos.google.cloud.apigeeregistry.v1.GetArtifactContentsRequest()
       );
-      request.name = '';
-      const expectedHeaderRequestParams = 'name=';
-      const expectedOptions = {
-        otherArgs: {
-          headers: {
-            'x-goog-request-params': expectedHeaderRequestParams,
-          },
-        },
-      };
+      const defaultValue1 = getTypeDefaultValue('GetArtifactContentsRequest', [
+        'name',
+      ]);
+      request.name = defaultValue1;
+      const expectedHeaderRequestParams = `name=${defaultValue1}`;
       const expectedResponse = generateSampleMessage(
         new protos.google.api.HttpBody()
       );
@@ -3299,11 +3302,14 @@ describe('v1.RegistryClient', () => {
         stubSimpleCall(expectedResponse);
       const [response] = await client.getArtifactContents(request);
       assert.deepStrictEqual(response, expectedResponse);
-      assert(
-        (client.innerApiCalls.getArtifactContents as SinonStub)
-          .getCall(0)
-          .calledWith(request, expectedOptions, undefined)
-      );
+      const actualRequest = (
+        client.innerApiCalls.getArtifactContents as SinonStub
+      ).getCall(0).args[0];
+      assert.deepStrictEqual(actualRequest, request);
+      const actualHeaderRequestParams = (
+        client.innerApiCalls.getArtifactContents as SinonStub
+      ).getCall(0).args[1].otherArgs.headers['x-goog-request-params'];
+      assert(actualHeaderRequestParams.includes(expectedHeaderRequestParams));
     });
 
     it('invokes getArtifactContents without error using callback', async () => {
@@ -3315,15 +3321,11 @@ describe('v1.RegistryClient', () => {
       const request = generateSampleMessage(
         new protos.google.cloud.apigeeregistry.v1.GetArtifactContentsRequest()
       );
-      request.name = '';
-      const expectedHeaderRequestParams = 'name=';
-      const expectedOptions = {
-        otherArgs: {
-          headers: {
-            'x-goog-request-params': expectedHeaderRequestParams,
-          },
-        },
-      };
+      const defaultValue1 = getTypeDefaultValue('GetArtifactContentsRequest', [
+        'name',
+      ]);
+      request.name = defaultValue1;
+      const expectedHeaderRequestParams = `name=${defaultValue1}`;
       const expectedResponse = generateSampleMessage(
         new protos.google.api.HttpBody()
       );
@@ -3343,11 +3345,14 @@ describe('v1.RegistryClient', () => {
       });
       const response = await promise;
       assert.deepStrictEqual(response, expectedResponse);
-      assert(
-        (client.innerApiCalls.getArtifactContents as SinonStub)
-          .getCall(0)
-          .calledWith(request, expectedOptions /*, callback defined above */)
-      );
+      const actualRequest = (
+        client.innerApiCalls.getArtifactContents as SinonStub
+      ).getCall(0).args[0];
+      assert.deepStrictEqual(actualRequest, request);
+      const actualHeaderRequestParams = (
+        client.innerApiCalls.getArtifactContents as SinonStub
+      ).getCall(0).args[1].otherArgs.headers['x-goog-request-params'];
+      assert(actualHeaderRequestParams.includes(expectedHeaderRequestParams));
     });
 
     it('invokes getArtifactContents with error', async () => {
@@ -3359,26 +3364,25 @@ describe('v1.RegistryClient', () => {
       const request = generateSampleMessage(
         new protos.google.cloud.apigeeregistry.v1.GetArtifactContentsRequest()
       );
-      request.name = '';
-      const expectedHeaderRequestParams = 'name=';
-      const expectedOptions = {
-        otherArgs: {
-          headers: {
-            'x-goog-request-params': expectedHeaderRequestParams,
-          },
-        },
-      };
+      const defaultValue1 = getTypeDefaultValue('GetArtifactContentsRequest', [
+        'name',
+      ]);
+      request.name = defaultValue1;
+      const expectedHeaderRequestParams = `name=${defaultValue1}`;
       const expectedError = new Error('expected');
       client.innerApiCalls.getArtifactContents = stubSimpleCall(
         undefined,
         expectedError
       );
       await assert.rejects(client.getArtifactContents(request), expectedError);
-      assert(
-        (client.innerApiCalls.getArtifactContents as SinonStub)
-          .getCall(0)
-          .calledWith(request, expectedOptions, undefined)
-      );
+      const actualRequest = (
+        client.innerApiCalls.getArtifactContents as SinonStub
+      ).getCall(0).args[0];
+      assert.deepStrictEqual(actualRequest, request);
+      const actualHeaderRequestParams = (
+        client.innerApiCalls.getArtifactContents as SinonStub
+      ).getCall(0).args[1].otherArgs.headers['x-goog-request-params'];
+      assert(actualHeaderRequestParams.includes(expectedHeaderRequestParams));
     });
 
     it('invokes getArtifactContents with closed client', async () => {
@@ -3390,7 +3394,10 @@ describe('v1.RegistryClient', () => {
       const request = generateSampleMessage(
         new protos.google.cloud.apigeeregistry.v1.GetArtifactContentsRequest()
       );
-      request.name = '';
+      const defaultValue1 = getTypeDefaultValue('GetArtifactContentsRequest', [
+        'name',
+      ]);
+      request.name = defaultValue1;
       const expectedError = new Error('The client has already been closed.');
       client.close();
       await assert.rejects(client.getArtifactContents(request), expectedError);
@@ -3407,26 +3414,25 @@ describe('v1.RegistryClient', () => {
       const request = generateSampleMessage(
         new protos.google.cloud.apigeeregistry.v1.CreateArtifactRequest()
       );
-      request.parent = '';
-      const expectedHeaderRequestParams = 'parent=';
-      const expectedOptions = {
-        otherArgs: {
-          headers: {
-            'x-goog-request-params': expectedHeaderRequestParams,
-          },
-        },
-      };
+      const defaultValue1 = getTypeDefaultValue('CreateArtifactRequest', [
+        'parent',
+      ]);
+      request.parent = defaultValue1;
+      const expectedHeaderRequestParams = `parent=${defaultValue1}`;
       const expectedResponse = generateSampleMessage(
         new protos.google.cloud.apigeeregistry.v1.Artifact()
       );
       client.innerApiCalls.createArtifact = stubSimpleCall(expectedResponse);
       const [response] = await client.createArtifact(request);
       assert.deepStrictEqual(response, expectedResponse);
-      assert(
-        (client.innerApiCalls.createArtifact as SinonStub)
-          .getCall(0)
-          .calledWith(request, expectedOptions, undefined)
-      );
+      const actualRequest = (
+        client.innerApiCalls.createArtifact as SinonStub
+      ).getCall(0).args[0];
+      assert.deepStrictEqual(actualRequest, request);
+      const actualHeaderRequestParams = (
+        client.innerApiCalls.createArtifact as SinonStub
+      ).getCall(0).args[1].otherArgs.headers['x-goog-request-params'];
+      assert(actualHeaderRequestParams.includes(expectedHeaderRequestParams));
     });
 
     it('invokes createArtifact without error using callback', async () => {
@@ -3438,15 +3444,11 @@ describe('v1.RegistryClient', () => {
       const request = generateSampleMessage(
         new protos.google.cloud.apigeeregistry.v1.CreateArtifactRequest()
       );
-      request.parent = '';
-      const expectedHeaderRequestParams = 'parent=';
-      const expectedOptions = {
-        otherArgs: {
-          headers: {
-            'x-goog-request-params': expectedHeaderRequestParams,
-          },
-        },
-      };
+      const defaultValue1 = getTypeDefaultValue('CreateArtifactRequest', [
+        'parent',
+      ]);
+      request.parent = defaultValue1;
+      const expectedHeaderRequestParams = `parent=${defaultValue1}`;
       const expectedResponse = generateSampleMessage(
         new protos.google.cloud.apigeeregistry.v1.Artifact()
       );
@@ -3469,11 +3471,14 @@ describe('v1.RegistryClient', () => {
       });
       const response = await promise;
       assert.deepStrictEqual(response, expectedResponse);
-      assert(
-        (client.innerApiCalls.createArtifact as SinonStub)
-          .getCall(0)
-          .calledWith(request, expectedOptions /*, callback defined above */)
-      );
+      const actualRequest = (
+        client.innerApiCalls.createArtifact as SinonStub
+      ).getCall(0).args[0];
+      assert.deepStrictEqual(actualRequest, request);
+      const actualHeaderRequestParams = (
+        client.innerApiCalls.createArtifact as SinonStub
+      ).getCall(0).args[1].otherArgs.headers['x-goog-request-params'];
+      assert(actualHeaderRequestParams.includes(expectedHeaderRequestParams));
     });
 
     it('invokes createArtifact with error', async () => {
@@ -3485,26 +3490,25 @@ describe('v1.RegistryClient', () => {
       const request = generateSampleMessage(
         new protos.google.cloud.apigeeregistry.v1.CreateArtifactRequest()
       );
-      request.parent = '';
-      const expectedHeaderRequestParams = 'parent=';
-      const expectedOptions = {
-        otherArgs: {
-          headers: {
-            'x-goog-request-params': expectedHeaderRequestParams,
-          },
-        },
-      };
+      const defaultValue1 = getTypeDefaultValue('CreateArtifactRequest', [
+        'parent',
+      ]);
+      request.parent = defaultValue1;
+      const expectedHeaderRequestParams = `parent=${defaultValue1}`;
       const expectedError = new Error('expected');
       client.innerApiCalls.createArtifact = stubSimpleCall(
         undefined,
         expectedError
       );
       await assert.rejects(client.createArtifact(request), expectedError);
-      assert(
-        (client.innerApiCalls.createArtifact as SinonStub)
-          .getCall(0)
-          .calledWith(request, expectedOptions, undefined)
-      );
+      const actualRequest = (
+        client.innerApiCalls.createArtifact as SinonStub
+      ).getCall(0).args[0];
+      assert.deepStrictEqual(actualRequest, request);
+      const actualHeaderRequestParams = (
+        client.innerApiCalls.createArtifact as SinonStub
+      ).getCall(0).args[1].otherArgs.headers['x-goog-request-params'];
+      assert(actualHeaderRequestParams.includes(expectedHeaderRequestParams));
     });
 
     it('invokes createArtifact with closed client', async () => {
@@ -3516,7 +3520,10 @@ describe('v1.RegistryClient', () => {
       const request = generateSampleMessage(
         new protos.google.cloud.apigeeregistry.v1.CreateArtifactRequest()
       );
-      request.parent = '';
+      const defaultValue1 = getTypeDefaultValue('CreateArtifactRequest', [
+        'parent',
+      ]);
+      request.parent = defaultValue1;
       const expectedError = new Error('The client has already been closed.');
       client.close();
       await assert.rejects(client.createArtifact(request), expectedError);
@@ -3533,27 +3540,27 @@ describe('v1.RegistryClient', () => {
       const request = generateSampleMessage(
         new protos.google.cloud.apigeeregistry.v1.ReplaceArtifactRequest()
       );
-      request.artifact = {};
-      request.artifact.name = '';
-      const expectedHeaderRequestParams = 'artifact.name=';
-      const expectedOptions = {
-        otherArgs: {
-          headers: {
-            'x-goog-request-params': expectedHeaderRequestParams,
-          },
-        },
-      };
+      request.artifact ??= {};
+      const defaultValue1 = getTypeDefaultValue('ReplaceArtifactRequest', [
+        'artifact',
+        'name',
+      ]);
+      request.artifact.name = defaultValue1;
+      const expectedHeaderRequestParams = `artifact.name=${defaultValue1}`;
       const expectedResponse = generateSampleMessage(
         new protos.google.cloud.apigeeregistry.v1.Artifact()
       );
       client.innerApiCalls.replaceArtifact = stubSimpleCall(expectedResponse);
       const [response] = await client.replaceArtifact(request);
       assert.deepStrictEqual(response, expectedResponse);
-      assert(
-        (client.innerApiCalls.replaceArtifact as SinonStub)
-          .getCall(0)
-          .calledWith(request, expectedOptions, undefined)
-      );
+      const actualRequest = (
+        client.innerApiCalls.replaceArtifact as SinonStub
+      ).getCall(0).args[0];
+      assert.deepStrictEqual(actualRequest, request);
+      const actualHeaderRequestParams = (
+        client.innerApiCalls.replaceArtifact as SinonStub
+      ).getCall(0).args[1].otherArgs.headers['x-goog-request-params'];
+      assert(actualHeaderRequestParams.includes(expectedHeaderRequestParams));
     });
 
     it('invokes replaceArtifact without error using callback', async () => {
@@ -3565,16 +3572,13 @@ describe('v1.RegistryClient', () => {
       const request = generateSampleMessage(
         new protos.google.cloud.apigeeregistry.v1.ReplaceArtifactRequest()
       );
-      request.artifact = {};
-      request.artifact.name = '';
-      const expectedHeaderRequestParams = 'artifact.name=';
-      const expectedOptions = {
-        otherArgs: {
-          headers: {
-            'x-goog-request-params': expectedHeaderRequestParams,
-          },
-        },
-      };
+      request.artifact ??= {};
+      const defaultValue1 = getTypeDefaultValue('ReplaceArtifactRequest', [
+        'artifact',
+        'name',
+      ]);
+      request.artifact.name = defaultValue1;
+      const expectedHeaderRequestParams = `artifact.name=${defaultValue1}`;
       const expectedResponse = generateSampleMessage(
         new protos.google.cloud.apigeeregistry.v1.Artifact()
       );
@@ -3597,11 +3601,14 @@ describe('v1.RegistryClient', () => {
       });
       const response = await promise;
       assert.deepStrictEqual(response, expectedResponse);
-      assert(
-        (client.innerApiCalls.replaceArtifact as SinonStub)
-          .getCall(0)
-          .calledWith(request, expectedOptions /*, callback defined above */)
-      );
+      const actualRequest = (
+        client.innerApiCalls.replaceArtifact as SinonStub
+      ).getCall(0).args[0];
+      assert.deepStrictEqual(actualRequest, request);
+      const actualHeaderRequestParams = (
+        client.innerApiCalls.replaceArtifact as SinonStub
+      ).getCall(0).args[1].otherArgs.headers['x-goog-request-params'];
+      assert(actualHeaderRequestParams.includes(expectedHeaderRequestParams));
     });
 
     it('invokes replaceArtifact with error', async () => {
@@ -3613,27 +3620,27 @@ describe('v1.RegistryClient', () => {
       const request = generateSampleMessage(
         new protos.google.cloud.apigeeregistry.v1.ReplaceArtifactRequest()
       );
-      request.artifact = {};
-      request.artifact.name = '';
-      const expectedHeaderRequestParams = 'artifact.name=';
-      const expectedOptions = {
-        otherArgs: {
-          headers: {
-            'x-goog-request-params': expectedHeaderRequestParams,
-          },
-        },
-      };
+      request.artifact ??= {};
+      const defaultValue1 = getTypeDefaultValue('ReplaceArtifactRequest', [
+        'artifact',
+        'name',
+      ]);
+      request.artifact.name = defaultValue1;
+      const expectedHeaderRequestParams = `artifact.name=${defaultValue1}`;
       const expectedError = new Error('expected');
       client.innerApiCalls.replaceArtifact = stubSimpleCall(
         undefined,
         expectedError
       );
       await assert.rejects(client.replaceArtifact(request), expectedError);
-      assert(
-        (client.innerApiCalls.replaceArtifact as SinonStub)
-          .getCall(0)
-          .calledWith(request, expectedOptions, undefined)
-      );
+      const actualRequest = (
+        client.innerApiCalls.replaceArtifact as SinonStub
+      ).getCall(0).args[0];
+      assert.deepStrictEqual(actualRequest, request);
+      const actualHeaderRequestParams = (
+        client.innerApiCalls.replaceArtifact as SinonStub
+      ).getCall(0).args[1].otherArgs.headers['x-goog-request-params'];
+      assert(actualHeaderRequestParams.includes(expectedHeaderRequestParams));
     });
 
     it('invokes replaceArtifact with closed client', async () => {
@@ -3645,8 +3652,12 @@ describe('v1.RegistryClient', () => {
       const request = generateSampleMessage(
         new protos.google.cloud.apigeeregistry.v1.ReplaceArtifactRequest()
       );
-      request.artifact = {};
-      request.artifact.name = '';
+      request.artifact ??= {};
+      const defaultValue1 = getTypeDefaultValue('ReplaceArtifactRequest', [
+        'artifact',
+        'name',
+      ]);
+      request.artifact.name = defaultValue1;
       const expectedError = new Error('The client has already been closed.');
       client.close();
       await assert.rejects(client.replaceArtifact(request), expectedError);
@@ -3663,26 +3674,25 @@ describe('v1.RegistryClient', () => {
       const request = generateSampleMessage(
         new protos.google.cloud.apigeeregistry.v1.DeleteArtifactRequest()
       );
-      request.name = '';
-      const expectedHeaderRequestParams = 'name=';
-      const expectedOptions = {
-        otherArgs: {
-          headers: {
-            'x-goog-request-params': expectedHeaderRequestParams,
-          },
-        },
-      };
+      const defaultValue1 = getTypeDefaultValue('DeleteArtifactRequest', [
+        'name',
+      ]);
+      request.name = defaultValue1;
+      const expectedHeaderRequestParams = `name=${defaultValue1}`;
       const expectedResponse = generateSampleMessage(
         new protos.google.protobuf.Empty()
       );
       client.innerApiCalls.deleteArtifact = stubSimpleCall(expectedResponse);
       const [response] = await client.deleteArtifact(request);
       assert.deepStrictEqual(response, expectedResponse);
-      assert(
-        (client.innerApiCalls.deleteArtifact as SinonStub)
-          .getCall(0)
-          .calledWith(request, expectedOptions, undefined)
-      );
+      const actualRequest = (
+        client.innerApiCalls.deleteArtifact as SinonStub
+      ).getCall(0).args[0];
+      assert.deepStrictEqual(actualRequest, request);
+      const actualHeaderRequestParams = (
+        client.innerApiCalls.deleteArtifact as SinonStub
+      ).getCall(0).args[1].otherArgs.headers['x-goog-request-params'];
+      assert(actualHeaderRequestParams.includes(expectedHeaderRequestParams));
     });
 
     it('invokes deleteArtifact without error using callback', async () => {
@@ -3694,15 +3704,11 @@ describe('v1.RegistryClient', () => {
       const request = generateSampleMessage(
         new protos.google.cloud.apigeeregistry.v1.DeleteArtifactRequest()
       );
-      request.name = '';
-      const expectedHeaderRequestParams = 'name=';
-      const expectedOptions = {
-        otherArgs: {
-          headers: {
-            'x-goog-request-params': expectedHeaderRequestParams,
-          },
-        },
-      };
+      const defaultValue1 = getTypeDefaultValue('DeleteArtifactRequest', [
+        'name',
+      ]);
+      request.name = defaultValue1;
+      const expectedHeaderRequestParams = `name=${defaultValue1}`;
       const expectedResponse = generateSampleMessage(
         new protos.google.protobuf.Empty()
       );
@@ -3725,11 +3731,14 @@ describe('v1.RegistryClient', () => {
       });
       const response = await promise;
       assert.deepStrictEqual(response, expectedResponse);
-      assert(
-        (client.innerApiCalls.deleteArtifact as SinonStub)
-          .getCall(0)
-          .calledWith(request, expectedOptions /*, callback defined above */)
-      );
+      const actualRequest = (
+        client.innerApiCalls.deleteArtifact as SinonStub
+      ).getCall(0).args[0];
+      assert.deepStrictEqual(actualRequest, request);
+      const actualHeaderRequestParams = (
+        client.innerApiCalls.deleteArtifact as SinonStub
+      ).getCall(0).args[1].otherArgs.headers['x-goog-request-params'];
+      assert(actualHeaderRequestParams.includes(expectedHeaderRequestParams));
     });
 
     it('invokes deleteArtifact with error', async () => {
@@ -3741,26 +3750,25 @@ describe('v1.RegistryClient', () => {
       const request = generateSampleMessage(
         new protos.google.cloud.apigeeregistry.v1.DeleteArtifactRequest()
       );
-      request.name = '';
-      const expectedHeaderRequestParams = 'name=';
-      const expectedOptions = {
-        otherArgs: {
-          headers: {
-            'x-goog-request-params': expectedHeaderRequestParams,
-          },
-        },
-      };
+      const defaultValue1 = getTypeDefaultValue('DeleteArtifactRequest', [
+        'name',
+      ]);
+      request.name = defaultValue1;
+      const expectedHeaderRequestParams = `name=${defaultValue1}`;
       const expectedError = new Error('expected');
       client.innerApiCalls.deleteArtifact = stubSimpleCall(
         undefined,
         expectedError
       );
       await assert.rejects(client.deleteArtifact(request), expectedError);
-      assert(
-        (client.innerApiCalls.deleteArtifact as SinonStub)
-          .getCall(0)
-          .calledWith(request, expectedOptions, undefined)
-      );
+      const actualRequest = (
+        client.innerApiCalls.deleteArtifact as SinonStub
+      ).getCall(0).args[0];
+      assert.deepStrictEqual(actualRequest, request);
+      const actualHeaderRequestParams = (
+        client.innerApiCalls.deleteArtifact as SinonStub
+      ).getCall(0).args[1].otherArgs.headers['x-goog-request-params'];
+      assert(actualHeaderRequestParams.includes(expectedHeaderRequestParams));
     });
 
     it('invokes deleteArtifact with closed client', async () => {
@@ -3772,7 +3780,10 @@ describe('v1.RegistryClient', () => {
       const request = generateSampleMessage(
         new protos.google.cloud.apigeeregistry.v1.DeleteArtifactRequest()
       );
-      request.name = '';
+      const defaultValue1 = getTypeDefaultValue('DeleteArtifactRequest', [
+        'name',
+      ]);
+      request.name = defaultValue1;
       const expectedError = new Error('The client has already been closed.');
       client.close();
       await assert.rejects(client.deleteArtifact(request), expectedError);
@@ -3789,15 +3800,9 @@ describe('v1.RegistryClient', () => {
       const request = generateSampleMessage(
         new protos.google.cloud.apigeeregistry.v1.ListApisRequest()
       );
-      request.parent = '';
-      const expectedHeaderRequestParams = 'parent=';
-      const expectedOptions = {
-        otherArgs: {
-          headers: {
-            'x-goog-request-params': expectedHeaderRequestParams,
-          },
-        },
-      };
+      const defaultValue1 = getTypeDefaultValue('ListApisRequest', ['parent']);
+      request.parent = defaultValue1;
+      const expectedHeaderRequestParams = `parent=${defaultValue1}`;
       const expectedResponse = [
         generateSampleMessage(new protos.google.cloud.apigeeregistry.v1.Api()),
         generateSampleMessage(new protos.google.cloud.apigeeregistry.v1.Api()),
@@ -3806,11 +3811,14 @@ describe('v1.RegistryClient', () => {
       client.innerApiCalls.listApis = stubSimpleCall(expectedResponse);
       const [response] = await client.listApis(request);
       assert.deepStrictEqual(response, expectedResponse);
-      assert(
-        (client.innerApiCalls.listApis as SinonStub)
-          .getCall(0)
-          .calledWith(request, expectedOptions, undefined)
-      );
+      const actualRequest = (
+        client.innerApiCalls.listApis as SinonStub
+      ).getCall(0).args[0];
+      assert.deepStrictEqual(actualRequest, request);
+      const actualHeaderRequestParams = (
+        client.innerApiCalls.listApis as SinonStub
+      ).getCall(0).args[1].otherArgs.headers['x-goog-request-params'];
+      assert(actualHeaderRequestParams.includes(expectedHeaderRequestParams));
     });
 
     it('invokes listApis without error using callback', async () => {
@@ -3822,15 +3830,9 @@ describe('v1.RegistryClient', () => {
       const request = generateSampleMessage(
         new protos.google.cloud.apigeeregistry.v1.ListApisRequest()
       );
-      request.parent = '';
-      const expectedHeaderRequestParams = 'parent=';
-      const expectedOptions = {
-        otherArgs: {
-          headers: {
-            'x-goog-request-params': expectedHeaderRequestParams,
-          },
-        },
-      };
+      const defaultValue1 = getTypeDefaultValue('ListApisRequest', ['parent']);
+      request.parent = defaultValue1;
+      const expectedHeaderRequestParams = `parent=${defaultValue1}`;
       const expectedResponse = [
         generateSampleMessage(new protos.google.cloud.apigeeregistry.v1.Api()),
         generateSampleMessage(new protos.google.cloud.apigeeregistry.v1.Api()),
@@ -3855,11 +3857,14 @@ describe('v1.RegistryClient', () => {
       });
       const response = await promise;
       assert.deepStrictEqual(response, expectedResponse);
-      assert(
-        (client.innerApiCalls.listApis as SinonStub)
-          .getCall(0)
-          .calledWith(request, expectedOptions /*, callback defined above */)
-      );
+      const actualRequest = (
+        client.innerApiCalls.listApis as SinonStub
+      ).getCall(0).args[0];
+      assert.deepStrictEqual(actualRequest, request);
+      const actualHeaderRequestParams = (
+        client.innerApiCalls.listApis as SinonStub
+      ).getCall(0).args[1].otherArgs.headers['x-goog-request-params'];
+      assert(actualHeaderRequestParams.includes(expectedHeaderRequestParams));
     });
 
     it('invokes listApis with error', async () => {
@@ -3871,23 +3876,20 @@ describe('v1.RegistryClient', () => {
       const request = generateSampleMessage(
         new protos.google.cloud.apigeeregistry.v1.ListApisRequest()
       );
-      request.parent = '';
-      const expectedHeaderRequestParams = 'parent=';
-      const expectedOptions = {
-        otherArgs: {
-          headers: {
-            'x-goog-request-params': expectedHeaderRequestParams,
-          },
-        },
-      };
+      const defaultValue1 = getTypeDefaultValue('ListApisRequest', ['parent']);
+      request.parent = defaultValue1;
+      const expectedHeaderRequestParams = `parent=${defaultValue1}`;
       const expectedError = new Error('expected');
       client.innerApiCalls.listApis = stubSimpleCall(undefined, expectedError);
       await assert.rejects(client.listApis(request), expectedError);
-      assert(
-        (client.innerApiCalls.listApis as SinonStub)
-          .getCall(0)
-          .calledWith(request, expectedOptions, undefined)
-      );
+      const actualRequest = (
+        client.innerApiCalls.listApis as SinonStub
+      ).getCall(0).args[0];
+      assert.deepStrictEqual(actualRequest, request);
+      const actualHeaderRequestParams = (
+        client.innerApiCalls.listApis as SinonStub
+      ).getCall(0).args[1].otherArgs.headers['x-goog-request-params'];
+      assert(actualHeaderRequestParams.includes(expectedHeaderRequestParams));
     });
 
     it('invokes listApisStream without error', async () => {
@@ -3899,8 +3901,9 @@ describe('v1.RegistryClient', () => {
       const request = generateSampleMessage(
         new protos.google.cloud.apigeeregistry.v1.ListApisRequest()
       );
-      request.parent = '';
-      const expectedHeaderRequestParams = 'parent=';
+      const defaultValue1 = getTypeDefaultValue('ListApisRequest', ['parent']);
+      request.parent = defaultValue1;
+      const expectedHeaderRequestParams = `parent=${defaultValue1}`;
       const expectedResponse = [
         generateSampleMessage(new protos.google.cloud.apigeeregistry.v1.Api()),
         generateSampleMessage(new protos.google.cloud.apigeeregistry.v1.Api()),
@@ -3931,10 +3934,12 @@ describe('v1.RegistryClient', () => {
           .getCall(0)
           .calledWith(client.innerApiCalls.listApis, request)
       );
-      assert.strictEqual(
-        (client.descriptors.page.listApis.createStream as SinonStub).getCall(0)
-          .args[2].otherArgs.headers['x-goog-request-params'],
-        expectedHeaderRequestParams
+      assert(
+        (client.descriptors.page.listApis.createStream as SinonStub)
+          .getCall(0)
+          .args[2].otherArgs.headers['x-goog-request-params'].includes(
+            expectedHeaderRequestParams
+          )
       );
     });
 
@@ -3947,8 +3952,9 @@ describe('v1.RegistryClient', () => {
       const request = generateSampleMessage(
         new protos.google.cloud.apigeeregistry.v1.ListApisRequest()
       );
-      request.parent = '';
-      const expectedHeaderRequestParams = 'parent=';
+      const defaultValue1 = getTypeDefaultValue('ListApisRequest', ['parent']);
+      request.parent = defaultValue1;
+      const expectedHeaderRequestParams = `parent=${defaultValue1}`;
       const expectedError = new Error('expected');
       client.descriptors.page.listApis.createStream = stubPageStreamingCall(
         undefined,
@@ -3976,10 +3982,12 @@ describe('v1.RegistryClient', () => {
           .getCall(0)
           .calledWith(client.innerApiCalls.listApis, request)
       );
-      assert.strictEqual(
-        (client.descriptors.page.listApis.createStream as SinonStub).getCall(0)
-          .args[2].otherArgs.headers['x-goog-request-params'],
-        expectedHeaderRequestParams
+      assert(
+        (client.descriptors.page.listApis.createStream as SinonStub)
+          .getCall(0)
+          .args[2].otherArgs.headers['x-goog-request-params'].includes(
+            expectedHeaderRequestParams
+          )
       );
     });
 
@@ -3992,8 +4000,9 @@ describe('v1.RegistryClient', () => {
       const request = generateSampleMessage(
         new protos.google.cloud.apigeeregistry.v1.ListApisRequest()
       );
-      request.parent = '';
-      const expectedHeaderRequestParams = 'parent=';
+      const defaultValue1 = getTypeDefaultValue('ListApisRequest', ['parent']);
+      request.parent = defaultValue1;
+      const expectedHeaderRequestParams = `parent=${defaultValue1}`;
       const expectedResponse = [
         generateSampleMessage(new protos.google.cloud.apigeeregistry.v1.Api()),
         generateSampleMessage(new protos.google.cloud.apigeeregistry.v1.Api()),
@@ -4012,10 +4021,12 @@ describe('v1.RegistryClient', () => {
           .args[1],
         request
       );
-      assert.strictEqual(
-        (client.descriptors.page.listApis.asyncIterate as SinonStub).getCall(0)
-          .args[2].otherArgs.headers['x-goog-request-params'],
-        expectedHeaderRequestParams
+      assert(
+        (client.descriptors.page.listApis.asyncIterate as SinonStub)
+          .getCall(0)
+          .args[2].otherArgs.headers['x-goog-request-params'].includes(
+            expectedHeaderRequestParams
+          )
       );
     });
 
@@ -4028,8 +4039,9 @@ describe('v1.RegistryClient', () => {
       const request = generateSampleMessage(
         new protos.google.cloud.apigeeregistry.v1.ListApisRequest()
       );
-      request.parent = '';
-      const expectedHeaderRequestParams = 'parent=';
+      const defaultValue1 = getTypeDefaultValue('ListApisRequest', ['parent']);
+      request.parent = defaultValue1;
+      const expectedHeaderRequestParams = `parent=${defaultValue1}`;
       const expectedError = new Error('expected');
       client.descriptors.page.listApis.asyncIterate = stubAsyncIterationCall(
         undefined,
@@ -4047,10 +4059,12 @@ describe('v1.RegistryClient', () => {
           .args[1],
         request
       );
-      assert.strictEqual(
-        (client.descriptors.page.listApis.asyncIterate as SinonStub).getCall(0)
-          .args[2].otherArgs.headers['x-goog-request-params'],
-        expectedHeaderRequestParams
+      assert(
+        (client.descriptors.page.listApis.asyncIterate as SinonStub)
+          .getCall(0)
+          .args[2].otherArgs.headers['x-goog-request-params'].includes(
+            expectedHeaderRequestParams
+          )
       );
     });
   });
@@ -4065,15 +4079,11 @@ describe('v1.RegistryClient', () => {
       const request = generateSampleMessage(
         new protos.google.cloud.apigeeregistry.v1.ListApiVersionsRequest()
       );
-      request.parent = '';
-      const expectedHeaderRequestParams = 'parent=';
-      const expectedOptions = {
-        otherArgs: {
-          headers: {
-            'x-goog-request-params': expectedHeaderRequestParams,
-          },
-        },
-      };
+      const defaultValue1 = getTypeDefaultValue('ListApiVersionsRequest', [
+        'parent',
+      ]);
+      request.parent = defaultValue1;
+      const expectedHeaderRequestParams = `parent=${defaultValue1}`;
       const expectedResponse = [
         generateSampleMessage(
           new protos.google.cloud.apigeeregistry.v1.ApiVersion()
@@ -4088,11 +4098,14 @@ describe('v1.RegistryClient', () => {
       client.innerApiCalls.listApiVersions = stubSimpleCall(expectedResponse);
       const [response] = await client.listApiVersions(request);
       assert.deepStrictEqual(response, expectedResponse);
-      assert(
-        (client.innerApiCalls.listApiVersions as SinonStub)
-          .getCall(0)
-          .calledWith(request, expectedOptions, undefined)
-      );
+      const actualRequest = (
+        client.innerApiCalls.listApiVersions as SinonStub
+      ).getCall(0).args[0];
+      assert.deepStrictEqual(actualRequest, request);
+      const actualHeaderRequestParams = (
+        client.innerApiCalls.listApiVersions as SinonStub
+      ).getCall(0).args[1].otherArgs.headers['x-goog-request-params'];
+      assert(actualHeaderRequestParams.includes(expectedHeaderRequestParams));
     });
 
     it('invokes listApiVersions without error using callback', async () => {
@@ -4104,15 +4117,11 @@ describe('v1.RegistryClient', () => {
       const request = generateSampleMessage(
         new protos.google.cloud.apigeeregistry.v1.ListApiVersionsRequest()
       );
-      request.parent = '';
-      const expectedHeaderRequestParams = 'parent=';
-      const expectedOptions = {
-        otherArgs: {
-          headers: {
-            'x-goog-request-params': expectedHeaderRequestParams,
-          },
-        },
-      };
+      const defaultValue1 = getTypeDefaultValue('ListApiVersionsRequest', [
+        'parent',
+      ]);
+      request.parent = defaultValue1;
+      const expectedHeaderRequestParams = `parent=${defaultValue1}`;
       const expectedResponse = [
         generateSampleMessage(
           new protos.google.cloud.apigeeregistry.v1.ApiVersion()
@@ -4143,11 +4152,14 @@ describe('v1.RegistryClient', () => {
       });
       const response = await promise;
       assert.deepStrictEqual(response, expectedResponse);
-      assert(
-        (client.innerApiCalls.listApiVersions as SinonStub)
-          .getCall(0)
-          .calledWith(request, expectedOptions /*, callback defined above */)
-      );
+      const actualRequest = (
+        client.innerApiCalls.listApiVersions as SinonStub
+      ).getCall(0).args[0];
+      assert.deepStrictEqual(actualRequest, request);
+      const actualHeaderRequestParams = (
+        client.innerApiCalls.listApiVersions as SinonStub
+      ).getCall(0).args[1].otherArgs.headers['x-goog-request-params'];
+      assert(actualHeaderRequestParams.includes(expectedHeaderRequestParams));
     });
 
     it('invokes listApiVersions with error', async () => {
@@ -4159,26 +4171,25 @@ describe('v1.RegistryClient', () => {
       const request = generateSampleMessage(
         new protos.google.cloud.apigeeregistry.v1.ListApiVersionsRequest()
       );
-      request.parent = '';
-      const expectedHeaderRequestParams = 'parent=';
-      const expectedOptions = {
-        otherArgs: {
-          headers: {
-            'x-goog-request-params': expectedHeaderRequestParams,
-          },
-        },
-      };
+      const defaultValue1 = getTypeDefaultValue('ListApiVersionsRequest', [
+        'parent',
+      ]);
+      request.parent = defaultValue1;
+      const expectedHeaderRequestParams = `parent=${defaultValue1}`;
       const expectedError = new Error('expected');
       client.innerApiCalls.listApiVersions = stubSimpleCall(
         undefined,
         expectedError
       );
       await assert.rejects(client.listApiVersions(request), expectedError);
-      assert(
-        (client.innerApiCalls.listApiVersions as SinonStub)
-          .getCall(0)
-          .calledWith(request, expectedOptions, undefined)
-      );
+      const actualRequest = (
+        client.innerApiCalls.listApiVersions as SinonStub
+      ).getCall(0).args[0];
+      assert.deepStrictEqual(actualRequest, request);
+      const actualHeaderRequestParams = (
+        client.innerApiCalls.listApiVersions as SinonStub
+      ).getCall(0).args[1].otherArgs.headers['x-goog-request-params'];
+      assert(actualHeaderRequestParams.includes(expectedHeaderRequestParams));
     });
 
     it('invokes listApiVersionsStream without error', async () => {
@@ -4190,8 +4201,11 @@ describe('v1.RegistryClient', () => {
       const request = generateSampleMessage(
         new protos.google.cloud.apigeeregistry.v1.ListApiVersionsRequest()
       );
-      request.parent = '';
-      const expectedHeaderRequestParams = 'parent=';
+      const defaultValue1 = getTypeDefaultValue('ListApiVersionsRequest', [
+        'parent',
+      ]);
+      request.parent = defaultValue1;
+      const expectedHeaderRequestParams = `parent=${defaultValue1}`;
       const expectedResponse = [
         generateSampleMessage(
           new protos.google.cloud.apigeeregistry.v1.ApiVersion()
@@ -4229,11 +4243,12 @@ describe('v1.RegistryClient', () => {
           .getCall(0)
           .calledWith(client.innerApiCalls.listApiVersions, request)
       );
-      assert.strictEqual(
-        (
-          client.descriptors.page.listApiVersions.createStream as SinonStub
-        ).getCall(0).args[2].otherArgs.headers['x-goog-request-params'],
-        expectedHeaderRequestParams
+      assert(
+        (client.descriptors.page.listApiVersions.createStream as SinonStub)
+          .getCall(0)
+          .args[2].otherArgs.headers['x-goog-request-params'].includes(
+            expectedHeaderRequestParams
+          )
       );
     });
 
@@ -4246,8 +4261,11 @@ describe('v1.RegistryClient', () => {
       const request = generateSampleMessage(
         new protos.google.cloud.apigeeregistry.v1.ListApiVersionsRequest()
       );
-      request.parent = '';
-      const expectedHeaderRequestParams = 'parent=';
+      const defaultValue1 = getTypeDefaultValue('ListApiVersionsRequest', [
+        'parent',
+      ]);
+      request.parent = defaultValue1;
+      const expectedHeaderRequestParams = `parent=${defaultValue1}`;
       const expectedError = new Error('expected');
       client.descriptors.page.listApiVersions.createStream =
         stubPageStreamingCall(undefined, expectedError);
@@ -4274,11 +4292,12 @@ describe('v1.RegistryClient', () => {
           .getCall(0)
           .calledWith(client.innerApiCalls.listApiVersions, request)
       );
-      assert.strictEqual(
-        (
-          client.descriptors.page.listApiVersions.createStream as SinonStub
-        ).getCall(0).args[2].otherArgs.headers['x-goog-request-params'],
-        expectedHeaderRequestParams
+      assert(
+        (client.descriptors.page.listApiVersions.createStream as SinonStub)
+          .getCall(0)
+          .args[2].otherArgs.headers['x-goog-request-params'].includes(
+            expectedHeaderRequestParams
+          )
       );
     });
 
@@ -4291,8 +4310,11 @@ describe('v1.RegistryClient', () => {
       const request = generateSampleMessage(
         new protos.google.cloud.apigeeregistry.v1.ListApiVersionsRequest()
       );
-      request.parent = '';
-      const expectedHeaderRequestParams = 'parent=';
+      const defaultValue1 = getTypeDefaultValue('ListApiVersionsRequest', [
+        'parent',
+      ]);
+      request.parent = defaultValue1;
+      const expectedHeaderRequestParams = `parent=${defaultValue1}`;
       const expectedResponse = [
         generateSampleMessage(
           new protos.google.cloud.apigeeregistry.v1.ApiVersion()
@@ -4318,11 +4340,12 @@ describe('v1.RegistryClient', () => {
         ).getCall(0).args[1],
         request
       );
-      assert.strictEqual(
-        (
-          client.descriptors.page.listApiVersions.asyncIterate as SinonStub
-        ).getCall(0).args[2].otherArgs.headers['x-goog-request-params'],
-        expectedHeaderRequestParams
+      assert(
+        (client.descriptors.page.listApiVersions.asyncIterate as SinonStub)
+          .getCall(0)
+          .args[2].otherArgs.headers['x-goog-request-params'].includes(
+            expectedHeaderRequestParams
+          )
       );
     });
 
@@ -4335,8 +4358,11 @@ describe('v1.RegistryClient', () => {
       const request = generateSampleMessage(
         new protos.google.cloud.apigeeregistry.v1.ListApiVersionsRequest()
       );
-      request.parent = '';
-      const expectedHeaderRequestParams = 'parent=';
+      const defaultValue1 = getTypeDefaultValue('ListApiVersionsRequest', [
+        'parent',
+      ]);
+      request.parent = defaultValue1;
+      const expectedHeaderRequestParams = `parent=${defaultValue1}`;
       const expectedError = new Error('expected');
       client.descriptors.page.listApiVersions.asyncIterate =
         stubAsyncIterationCall(undefined, expectedError);
@@ -4354,11 +4380,12 @@ describe('v1.RegistryClient', () => {
         ).getCall(0).args[1],
         request
       );
-      assert.strictEqual(
-        (
-          client.descriptors.page.listApiVersions.asyncIterate as SinonStub
-        ).getCall(0).args[2].otherArgs.headers['x-goog-request-params'],
-        expectedHeaderRequestParams
+      assert(
+        (client.descriptors.page.listApiVersions.asyncIterate as SinonStub)
+          .getCall(0)
+          .args[2].otherArgs.headers['x-goog-request-params'].includes(
+            expectedHeaderRequestParams
+          )
       );
     });
   });
@@ -4373,15 +4400,11 @@ describe('v1.RegistryClient', () => {
       const request = generateSampleMessage(
         new protos.google.cloud.apigeeregistry.v1.ListApiSpecsRequest()
       );
-      request.parent = '';
-      const expectedHeaderRequestParams = 'parent=';
-      const expectedOptions = {
-        otherArgs: {
-          headers: {
-            'x-goog-request-params': expectedHeaderRequestParams,
-          },
-        },
-      };
+      const defaultValue1 = getTypeDefaultValue('ListApiSpecsRequest', [
+        'parent',
+      ]);
+      request.parent = defaultValue1;
+      const expectedHeaderRequestParams = `parent=${defaultValue1}`;
       const expectedResponse = [
         generateSampleMessage(
           new protos.google.cloud.apigeeregistry.v1.ApiSpec()
@@ -4396,11 +4419,14 @@ describe('v1.RegistryClient', () => {
       client.innerApiCalls.listApiSpecs = stubSimpleCall(expectedResponse);
       const [response] = await client.listApiSpecs(request);
       assert.deepStrictEqual(response, expectedResponse);
-      assert(
-        (client.innerApiCalls.listApiSpecs as SinonStub)
-          .getCall(0)
-          .calledWith(request, expectedOptions, undefined)
-      );
+      const actualRequest = (
+        client.innerApiCalls.listApiSpecs as SinonStub
+      ).getCall(0).args[0];
+      assert.deepStrictEqual(actualRequest, request);
+      const actualHeaderRequestParams = (
+        client.innerApiCalls.listApiSpecs as SinonStub
+      ).getCall(0).args[1].otherArgs.headers['x-goog-request-params'];
+      assert(actualHeaderRequestParams.includes(expectedHeaderRequestParams));
     });
 
     it('invokes listApiSpecs without error using callback', async () => {
@@ -4412,15 +4438,11 @@ describe('v1.RegistryClient', () => {
       const request = generateSampleMessage(
         new protos.google.cloud.apigeeregistry.v1.ListApiSpecsRequest()
       );
-      request.parent = '';
-      const expectedHeaderRequestParams = 'parent=';
-      const expectedOptions = {
-        otherArgs: {
-          headers: {
-            'x-goog-request-params': expectedHeaderRequestParams,
-          },
-        },
-      };
+      const defaultValue1 = getTypeDefaultValue('ListApiSpecsRequest', [
+        'parent',
+      ]);
+      request.parent = defaultValue1;
+      const expectedHeaderRequestParams = `parent=${defaultValue1}`;
       const expectedResponse = [
         generateSampleMessage(
           new protos.google.cloud.apigeeregistry.v1.ApiSpec()
@@ -4451,11 +4473,14 @@ describe('v1.RegistryClient', () => {
       });
       const response = await promise;
       assert.deepStrictEqual(response, expectedResponse);
-      assert(
-        (client.innerApiCalls.listApiSpecs as SinonStub)
-          .getCall(0)
-          .calledWith(request, expectedOptions /*, callback defined above */)
-      );
+      const actualRequest = (
+        client.innerApiCalls.listApiSpecs as SinonStub
+      ).getCall(0).args[0];
+      assert.deepStrictEqual(actualRequest, request);
+      const actualHeaderRequestParams = (
+        client.innerApiCalls.listApiSpecs as SinonStub
+      ).getCall(0).args[1].otherArgs.headers['x-goog-request-params'];
+      assert(actualHeaderRequestParams.includes(expectedHeaderRequestParams));
     });
 
     it('invokes listApiSpecs with error', async () => {
@@ -4467,26 +4492,25 @@ describe('v1.RegistryClient', () => {
       const request = generateSampleMessage(
         new protos.google.cloud.apigeeregistry.v1.ListApiSpecsRequest()
       );
-      request.parent = '';
-      const expectedHeaderRequestParams = 'parent=';
-      const expectedOptions = {
-        otherArgs: {
-          headers: {
-            'x-goog-request-params': expectedHeaderRequestParams,
-          },
-        },
-      };
+      const defaultValue1 = getTypeDefaultValue('ListApiSpecsRequest', [
+        'parent',
+      ]);
+      request.parent = defaultValue1;
+      const expectedHeaderRequestParams = `parent=${defaultValue1}`;
       const expectedError = new Error('expected');
       client.innerApiCalls.listApiSpecs = stubSimpleCall(
         undefined,
         expectedError
       );
       await assert.rejects(client.listApiSpecs(request), expectedError);
-      assert(
-        (client.innerApiCalls.listApiSpecs as SinonStub)
-          .getCall(0)
-          .calledWith(request, expectedOptions, undefined)
-      );
+      const actualRequest = (
+        client.innerApiCalls.listApiSpecs as SinonStub
+      ).getCall(0).args[0];
+      assert.deepStrictEqual(actualRequest, request);
+      const actualHeaderRequestParams = (
+        client.innerApiCalls.listApiSpecs as SinonStub
+      ).getCall(0).args[1].otherArgs.headers['x-goog-request-params'];
+      assert(actualHeaderRequestParams.includes(expectedHeaderRequestParams));
     });
 
     it('invokes listApiSpecsStream without error', async () => {
@@ -4498,8 +4522,11 @@ describe('v1.RegistryClient', () => {
       const request = generateSampleMessage(
         new protos.google.cloud.apigeeregistry.v1.ListApiSpecsRequest()
       );
-      request.parent = '';
-      const expectedHeaderRequestParams = 'parent=';
+      const defaultValue1 = getTypeDefaultValue('ListApiSpecsRequest', [
+        'parent',
+      ]);
+      request.parent = defaultValue1;
+      const expectedHeaderRequestParams = `parent=${defaultValue1}`;
       const expectedResponse = [
         generateSampleMessage(
           new protos.google.cloud.apigeeregistry.v1.ApiSpec()
@@ -4536,11 +4563,12 @@ describe('v1.RegistryClient', () => {
           .getCall(0)
           .calledWith(client.innerApiCalls.listApiSpecs, request)
       );
-      assert.strictEqual(
-        (
-          client.descriptors.page.listApiSpecs.createStream as SinonStub
-        ).getCall(0).args[2].otherArgs.headers['x-goog-request-params'],
-        expectedHeaderRequestParams
+      assert(
+        (client.descriptors.page.listApiSpecs.createStream as SinonStub)
+          .getCall(0)
+          .args[2].otherArgs.headers['x-goog-request-params'].includes(
+            expectedHeaderRequestParams
+          )
       );
     });
 
@@ -4553,8 +4581,11 @@ describe('v1.RegistryClient', () => {
       const request = generateSampleMessage(
         new protos.google.cloud.apigeeregistry.v1.ListApiSpecsRequest()
       );
-      request.parent = '';
-      const expectedHeaderRequestParams = 'parent=';
+      const defaultValue1 = getTypeDefaultValue('ListApiSpecsRequest', [
+        'parent',
+      ]);
+      request.parent = defaultValue1;
+      const expectedHeaderRequestParams = `parent=${defaultValue1}`;
       const expectedError = new Error('expected');
       client.descriptors.page.listApiSpecs.createStream = stubPageStreamingCall(
         undefined,
@@ -4582,11 +4613,12 @@ describe('v1.RegistryClient', () => {
           .getCall(0)
           .calledWith(client.innerApiCalls.listApiSpecs, request)
       );
-      assert.strictEqual(
-        (
-          client.descriptors.page.listApiSpecs.createStream as SinonStub
-        ).getCall(0).args[2].otherArgs.headers['x-goog-request-params'],
-        expectedHeaderRequestParams
+      assert(
+        (client.descriptors.page.listApiSpecs.createStream as SinonStub)
+          .getCall(0)
+          .args[2].otherArgs.headers['x-goog-request-params'].includes(
+            expectedHeaderRequestParams
+          )
       );
     });
 
@@ -4599,8 +4631,11 @@ describe('v1.RegistryClient', () => {
       const request = generateSampleMessage(
         new protos.google.cloud.apigeeregistry.v1.ListApiSpecsRequest()
       );
-      request.parent = '';
-      const expectedHeaderRequestParams = 'parent=';
+      const defaultValue1 = getTypeDefaultValue('ListApiSpecsRequest', [
+        'parent',
+      ]);
+      request.parent = defaultValue1;
+      const expectedHeaderRequestParams = `parent=${defaultValue1}`;
       const expectedResponse = [
         generateSampleMessage(
           new protos.google.cloud.apigeeregistry.v1.ApiSpec()
@@ -4626,11 +4661,12 @@ describe('v1.RegistryClient', () => {
         ).getCall(0).args[1],
         request
       );
-      assert.strictEqual(
-        (
-          client.descriptors.page.listApiSpecs.asyncIterate as SinonStub
-        ).getCall(0).args[2].otherArgs.headers['x-goog-request-params'],
-        expectedHeaderRequestParams
+      assert(
+        (client.descriptors.page.listApiSpecs.asyncIterate as SinonStub)
+          .getCall(0)
+          .args[2].otherArgs.headers['x-goog-request-params'].includes(
+            expectedHeaderRequestParams
+          )
       );
     });
 
@@ -4643,8 +4679,11 @@ describe('v1.RegistryClient', () => {
       const request = generateSampleMessage(
         new protos.google.cloud.apigeeregistry.v1.ListApiSpecsRequest()
       );
-      request.parent = '';
-      const expectedHeaderRequestParams = 'parent=';
+      const defaultValue1 = getTypeDefaultValue('ListApiSpecsRequest', [
+        'parent',
+      ]);
+      request.parent = defaultValue1;
+      const expectedHeaderRequestParams = `parent=${defaultValue1}`;
       const expectedError = new Error('expected');
       client.descriptors.page.listApiSpecs.asyncIterate =
         stubAsyncIterationCall(undefined, expectedError);
@@ -4661,11 +4700,12 @@ describe('v1.RegistryClient', () => {
         ).getCall(0).args[1],
         request
       );
-      assert.strictEqual(
-        (
-          client.descriptors.page.listApiSpecs.asyncIterate as SinonStub
-        ).getCall(0).args[2].otherArgs.headers['x-goog-request-params'],
-        expectedHeaderRequestParams
+      assert(
+        (client.descriptors.page.listApiSpecs.asyncIterate as SinonStub)
+          .getCall(0)
+          .args[2].otherArgs.headers['x-goog-request-params'].includes(
+            expectedHeaderRequestParams
+          )
       );
     });
   });
@@ -4680,15 +4720,11 @@ describe('v1.RegistryClient', () => {
       const request = generateSampleMessage(
         new protos.google.cloud.apigeeregistry.v1.ListApiSpecRevisionsRequest()
       );
-      request.name = '';
-      const expectedHeaderRequestParams = 'name=';
-      const expectedOptions = {
-        otherArgs: {
-          headers: {
-            'x-goog-request-params': expectedHeaderRequestParams,
-          },
-        },
-      };
+      const defaultValue1 = getTypeDefaultValue('ListApiSpecRevisionsRequest', [
+        'name',
+      ]);
+      request.name = defaultValue1;
+      const expectedHeaderRequestParams = `name=${defaultValue1}`;
       const expectedResponse = [
         generateSampleMessage(
           new protos.google.cloud.apigeeregistry.v1.ApiSpec()
@@ -4704,11 +4740,14 @@ describe('v1.RegistryClient', () => {
         stubSimpleCall(expectedResponse);
       const [response] = await client.listApiSpecRevisions(request);
       assert.deepStrictEqual(response, expectedResponse);
-      assert(
-        (client.innerApiCalls.listApiSpecRevisions as SinonStub)
-          .getCall(0)
-          .calledWith(request, expectedOptions, undefined)
-      );
+      const actualRequest = (
+        client.innerApiCalls.listApiSpecRevisions as SinonStub
+      ).getCall(0).args[0];
+      assert.deepStrictEqual(actualRequest, request);
+      const actualHeaderRequestParams = (
+        client.innerApiCalls.listApiSpecRevisions as SinonStub
+      ).getCall(0).args[1].otherArgs.headers['x-goog-request-params'];
+      assert(actualHeaderRequestParams.includes(expectedHeaderRequestParams));
     });
 
     it('invokes listApiSpecRevisions without error using callback', async () => {
@@ -4720,15 +4759,11 @@ describe('v1.RegistryClient', () => {
       const request = generateSampleMessage(
         new protos.google.cloud.apigeeregistry.v1.ListApiSpecRevisionsRequest()
       );
-      request.name = '';
-      const expectedHeaderRequestParams = 'name=';
-      const expectedOptions = {
-        otherArgs: {
-          headers: {
-            'x-goog-request-params': expectedHeaderRequestParams,
-          },
-        },
-      };
+      const defaultValue1 = getTypeDefaultValue('ListApiSpecRevisionsRequest', [
+        'name',
+      ]);
+      request.name = defaultValue1;
+      const expectedHeaderRequestParams = `name=${defaultValue1}`;
       const expectedResponse = [
         generateSampleMessage(
           new protos.google.cloud.apigeeregistry.v1.ApiSpec()
@@ -4759,11 +4794,14 @@ describe('v1.RegistryClient', () => {
       });
       const response = await promise;
       assert.deepStrictEqual(response, expectedResponse);
-      assert(
-        (client.innerApiCalls.listApiSpecRevisions as SinonStub)
-          .getCall(0)
-          .calledWith(request, expectedOptions /*, callback defined above */)
-      );
+      const actualRequest = (
+        client.innerApiCalls.listApiSpecRevisions as SinonStub
+      ).getCall(0).args[0];
+      assert.deepStrictEqual(actualRequest, request);
+      const actualHeaderRequestParams = (
+        client.innerApiCalls.listApiSpecRevisions as SinonStub
+      ).getCall(0).args[1].otherArgs.headers['x-goog-request-params'];
+      assert(actualHeaderRequestParams.includes(expectedHeaderRequestParams));
     });
 
     it('invokes listApiSpecRevisions with error', async () => {
@@ -4775,26 +4813,25 @@ describe('v1.RegistryClient', () => {
       const request = generateSampleMessage(
         new protos.google.cloud.apigeeregistry.v1.ListApiSpecRevisionsRequest()
       );
-      request.name = '';
-      const expectedHeaderRequestParams = 'name=';
-      const expectedOptions = {
-        otherArgs: {
-          headers: {
-            'x-goog-request-params': expectedHeaderRequestParams,
-          },
-        },
-      };
+      const defaultValue1 = getTypeDefaultValue('ListApiSpecRevisionsRequest', [
+        'name',
+      ]);
+      request.name = defaultValue1;
+      const expectedHeaderRequestParams = `name=${defaultValue1}`;
       const expectedError = new Error('expected');
       client.innerApiCalls.listApiSpecRevisions = stubSimpleCall(
         undefined,
         expectedError
       );
       await assert.rejects(client.listApiSpecRevisions(request), expectedError);
-      assert(
-        (client.innerApiCalls.listApiSpecRevisions as SinonStub)
-          .getCall(0)
-          .calledWith(request, expectedOptions, undefined)
-      );
+      const actualRequest = (
+        client.innerApiCalls.listApiSpecRevisions as SinonStub
+      ).getCall(0).args[0];
+      assert.deepStrictEqual(actualRequest, request);
+      const actualHeaderRequestParams = (
+        client.innerApiCalls.listApiSpecRevisions as SinonStub
+      ).getCall(0).args[1].otherArgs.headers['x-goog-request-params'];
+      assert(actualHeaderRequestParams.includes(expectedHeaderRequestParams));
     });
 
     it('invokes listApiSpecRevisionsStream without error', async () => {
@@ -4806,8 +4843,11 @@ describe('v1.RegistryClient', () => {
       const request = generateSampleMessage(
         new protos.google.cloud.apigeeregistry.v1.ListApiSpecRevisionsRequest()
       );
-      request.name = '';
-      const expectedHeaderRequestParams = 'name=';
+      const defaultValue1 = getTypeDefaultValue('ListApiSpecRevisionsRequest', [
+        'name',
+      ]);
+      request.name = defaultValue1;
+      const expectedHeaderRequestParams = `name=${defaultValue1}`;
       const expectedResponse = [
         generateSampleMessage(
           new protos.google.cloud.apigeeregistry.v1.ApiSpec()
@@ -4844,11 +4884,12 @@ describe('v1.RegistryClient', () => {
           .getCall(0)
           .calledWith(client.innerApiCalls.listApiSpecRevisions, request)
       );
-      assert.strictEqual(
-        (
-          client.descriptors.page.listApiSpecRevisions.createStream as SinonStub
-        ).getCall(0).args[2].otherArgs.headers['x-goog-request-params'],
-        expectedHeaderRequestParams
+      assert(
+        (client.descriptors.page.listApiSpecRevisions.createStream as SinonStub)
+          .getCall(0)
+          .args[2].otherArgs.headers['x-goog-request-params'].includes(
+            expectedHeaderRequestParams
+          )
       );
     });
 
@@ -4861,8 +4902,11 @@ describe('v1.RegistryClient', () => {
       const request = generateSampleMessage(
         new protos.google.cloud.apigeeregistry.v1.ListApiSpecRevisionsRequest()
       );
-      request.name = '';
-      const expectedHeaderRequestParams = 'name=';
+      const defaultValue1 = getTypeDefaultValue('ListApiSpecRevisionsRequest', [
+        'name',
+      ]);
+      request.name = defaultValue1;
+      const expectedHeaderRequestParams = `name=${defaultValue1}`;
       const expectedError = new Error('expected');
       client.descriptors.page.listApiSpecRevisions.createStream =
         stubPageStreamingCall(undefined, expectedError);
@@ -4888,11 +4932,12 @@ describe('v1.RegistryClient', () => {
           .getCall(0)
           .calledWith(client.innerApiCalls.listApiSpecRevisions, request)
       );
-      assert.strictEqual(
-        (
-          client.descriptors.page.listApiSpecRevisions.createStream as SinonStub
-        ).getCall(0).args[2].otherArgs.headers['x-goog-request-params'],
-        expectedHeaderRequestParams
+      assert(
+        (client.descriptors.page.listApiSpecRevisions.createStream as SinonStub)
+          .getCall(0)
+          .args[2].otherArgs.headers['x-goog-request-params'].includes(
+            expectedHeaderRequestParams
+          )
       );
     });
 
@@ -4905,8 +4950,11 @@ describe('v1.RegistryClient', () => {
       const request = generateSampleMessage(
         new protos.google.cloud.apigeeregistry.v1.ListApiSpecRevisionsRequest()
       );
-      request.name = '';
-      const expectedHeaderRequestParams = 'name=';
+      const defaultValue1 = getTypeDefaultValue('ListApiSpecRevisionsRequest', [
+        'name',
+      ]);
+      request.name = defaultValue1;
+      const expectedHeaderRequestParams = `name=${defaultValue1}`;
       const expectedResponse = [
         generateSampleMessage(
           new protos.google.cloud.apigeeregistry.v1.ApiSpec()
@@ -4932,11 +4980,12 @@ describe('v1.RegistryClient', () => {
         ).getCall(0).args[1],
         request
       );
-      assert.strictEqual(
-        (
-          client.descriptors.page.listApiSpecRevisions.asyncIterate as SinonStub
-        ).getCall(0).args[2].otherArgs.headers['x-goog-request-params'],
-        expectedHeaderRequestParams
+      assert(
+        (client.descriptors.page.listApiSpecRevisions.asyncIterate as SinonStub)
+          .getCall(0)
+          .args[2].otherArgs.headers['x-goog-request-params'].includes(
+            expectedHeaderRequestParams
+          )
       );
     });
 
@@ -4949,8 +4998,11 @@ describe('v1.RegistryClient', () => {
       const request = generateSampleMessage(
         new protos.google.cloud.apigeeregistry.v1.ListApiSpecRevisionsRequest()
       );
-      request.name = '';
-      const expectedHeaderRequestParams = 'name=';
+      const defaultValue1 = getTypeDefaultValue('ListApiSpecRevisionsRequest', [
+        'name',
+      ]);
+      request.name = defaultValue1;
+      const expectedHeaderRequestParams = `name=${defaultValue1}`;
       const expectedError = new Error('expected');
       client.descriptors.page.listApiSpecRevisions.asyncIterate =
         stubAsyncIterationCall(undefined, expectedError);
@@ -4967,11 +5019,12 @@ describe('v1.RegistryClient', () => {
         ).getCall(0).args[1],
         request
       );
-      assert.strictEqual(
-        (
-          client.descriptors.page.listApiSpecRevisions.asyncIterate as SinonStub
-        ).getCall(0).args[2].otherArgs.headers['x-goog-request-params'],
-        expectedHeaderRequestParams
+      assert(
+        (client.descriptors.page.listApiSpecRevisions.asyncIterate as SinonStub)
+          .getCall(0)
+          .args[2].otherArgs.headers['x-goog-request-params'].includes(
+            expectedHeaderRequestParams
+          )
       );
     });
   });
@@ -4986,15 +5039,11 @@ describe('v1.RegistryClient', () => {
       const request = generateSampleMessage(
         new protos.google.cloud.apigeeregistry.v1.ListApiDeploymentsRequest()
       );
-      request.parent = '';
-      const expectedHeaderRequestParams = 'parent=';
-      const expectedOptions = {
-        otherArgs: {
-          headers: {
-            'x-goog-request-params': expectedHeaderRequestParams,
-          },
-        },
-      };
+      const defaultValue1 = getTypeDefaultValue('ListApiDeploymentsRequest', [
+        'parent',
+      ]);
+      request.parent = defaultValue1;
+      const expectedHeaderRequestParams = `parent=${defaultValue1}`;
       const expectedResponse = [
         generateSampleMessage(
           new protos.google.cloud.apigeeregistry.v1.ApiDeployment()
@@ -5010,11 +5059,14 @@ describe('v1.RegistryClient', () => {
         stubSimpleCall(expectedResponse);
       const [response] = await client.listApiDeployments(request);
       assert.deepStrictEqual(response, expectedResponse);
-      assert(
-        (client.innerApiCalls.listApiDeployments as SinonStub)
-          .getCall(0)
-          .calledWith(request, expectedOptions, undefined)
-      );
+      const actualRequest = (
+        client.innerApiCalls.listApiDeployments as SinonStub
+      ).getCall(0).args[0];
+      assert.deepStrictEqual(actualRequest, request);
+      const actualHeaderRequestParams = (
+        client.innerApiCalls.listApiDeployments as SinonStub
+      ).getCall(0).args[1].otherArgs.headers['x-goog-request-params'];
+      assert(actualHeaderRequestParams.includes(expectedHeaderRequestParams));
     });
 
     it('invokes listApiDeployments without error using callback', async () => {
@@ -5026,15 +5078,11 @@ describe('v1.RegistryClient', () => {
       const request = generateSampleMessage(
         new protos.google.cloud.apigeeregistry.v1.ListApiDeploymentsRequest()
       );
-      request.parent = '';
-      const expectedHeaderRequestParams = 'parent=';
-      const expectedOptions = {
-        otherArgs: {
-          headers: {
-            'x-goog-request-params': expectedHeaderRequestParams,
-          },
-        },
-      };
+      const defaultValue1 = getTypeDefaultValue('ListApiDeploymentsRequest', [
+        'parent',
+      ]);
+      request.parent = defaultValue1;
+      const expectedHeaderRequestParams = `parent=${defaultValue1}`;
       const expectedResponse = [
         generateSampleMessage(
           new protos.google.cloud.apigeeregistry.v1.ApiDeployment()
@@ -5067,11 +5115,14 @@ describe('v1.RegistryClient', () => {
       });
       const response = await promise;
       assert.deepStrictEqual(response, expectedResponse);
-      assert(
-        (client.innerApiCalls.listApiDeployments as SinonStub)
-          .getCall(0)
-          .calledWith(request, expectedOptions /*, callback defined above */)
-      );
+      const actualRequest = (
+        client.innerApiCalls.listApiDeployments as SinonStub
+      ).getCall(0).args[0];
+      assert.deepStrictEqual(actualRequest, request);
+      const actualHeaderRequestParams = (
+        client.innerApiCalls.listApiDeployments as SinonStub
+      ).getCall(0).args[1].otherArgs.headers['x-goog-request-params'];
+      assert(actualHeaderRequestParams.includes(expectedHeaderRequestParams));
     });
 
     it('invokes listApiDeployments with error', async () => {
@@ -5083,26 +5134,25 @@ describe('v1.RegistryClient', () => {
       const request = generateSampleMessage(
         new protos.google.cloud.apigeeregistry.v1.ListApiDeploymentsRequest()
       );
-      request.parent = '';
-      const expectedHeaderRequestParams = 'parent=';
-      const expectedOptions = {
-        otherArgs: {
-          headers: {
-            'x-goog-request-params': expectedHeaderRequestParams,
-          },
-        },
-      };
+      const defaultValue1 = getTypeDefaultValue('ListApiDeploymentsRequest', [
+        'parent',
+      ]);
+      request.parent = defaultValue1;
+      const expectedHeaderRequestParams = `parent=${defaultValue1}`;
       const expectedError = new Error('expected');
       client.innerApiCalls.listApiDeployments = stubSimpleCall(
         undefined,
         expectedError
       );
       await assert.rejects(client.listApiDeployments(request), expectedError);
-      assert(
-        (client.innerApiCalls.listApiDeployments as SinonStub)
-          .getCall(0)
-          .calledWith(request, expectedOptions, undefined)
-      );
+      const actualRequest = (
+        client.innerApiCalls.listApiDeployments as SinonStub
+      ).getCall(0).args[0];
+      assert.deepStrictEqual(actualRequest, request);
+      const actualHeaderRequestParams = (
+        client.innerApiCalls.listApiDeployments as SinonStub
+      ).getCall(0).args[1].otherArgs.headers['x-goog-request-params'];
+      assert(actualHeaderRequestParams.includes(expectedHeaderRequestParams));
     });
 
     it('invokes listApiDeploymentsStream without error', async () => {
@@ -5114,8 +5164,11 @@ describe('v1.RegistryClient', () => {
       const request = generateSampleMessage(
         new protos.google.cloud.apigeeregistry.v1.ListApiDeploymentsRequest()
       );
-      request.parent = '';
-      const expectedHeaderRequestParams = 'parent=';
+      const defaultValue1 = getTypeDefaultValue('ListApiDeploymentsRequest', [
+        'parent',
+      ]);
+      request.parent = defaultValue1;
+      const expectedHeaderRequestParams = `parent=${defaultValue1}`;
       const expectedResponse = [
         generateSampleMessage(
           new protos.google.cloud.apigeeregistry.v1.ApiDeployment()
@@ -5153,11 +5206,12 @@ describe('v1.RegistryClient', () => {
           .getCall(0)
           .calledWith(client.innerApiCalls.listApiDeployments, request)
       );
-      assert.strictEqual(
-        (
-          client.descriptors.page.listApiDeployments.createStream as SinonStub
-        ).getCall(0).args[2].otherArgs.headers['x-goog-request-params'],
-        expectedHeaderRequestParams
+      assert(
+        (client.descriptors.page.listApiDeployments.createStream as SinonStub)
+          .getCall(0)
+          .args[2].otherArgs.headers['x-goog-request-params'].includes(
+            expectedHeaderRequestParams
+          )
       );
     });
 
@@ -5170,8 +5224,11 @@ describe('v1.RegistryClient', () => {
       const request = generateSampleMessage(
         new protos.google.cloud.apigeeregistry.v1.ListApiDeploymentsRequest()
       );
-      request.parent = '';
-      const expectedHeaderRequestParams = 'parent=';
+      const defaultValue1 = getTypeDefaultValue('ListApiDeploymentsRequest', [
+        'parent',
+      ]);
+      request.parent = defaultValue1;
+      const expectedHeaderRequestParams = `parent=${defaultValue1}`;
       const expectedError = new Error('expected');
       client.descriptors.page.listApiDeployments.createStream =
         stubPageStreamingCall(undefined, expectedError);
@@ -5198,11 +5255,12 @@ describe('v1.RegistryClient', () => {
           .getCall(0)
           .calledWith(client.innerApiCalls.listApiDeployments, request)
       );
-      assert.strictEqual(
-        (
-          client.descriptors.page.listApiDeployments.createStream as SinonStub
-        ).getCall(0).args[2].otherArgs.headers['x-goog-request-params'],
-        expectedHeaderRequestParams
+      assert(
+        (client.descriptors.page.listApiDeployments.createStream as SinonStub)
+          .getCall(0)
+          .args[2].otherArgs.headers['x-goog-request-params'].includes(
+            expectedHeaderRequestParams
+          )
       );
     });
 
@@ -5215,8 +5273,11 @@ describe('v1.RegistryClient', () => {
       const request = generateSampleMessage(
         new protos.google.cloud.apigeeregistry.v1.ListApiDeploymentsRequest()
       );
-      request.parent = '';
-      const expectedHeaderRequestParams = 'parent=';
+      const defaultValue1 = getTypeDefaultValue('ListApiDeploymentsRequest', [
+        'parent',
+      ]);
+      request.parent = defaultValue1;
+      const expectedHeaderRequestParams = `parent=${defaultValue1}`;
       const expectedResponse = [
         generateSampleMessage(
           new protos.google.cloud.apigeeregistry.v1.ApiDeployment()
@@ -5243,11 +5304,12 @@ describe('v1.RegistryClient', () => {
         ).getCall(0).args[1],
         request
       );
-      assert.strictEqual(
-        (
-          client.descriptors.page.listApiDeployments.asyncIterate as SinonStub
-        ).getCall(0).args[2].otherArgs.headers['x-goog-request-params'],
-        expectedHeaderRequestParams
+      assert(
+        (client.descriptors.page.listApiDeployments.asyncIterate as SinonStub)
+          .getCall(0)
+          .args[2].otherArgs.headers['x-goog-request-params'].includes(
+            expectedHeaderRequestParams
+          )
       );
     });
 
@@ -5260,8 +5322,11 @@ describe('v1.RegistryClient', () => {
       const request = generateSampleMessage(
         new protos.google.cloud.apigeeregistry.v1.ListApiDeploymentsRequest()
       );
-      request.parent = '';
-      const expectedHeaderRequestParams = 'parent=';
+      const defaultValue1 = getTypeDefaultValue('ListApiDeploymentsRequest', [
+        'parent',
+      ]);
+      request.parent = defaultValue1;
+      const expectedHeaderRequestParams = `parent=${defaultValue1}`;
       const expectedError = new Error('expected');
       client.descriptors.page.listApiDeployments.asyncIterate =
         stubAsyncIterationCall(undefined, expectedError);
@@ -5279,11 +5344,12 @@ describe('v1.RegistryClient', () => {
         ).getCall(0).args[1],
         request
       );
-      assert.strictEqual(
-        (
-          client.descriptors.page.listApiDeployments.asyncIterate as SinonStub
-        ).getCall(0).args[2].otherArgs.headers['x-goog-request-params'],
-        expectedHeaderRequestParams
+      assert(
+        (client.descriptors.page.listApiDeployments.asyncIterate as SinonStub)
+          .getCall(0)
+          .args[2].otherArgs.headers['x-goog-request-params'].includes(
+            expectedHeaderRequestParams
+          )
       );
     });
   });
@@ -5298,15 +5364,12 @@ describe('v1.RegistryClient', () => {
       const request = generateSampleMessage(
         new protos.google.cloud.apigeeregistry.v1.ListApiDeploymentRevisionsRequest()
       );
-      request.name = '';
-      const expectedHeaderRequestParams = 'name=';
-      const expectedOptions = {
-        otherArgs: {
-          headers: {
-            'x-goog-request-params': expectedHeaderRequestParams,
-          },
-        },
-      };
+      const defaultValue1 = getTypeDefaultValue(
+        'ListApiDeploymentRevisionsRequest',
+        ['name']
+      );
+      request.name = defaultValue1;
+      const expectedHeaderRequestParams = `name=${defaultValue1}`;
       const expectedResponse = [
         generateSampleMessage(
           new protos.google.cloud.apigeeregistry.v1.ApiDeployment()
@@ -5322,11 +5385,14 @@ describe('v1.RegistryClient', () => {
         stubSimpleCall(expectedResponse);
       const [response] = await client.listApiDeploymentRevisions(request);
       assert.deepStrictEqual(response, expectedResponse);
-      assert(
-        (client.innerApiCalls.listApiDeploymentRevisions as SinonStub)
-          .getCall(0)
-          .calledWith(request, expectedOptions, undefined)
-      );
+      const actualRequest = (
+        client.innerApiCalls.listApiDeploymentRevisions as SinonStub
+      ).getCall(0).args[0];
+      assert.deepStrictEqual(actualRequest, request);
+      const actualHeaderRequestParams = (
+        client.innerApiCalls.listApiDeploymentRevisions as SinonStub
+      ).getCall(0).args[1].otherArgs.headers['x-goog-request-params'];
+      assert(actualHeaderRequestParams.includes(expectedHeaderRequestParams));
     });
 
     it('invokes listApiDeploymentRevisions without error using callback', async () => {
@@ -5338,15 +5404,12 @@ describe('v1.RegistryClient', () => {
       const request = generateSampleMessage(
         new protos.google.cloud.apigeeregistry.v1.ListApiDeploymentRevisionsRequest()
       );
-      request.name = '';
-      const expectedHeaderRequestParams = 'name=';
-      const expectedOptions = {
-        otherArgs: {
-          headers: {
-            'x-goog-request-params': expectedHeaderRequestParams,
-          },
-        },
-      };
+      const defaultValue1 = getTypeDefaultValue(
+        'ListApiDeploymentRevisionsRequest',
+        ['name']
+      );
+      request.name = defaultValue1;
+      const expectedHeaderRequestParams = `name=${defaultValue1}`;
       const expectedResponse = [
         generateSampleMessage(
           new protos.google.cloud.apigeeregistry.v1.ApiDeployment()
@@ -5379,11 +5442,14 @@ describe('v1.RegistryClient', () => {
       });
       const response = await promise;
       assert.deepStrictEqual(response, expectedResponse);
-      assert(
-        (client.innerApiCalls.listApiDeploymentRevisions as SinonStub)
-          .getCall(0)
-          .calledWith(request, expectedOptions /*, callback defined above */)
-      );
+      const actualRequest = (
+        client.innerApiCalls.listApiDeploymentRevisions as SinonStub
+      ).getCall(0).args[0];
+      assert.deepStrictEqual(actualRequest, request);
+      const actualHeaderRequestParams = (
+        client.innerApiCalls.listApiDeploymentRevisions as SinonStub
+      ).getCall(0).args[1].otherArgs.headers['x-goog-request-params'];
+      assert(actualHeaderRequestParams.includes(expectedHeaderRequestParams));
     });
 
     it('invokes listApiDeploymentRevisions with error', async () => {
@@ -5395,15 +5461,12 @@ describe('v1.RegistryClient', () => {
       const request = generateSampleMessage(
         new protos.google.cloud.apigeeregistry.v1.ListApiDeploymentRevisionsRequest()
       );
-      request.name = '';
-      const expectedHeaderRequestParams = 'name=';
-      const expectedOptions = {
-        otherArgs: {
-          headers: {
-            'x-goog-request-params': expectedHeaderRequestParams,
-          },
-        },
-      };
+      const defaultValue1 = getTypeDefaultValue(
+        'ListApiDeploymentRevisionsRequest',
+        ['name']
+      );
+      request.name = defaultValue1;
+      const expectedHeaderRequestParams = `name=${defaultValue1}`;
       const expectedError = new Error('expected');
       client.innerApiCalls.listApiDeploymentRevisions = stubSimpleCall(
         undefined,
@@ -5413,11 +5476,14 @@ describe('v1.RegistryClient', () => {
         client.listApiDeploymentRevisions(request),
         expectedError
       );
-      assert(
-        (client.innerApiCalls.listApiDeploymentRevisions as SinonStub)
-          .getCall(0)
-          .calledWith(request, expectedOptions, undefined)
-      );
+      const actualRequest = (
+        client.innerApiCalls.listApiDeploymentRevisions as SinonStub
+      ).getCall(0).args[0];
+      assert.deepStrictEqual(actualRequest, request);
+      const actualHeaderRequestParams = (
+        client.innerApiCalls.listApiDeploymentRevisions as SinonStub
+      ).getCall(0).args[1].otherArgs.headers['x-goog-request-params'];
+      assert(actualHeaderRequestParams.includes(expectedHeaderRequestParams));
     });
 
     it('invokes listApiDeploymentRevisionsStream without error', async () => {
@@ -5429,8 +5495,12 @@ describe('v1.RegistryClient', () => {
       const request = generateSampleMessage(
         new protos.google.cloud.apigeeregistry.v1.ListApiDeploymentRevisionsRequest()
       );
-      request.name = '';
-      const expectedHeaderRequestParams = 'name=';
+      const defaultValue1 = getTypeDefaultValue(
+        'ListApiDeploymentRevisionsRequest',
+        ['name']
+      );
+      request.name = defaultValue1;
+      const expectedHeaderRequestParams = `name=${defaultValue1}`;
       const expectedResponse = [
         generateSampleMessage(
           new protos.google.cloud.apigeeregistry.v1.ApiDeployment()
@@ -5471,12 +5541,15 @@ describe('v1.RegistryClient', () => {
           .getCall(0)
           .calledWith(client.innerApiCalls.listApiDeploymentRevisions, request)
       );
-      assert.strictEqual(
+      assert(
         (
           client.descriptors.page.listApiDeploymentRevisions
             .createStream as SinonStub
-        ).getCall(0).args[2].otherArgs.headers['x-goog-request-params'],
-        expectedHeaderRequestParams
+        )
+          .getCall(0)
+          .args[2].otherArgs.headers['x-goog-request-params'].includes(
+            expectedHeaderRequestParams
+          )
       );
     });
 
@@ -5489,8 +5562,12 @@ describe('v1.RegistryClient', () => {
       const request = generateSampleMessage(
         new protos.google.cloud.apigeeregistry.v1.ListApiDeploymentRevisionsRequest()
       );
-      request.name = '';
-      const expectedHeaderRequestParams = 'name=';
+      const defaultValue1 = getTypeDefaultValue(
+        'ListApiDeploymentRevisionsRequest',
+        ['name']
+      );
+      request.name = defaultValue1;
+      const expectedHeaderRequestParams = `name=${defaultValue1}`;
       const expectedError = new Error('expected');
       client.descriptors.page.listApiDeploymentRevisions.createStream =
         stubPageStreamingCall(undefined, expectedError);
@@ -5520,12 +5597,15 @@ describe('v1.RegistryClient', () => {
           .getCall(0)
           .calledWith(client.innerApiCalls.listApiDeploymentRevisions, request)
       );
-      assert.strictEqual(
+      assert(
         (
           client.descriptors.page.listApiDeploymentRevisions
             .createStream as SinonStub
-        ).getCall(0).args[2].otherArgs.headers['x-goog-request-params'],
-        expectedHeaderRequestParams
+        )
+          .getCall(0)
+          .args[2].otherArgs.headers['x-goog-request-params'].includes(
+            expectedHeaderRequestParams
+          )
       );
     });
 
@@ -5538,8 +5618,12 @@ describe('v1.RegistryClient', () => {
       const request = generateSampleMessage(
         new protos.google.cloud.apigeeregistry.v1.ListApiDeploymentRevisionsRequest()
       );
-      request.name = '';
-      const expectedHeaderRequestParams = 'name=';
+      const defaultValue1 = getTypeDefaultValue(
+        'ListApiDeploymentRevisionsRequest',
+        ['name']
+      );
+      request.name = defaultValue1;
+      const expectedHeaderRequestParams = `name=${defaultValue1}`;
       const expectedResponse = [
         generateSampleMessage(
           new protos.google.cloud.apigeeregistry.v1.ApiDeployment()
@@ -5567,12 +5651,15 @@ describe('v1.RegistryClient', () => {
         ).getCall(0).args[1],
         request
       );
-      assert.strictEqual(
+      assert(
         (
           client.descriptors.page.listApiDeploymentRevisions
             .asyncIterate as SinonStub
-        ).getCall(0).args[2].otherArgs.headers['x-goog-request-params'],
-        expectedHeaderRequestParams
+        )
+          .getCall(0)
+          .args[2].otherArgs.headers['x-goog-request-params'].includes(
+            expectedHeaderRequestParams
+          )
       );
     });
 
@@ -5585,8 +5672,12 @@ describe('v1.RegistryClient', () => {
       const request = generateSampleMessage(
         new protos.google.cloud.apigeeregistry.v1.ListApiDeploymentRevisionsRequest()
       );
-      request.name = '';
-      const expectedHeaderRequestParams = 'name=';
+      const defaultValue1 = getTypeDefaultValue(
+        'ListApiDeploymentRevisionsRequest',
+        ['name']
+      );
+      request.name = defaultValue1;
+      const expectedHeaderRequestParams = `name=${defaultValue1}`;
       const expectedError = new Error('expected');
       client.descriptors.page.listApiDeploymentRevisions.asyncIterate =
         stubAsyncIterationCall(undefined, expectedError);
@@ -5605,12 +5696,15 @@ describe('v1.RegistryClient', () => {
         ).getCall(0).args[1],
         request
       );
-      assert.strictEqual(
+      assert(
         (
           client.descriptors.page.listApiDeploymentRevisions
             .asyncIterate as SinonStub
-        ).getCall(0).args[2].otherArgs.headers['x-goog-request-params'],
-        expectedHeaderRequestParams
+        )
+          .getCall(0)
+          .args[2].otherArgs.headers['x-goog-request-params'].includes(
+            expectedHeaderRequestParams
+          )
       );
     });
   });
@@ -5625,15 +5719,11 @@ describe('v1.RegistryClient', () => {
       const request = generateSampleMessage(
         new protos.google.cloud.apigeeregistry.v1.ListArtifactsRequest()
       );
-      request.parent = '';
-      const expectedHeaderRequestParams = 'parent=';
-      const expectedOptions = {
-        otherArgs: {
-          headers: {
-            'x-goog-request-params': expectedHeaderRequestParams,
-          },
-        },
-      };
+      const defaultValue1 = getTypeDefaultValue('ListArtifactsRequest', [
+        'parent',
+      ]);
+      request.parent = defaultValue1;
+      const expectedHeaderRequestParams = `parent=${defaultValue1}`;
       const expectedResponse = [
         generateSampleMessage(
           new protos.google.cloud.apigeeregistry.v1.Artifact()
@@ -5648,11 +5738,14 @@ describe('v1.RegistryClient', () => {
       client.innerApiCalls.listArtifacts = stubSimpleCall(expectedResponse);
       const [response] = await client.listArtifacts(request);
       assert.deepStrictEqual(response, expectedResponse);
-      assert(
-        (client.innerApiCalls.listArtifacts as SinonStub)
-          .getCall(0)
-          .calledWith(request, expectedOptions, undefined)
-      );
+      const actualRequest = (
+        client.innerApiCalls.listArtifacts as SinonStub
+      ).getCall(0).args[0];
+      assert.deepStrictEqual(actualRequest, request);
+      const actualHeaderRequestParams = (
+        client.innerApiCalls.listArtifacts as SinonStub
+      ).getCall(0).args[1].otherArgs.headers['x-goog-request-params'];
+      assert(actualHeaderRequestParams.includes(expectedHeaderRequestParams));
     });
 
     it('invokes listArtifacts without error using callback', async () => {
@@ -5664,15 +5757,11 @@ describe('v1.RegistryClient', () => {
       const request = generateSampleMessage(
         new protos.google.cloud.apigeeregistry.v1.ListArtifactsRequest()
       );
-      request.parent = '';
-      const expectedHeaderRequestParams = 'parent=';
-      const expectedOptions = {
-        otherArgs: {
-          headers: {
-            'x-goog-request-params': expectedHeaderRequestParams,
-          },
-        },
-      };
+      const defaultValue1 = getTypeDefaultValue('ListArtifactsRequest', [
+        'parent',
+      ]);
+      request.parent = defaultValue1;
+      const expectedHeaderRequestParams = `parent=${defaultValue1}`;
       const expectedResponse = [
         generateSampleMessage(
           new protos.google.cloud.apigeeregistry.v1.Artifact()
@@ -5703,11 +5792,14 @@ describe('v1.RegistryClient', () => {
       });
       const response = await promise;
       assert.deepStrictEqual(response, expectedResponse);
-      assert(
-        (client.innerApiCalls.listArtifacts as SinonStub)
-          .getCall(0)
-          .calledWith(request, expectedOptions /*, callback defined above */)
-      );
+      const actualRequest = (
+        client.innerApiCalls.listArtifacts as SinonStub
+      ).getCall(0).args[0];
+      assert.deepStrictEqual(actualRequest, request);
+      const actualHeaderRequestParams = (
+        client.innerApiCalls.listArtifacts as SinonStub
+      ).getCall(0).args[1].otherArgs.headers['x-goog-request-params'];
+      assert(actualHeaderRequestParams.includes(expectedHeaderRequestParams));
     });
 
     it('invokes listArtifacts with error', async () => {
@@ -5719,26 +5811,25 @@ describe('v1.RegistryClient', () => {
       const request = generateSampleMessage(
         new protos.google.cloud.apigeeregistry.v1.ListArtifactsRequest()
       );
-      request.parent = '';
-      const expectedHeaderRequestParams = 'parent=';
-      const expectedOptions = {
-        otherArgs: {
-          headers: {
-            'x-goog-request-params': expectedHeaderRequestParams,
-          },
-        },
-      };
+      const defaultValue1 = getTypeDefaultValue('ListArtifactsRequest', [
+        'parent',
+      ]);
+      request.parent = defaultValue1;
+      const expectedHeaderRequestParams = `parent=${defaultValue1}`;
       const expectedError = new Error('expected');
       client.innerApiCalls.listArtifacts = stubSimpleCall(
         undefined,
         expectedError
       );
       await assert.rejects(client.listArtifacts(request), expectedError);
-      assert(
-        (client.innerApiCalls.listArtifacts as SinonStub)
-          .getCall(0)
-          .calledWith(request, expectedOptions, undefined)
-      );
+      const actualRequest = (
+        client.innerApiCalls.listArtifacts as SinonStub
+      ).getCall(0).args[0];
+      assert.deepStrictEqual(actualRequest, request);
+      const actualHeaderRequestParams = (
+        client.innerApiCalls.listArtifacts as SinonStub
+      ).getCall(0).args[1].otherArgs.headers['x-goog-request-params'];
+      assert(actualHeaderRequestParams.includes(expectedHeaderRequestParams));
     });
 
     it('invokes listArtifactsStream without error', async () => {
@@ -5750,8 +5841,11 @@ describe('v1.RegistryClient', () => {
       const request = generateSampleMessage(
         new protos.google.cloud.apigeeregistry.v1.ListArtifactsRequest()
       );
-      request.parent = '';
-      const expectedHeaderRequestParams = 'parent=';
+      const defaultValue1 = getTypeDefaultValue('ListArtifactsRequest', [
+        'parent',
+      ]);
+      request.parent = defaultValue1;
+      const expectedHeaderRequestParams = `parent=${defaultValue1}`;
       const expectedResponse = [
         generateSampleMessage(
           new protos.google.cloud.apigeeregistry.v1.Artifact()
@@ -5788,11 +5882,12 @@ describe('v1.RegistryClient', () => {
           .getCall(0)
           .calledWith(client.innerApiCalls.listArtifacts, request)
       );
-      assert.strictEqual(
-        (
-          client.descriptors.page.listArtifacts.createStream as SinonStub
-        ).getCall(0).args[2].otherArgs.headers['x-goog-request-params'],
-        expectedHeaderRequestParams
+      assert(
+        (client.descriptors.page.listArtifacts.createStream as SinonStub)
+          .getCall(0)
+          .args[2].otherArgs.headers['x-goog-request-params'].includes(
+            expectedHeaderRequestParams
+          )
       );
     });
 
@@ -5805,8 +5900,11 @@ describe('v1.RegistryClient', () => {
       const request = generateSampleMessage(
         new protos.google.cloud.apigeeregistry.v1.ListArtifactsRequest()
       );
-      request.parent = '';
-      const expectedHeaderRequestParams = 'parent=';
+      const defaultValue1 = getTypeDefaultValue('ListArtifactsRequest', [
+        'parent',
+      ]);
+      request.parent = defaultValue1;
+      const expectedHeaderRequestParams = `parent=${defaultValue1}`;
       const expectedError = new Error('expected');
       client.descriptors.page.listArtifacts.createStream =
         stubPageStreamingCall(undefined, expectedError);
@@ -5832,11 +5930,12 @@ describe('v1.RegistryClient', () => {
           .getCall(0)
           .calledWith(client.innerApiCalls.listArtifacts, request)
       );
-      assert.strictEqual(
-        (
-          client.descriptors.page.listArtifacts.createStream as SinonStub
-        ).getCall(0).args[2].otherArgs.headers['x-goog-request-params'],
-        expectedHeaderRequestParams
+      assert(
+        (client.descriptors.page.listArtifacts.createStream as SinonStub)
+          .getCall(0)
+          .args[2].otherArgs.headers['x-goog-request-params'].includes(
+            expectedHeaderRequestParams
+          )
       );
     });
 
@@ -5849,8 +5948,11 @@ describe('v1.RegistryClient', () => {
       const request = generateSampleMessage(
         new protos.google.cloud.apigeeregistry.v1.ListArtifactsRequest()
       );
-      request.parent = '';
-      const expectedHeaderRequestParams = 'parent=';
+      const defaultValue1 = getTypeDefaultValue('ListArtifactsRequest', [
+        'parent',
+      ]);
+      request.parent = defaultValue1;
+      const expectedHeaderRequestParams = `parent=${defaultValue1}`;
       const expectedResponse = [
         generateSampleMessage(
           new protos.google.cloud.apigeeregistry.v1.Artifact()
@@ -5876,11 +5978,12 @@ describe('v1.RegistryClient', () => {
         ).getCall(0).args[1],
         request
       );
-      assert.strictEqual(
-        (
-          client.descriptors.page.listArtifacts.asyncIterate as SinonStub
-        ).getCall(0).args[2].otherArgs.headers['x-goog-request-params'],
-        expectedHeaderRequestParams
+      assert(
+        (client.descriptors.page.listArtifacts.asyncIterate as SinonStub)
+          .getCall(0)
+          .args[2].otherArgs.headers['x-goog-request-params'].includes(
+            expectedHeaderRequestParams
+          )
       );
     });
 
@@ -5893,8 +5996,11 @@ describe('v1.RegistryClient', () => {
       const request = generateSampleMessage(
         new protos.google.cloud.apigeeregistry.v1.ListArtifactsRequest()
       );
-      request.parent = '';
-      const expectedHeaderRequestParams = 'parent=';
+      const defaultValue1 = getTypeDefaultValue('ListArtifactsRequest', [
+        'parent',
+      ]);
+      request.parent = defaultValue1;
+      const expectedHeaderRequestParams = `parent=${defaultValue1}`;
       const expectedError = new Error('expected');
       client.descriptors.page.listArtifacts.asyncIterate =
         stubAsyncIterationCall(undefined, expectedError);
@@ -5911,11 +6017,12 @@ describe('v1.RegistryClient', () => {
         ).getCall(0).args[1],
         request
       );
-      assert.strictEqual(
-        (
-          client.descriptors.page.listArtifacts.asyncIterate as SinonStub
-        ).getCall(0).args[2].otherArgs.headers['x-goog-request-params'],
-        expectedHeaderRequestParams
+      assert(
+        (client.descriptors.page.listArtifacts.asyncIterate as SinonStub)
+          .getCall(0)
+          .args[2].otherArgs.headers['x-goog-request-params'].includes(
+            expectedHeaderRequestParams
+          )
       );
     });
   });
@@ -6390,12 +6497,15 @@ describe('v1.RegistryClient', () => {
         ).getCall(0).args[1],
         request
       );
-      assert.strictEqual(
+      assert(
         (
           client.locationsClient.descriptors.page.listLocations
             .asyncIterate as SinonStub
-        ).getCall(0).args[2].otherArgs.headers['x-goog-request-params'],
-        expectedHeaderRequestParams
+        )
+          .getCall(0)
+          .args[2].otherArgs.headers['x-goog-request-params'].includes(
+            expectedHeaderRequestParams
+          )
       );
     });
     it('uses async iteration with listLocations with error', async () => {
@@ -6426,12 +6536,15 @@ describe('v1.RegistryClient', () => {
         ).getCall(0).args[1],
         request
       );
-      assert.strictEqual(
+      assert(
         (
           client.locationsClient.descriptors.page.listLocations
             .asyncIterate as SinonStub
-        ).getCall(0).args[2].otherArgs.headers['x-goog-request-params'],
-        expectedHeaderRequestParams
+        )
+          .getCall(0)
+          .args[2].otherArgs.headers['x-goog-request-params'].includes(
+            expectedHeaderRequestParams
+          )
       );
     });
   });
