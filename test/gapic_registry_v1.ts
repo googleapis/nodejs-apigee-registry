@@ -25,12 +25,7 @@ import * as registryModule from '../src';
 
 import {PassThrough} from 'stream';
 
-import {
-  protobuf,
-  operationsProtos,
-  IamProtos,
-  LocationProtos,
-} from 'google-gax';
+import {protobuf, IamProtos, LocationProtos} from 'google-gax';
 
 // Dynamically loaded proto JSON is needed to get the type information
 // to fill in default values for request objects
@@ -240,7 +235,10 @@ describe('v1.RegistryClient', () => {
       const request = generateSampleMessage(
         new protos.google.cloud.apigeeregistry.v1.GetApiRequest()
       );
-      const defaultValue1 = getTypeDefaultValue('GetApiRequest', ['name']);
+      const defaultValue1 = getTypeDefaultValue(
+        '.google.cloud.apigeeregistry.v1.GetApiRequest',
+        ['name']
+      );
       request.name = defaultValue1;
       const expectedHeaderRequestParams = `name=${defaultValue1}`;
       const expectedResponse = generateSampleMessage(
@@ -268,7 +266,10 @@ describe('v1.RegistryClient', () => {
       const request = generateSampleMessage(
         new protos.google.cloud.apigeeregistry.v1.GetApiRequest()
       );
-      const defaultValue1 = getTypeDefaultValue('GetApiRequest', ['name']);
+      const defaultValue1 = getTypeDefaultValue(
+        '.google.cloud.apigeeregistry.v1.GetApiRequest',
+        ['name']
+      );
       request.name = defaultValue1;
       const expectedHeaderRequestParams = `name=${defaultValue1}`;
       const expectedResponse = generateSampleMessage(
@@ -312,7 +313,10 @@ describe('v1.RegistryClient', () => {
       const request = generateSampleMessage(
         new protos.google.cloud.apigeeregistry.v1.GetApiRequest()
       );
-      const defaultValue1 = getTypeDefaultValue('GetApiRequest', ['name']);
+      const defaultValue1 = getTypeDefaultValue(
+        '.google.cloud.apigeeregistry.v1.GetApiRequest',
+        ['name']
+      );
       request.name = defaultValue1;
       const expectedHeaderRequestParams = `name=${defaultValue1}`;
       const expectedError = new Error('expected');
@@ -337,7 +341,10 @@ describe('v1.RegistryClient', () => {
       const request = generateSampleMessage(
         new protos.google.cloud.apigeeregistry.v1.GetApiRequest()
       );
-      const defaultValue1 = getTypeDefaultValue('GetApiRequest', ['name']);
+      const defaultValue1 = getTypeDefaultValue(
+        '.google.cloud.apigeeregistry.v1.GetApiRequest',
+        ['name']
+      );
       request.name = defaultValue1;
       const expectedError = new Error('The client has already been closed.');
       client.close();
@@ -355,7 +362,10 @@ describe('v1.RegistryClient', () => {
       const request = generateSampleMessage(
         new protos.google.cloud.apigeeregistry.v1.CreateApiRequest()
       );
-      const defaultValue1 = getTypeDefaultValue('CreateApiRequest', ['parent']);
+      const defaultValue1 = getTypeDefaultValue(
+        '.google.cloud.apigeeregistry.v1.CreateApiRequest',
+        ['parent']
+      );
       request.parent = defaultValue1;
       const expectedHeaderRequestParams = `parent=${defaultValue1}`;
       const expectedResponse = generateSampleMessage(
@@ -383,7 +393,10 @@ describe('v1.RegistryClient', () => {
       const request = generateSampleMessage(
         new protos.google.cloud.apigeeregistry.v1.CreateApiRequest()
       );
-      const defaultValue1 = getTypeDefaultValue('CreateApiRequest', ['parent']);
+      const defaultValue1 = getTypeDefaultValue(
+        '.google.cloud.apigeeregistry.v1.CreateApiRequest',
+        ['parent']
+      );
       request.parent = defaultValue1;
       const expectedHeaderRequestParams = `parent=${defaultValue1}`;
       const expectedResponse = generateSampleMessage(
@@ -427,7 +440,10 @@ describe('v1.RegistryClient', () => {
       const request = generateSampleMessage(
         new protos.google.cloud.apigeeregistry.v1.CreateApiRequest()
       );
-      const defaultValue1 = getTypeDefaultValue('CreateApiRequest', ['parent']);
+      const defaultValue1 = getTypeDefaultValue(
+        '.google.cloud.apigeeregistry.v1.CreateApiRequest',
+        ['parent']
+      );
       request.parent = defaultValue1;
       const expectedHeaderRequestParams = `parent=${defaultValue1}`;
       const expectedError = new Error('expected');
@@ -452,7 +468,10 @@ describe('v1.RegistryClient', () => {
       const request = generateSampleMessage(
         new protos.google.cloud.apigeeregistry.v1.CreateApiRequest()
       );
-      const defaultValue1 = getTypeDefaultValue('CreateApiRequest', ['parent']);
+      const defaultValue1 = getTypeDefaultValue(
+        '.google.cloud.apigeeregistry.v1.CreateApiRequest',
+        ['parent']
+      );
       request.parent = defaultValue1;
       const expectedError = new Error('The client has already been closed.');
       client.close();
@@ -471,10 +490,10 @@ describe('v1.RegistryClient', () => {
         new protos.google.cloud.apigeeregistry.v1.UpdateApiRequest()
       );
       request.api ??= {};
-      const defaultValue1 = getTypeDefaultValue('UpdateApiRequest', [
-        'api',
-        'name',
-      ]);
+      const defaultValue1 = getTypeDefaultValue(
+        '.google.cloud.apigeeregistry.v1.UpdateApiRequest',
+        ['api', 'name']
+      );
       request.api.name = defaultValue1;
       const expectedHeaderRequestParams = `api.name=${defaultValue1}`;
       const expectedResponse = generateSampleMessage(
@@ -503,10 +522,10 @@ describe('v1.RegistryClient', () => {
         new protos.google.cloud.apigeeregistry.v1.UpdateApiRequest()
       );
       request.api ??= {};
-      const defaultValue1 = getTypeDefaultValue('UpdateApiRequest', [
-        'api',
-        'name',
-      ]);
+      const defaultValue1 = getTypeDefaultValue(
+        '.google.cloud.apigeeregistry.v1.UpdateApiRequest',
+        ['api', 'name']
+      );
       request.api.name = defaultValue1;
       const expectedHeaderRequestParams = `api.name=${defaultValue1}`;
       const expectedResponse = generateSampleMessage(
@@ -551,10 +570,10 @@ describe('v1.RegistryClient', () => {
         new protos.google.cloud.apigeeregistry.v1.UpdateApiRequest()
       );
       request.api ??= {};
-      const defaultValue1 = getTypeDefaultValue('UpdateApiRequest', [
-        'api',
-        'name',
-      ]);
+      const defaultValue1 = getTypeDefaultValue(
+        '.google.cloud.apigeeregistry.v1.UpdateApiRequest',
+        ['api', 'name']
+      );
       request.api.name = defaultValue1;
       const expectedHeaderRequestParams = `api.name=${defaultValue1}`;
       const expectedError = new Error('expected');
@@ -580,10 +599,10 @@ describe('v1.RegistryClient', () => {
         new protos.google.cloud.apigeeregistry.v1.UpdateApiRequest()
       );
       request.api ??= {};
-      const defaultValue1 = getTypeDefaultValue('UpdateApiRequest', [
-        'api',
-        'name',
-      ]);
+      const defaultValue1 = getTypeDefaultValue(
+        '.google.cloud.apigeeregistry.v1.UpdateApiRequest',
+        ['api', 'name']
+      );
       request.api.name = defaultValue1;
       const expectedError = new Error('The client has already been closed.');
       client.close();
@@ -601,7 +620,10 @@ describe('v1.RegistryClient', () => {
       const request = generateSampleMessage(
         new protos.google.cloud.apigeeregistry.v1.DeleteApiRequest()
       );
-      const defaultValue1 = getTypeDefaultValue('DeleteApiRequest', ['name']);
+      const defaultValue1 = getTypeDefaultValue(
+        '.google.cloud.apigeeregistry.v1.DeleteApiRequest',
+        ['name']
+      );
       request.name = defaultValue1;
       const expectedHeaderRequestParams = `name=${defaultValue1}`;
       const expectedResponse = generateSampleMessage(
@@ -629,7 +651,10 @@ describe('v1.RegistryClient', () => {
       const request = generateSampleMessage(
         new protos.google.cloud.apigeeregistry.v1.DeleteApiRequest()
       );
-      const defaultValue1 = getTypeDefaultValue('DeleteApiRequest', ['name']);
+      const defaultValue1 = getTypeDefaultValue(
+        '.google.cloud.apigeeregistry.v1.DeleteApiRequest',
+        ['name']
+      );
       request.name = defaultValue1;
       const expectedHeaderRequestParams = `name=${defaultValue1}`;
       const expectedResponse = generateSampleMessage(
@@ -673,7 +698,10 @@ describe('v1.RegistryClient', () => {
       const request = generateSampleMessage(
         new protos.google.cloud.apigeeregistry.v1.DeleteApiRequest()
       );
-      const defaultValue1 = getTypeDefaultValue('DeleteApiRequest', ['name']);
+      const defaultValue1 = getTypeDefaultValue(
+        '.google.cloud.apigeeregistry.v1.DeleteApiRequest',
+        ['name']
+      );
       request.name = defaultValue1;
       const expectedHeaderRequestParams = `name=${defaultValue1}`;
       const expectedError = new Error('expected');
@@ -698,7 +726,10 @@ describe('v1.RegistryClient', () => {
       const request = generateSampleMessage(
         new protos.google.cloud.apigeeregistry.v1.DeleteApiRequest()
       );
-      const defaultValue1 = getTypeDefaultValue('DeleteApiRequest', ['name']);
+      const defaultValue1 = getTypeDefaultValue(
+        '.google.cloud.apigeeregistry.v1.DeleteApiRequest',
+        ['name']
+      );
       request.name = defaultValue1;
       const expectedError = new Error('The client has already been closed.');
       client.close();
@@ -716,9 +747,10 @@ describe('v1.RegistryClient', () => {
       const request = generateSampleMessage(
         new protos.google.cloud.apigeeregistry.v1.GetApiVersionRequest()
       );
-      const defaultValue1 = getTypeDefaultValue('GetApiVersionRequest', [
-        'name',
-      ]);
+      const defaultValue1 = getTypeDefaultValue(
+        '.google.cloud.apigeeregistry.v1.GetApiVersionRequest',
+        ['name']
+      );
       request.name = defaultValue1;
       const expectedHeaderRequestParams = `name=${defaultValue1}`;
       const expectedResponse = generateSampleMessage(
@@ -746,9 +778,10 @@ describe('v1.RegistryClient', () => {
       const request = generateSampleMessage(
         new protos.google.cloud.apigeeregistry.v1.GetApiVersionRequest()
       );
-      const defaultValue1 = getTypeDefaultValue('GetApiVersionRequest', [
-        'name',
-      ]);
+      const defaultValue1 = getTypeDefaultValue(
+        '.google.cloud.apigeeregistry.v1.GetApiVersionRequest',
+        ['name']
+      );
       request.name = defaultValue1;
       const expectedHeaderRequestParams = `name=${defaultValue1}`;
       const expectedResponse = generateSampleMessage(
@@ -792,9 +825,10 @@ describe('v1.RegistryClient', () => {
       const request = generateSampleMessage(
         new protos.google.cloud.apigeeregistry.v1.GetApiVersionRequest()
       );
-      const defaultValue1 = getTypeDefaultValue('GetApiVersionRequest', [
-        'name',
-      ]);
+      const defaultValue1 = getTypeDefaultValue(
+        '.google.cloud.apigeeregistry.v1.GetApiVersionRequest',
+        ['name']
+      );
       request.name = defaultValue1;
       const expectedHeaderRequestParams = `name=${defaultValue1}`;
       const expectedError = new Error('expected');
@@ -822,9 +856,10 @@ describe('v1.RegistryClient', () => {
       const request = generateSampleMessage(
         new protos.google.cloud.apigeeregistry.v1.GetApiVersionRequest()
       );
-      const defaultValue1 = getTypeDefaultValue('GetApiVersionRequest', [
-        'name',
-      ]);
+      const defaultValue1 = getTypeDefaultValue(
+        '.google.cloud.apigeeregistry.v1.GetApiVersionRequest',
+        ['name']
+      );
       request.name = defaultValue1;
       const expectedError = new Error('The client has already been closed.');
       client.close();
@@ -842,9 +877,10 @@ describe('v1.RegistryClient', () => {
       const request = generateSampleMessage(
         new protos.google.cloud.apigeeregistry.v1.CreateApiVersionRequest()
       );
-      const defaultValue1 = getTypeDefaultValue('CreateApiVersionRequest', [
-        'parent',
-      ]);
+      const defaultValue1 = getTypeDefaultValue(
+        '.google.cloud.apigeeregistry.v1.CreateApiVersionRequest',
+        ['parent']
+      );
       request.parent = defaultValue1;
       const expectedHeaderRequestParams = `parent=${defaultValue1}`;
       const expectedResponse = generateSampleMessage(
@@ -872,9 +908,10 @@ describe('v1.RegistryClient', () => {
       const request = generateSampleMessage(
         new protos.google.cloud.apigeeregistry.v1.CreateApiVersionRequest()
       );
-      const defaultValue1 = getTypeDefaultValue('CreateApiVersionRequest', [
-        'parent',
-      ]);
+      const defaultValue1 = getTypeDefaultValue(
+        '.google.cloud.apigeeregistry.v1.CreateApiVersionRequest',
+        ['parent']
+      );
       request.parent = defaultValue1;
       const expectedHeaderRequestParams = `parent=${defaultValue1}`;
       const expectedResponse = generateSampleMessage(
@@ -918,9 +955,10 @@ describe('v1.RegistryClient', () => {
       const request = generateSampleMessage(
         new protos.google.cloud.apigeeregistry.v1.CreateApiVersionRequest()
       );
-      const defaultValue1 = getTypeDefaultValue('CreateApiVersionRequest', [
-        'parent',
-      ]);
+      const defaultValue1 = getTypeDefaultValue(
+        '.google.cloud.apigeeregistry.v1.CreateApiVersionRequest',
+        ['parent']
+      );
       request.parent = defaultValue1;
       const expectedHeaderRequestParams = `parent=${defaultValue1}`;
       const expectedError = new Error('expected');
@@ -948,9 +986,10 @@ describe('v1.RegistryClient', () => {
       const request = generateSampleMessage(
         new protos.google.cloud.apigeeregistry.v1.CreateApiVersionRequest()
       );
-      const defaultValue1 = getTypeDefaultValue('CreateApiVersionRequest', [
-        'parent',
-      ]);
+      const defaultValue1 = getTypeDefaultValue(
+        '.google.cloud.apigeeregistry.v1.CreateApiVersionRequest',
+        ['parent']
+      );
       request.parent = defaultValue1;
       const expectedError = new Error('The client has already been closed.');
       client.close();
@@ -969,10 +1008,10 @@ describe('v1.RegistryClient', () => {
         new protos.google.cloud.apigeeregistry.v1.UpdateApiVersionRequest()
       );
       request.apiVersion ??= {};
-      const defaultValue1 = getTypeDefaultValue('UpdateApiVersionRequest', [
-        'apiVersion',
-        'name',
-      ]);
+      const defaultValue1 = getTypeDefaultValue(
+        '.google.cloud.apigeeregistry.v1.UpdateApiVersionRequest',
+        ['apiVersion', 'name']
+      );
       request.apiVersion.name = defaultValue1;
       const expectedHeaderRequestParams = `api_version.name=${defaultValue1}`;
       const expectedResponse = generateSampleMessage(
@@ -1001,10 +1040,10 @@ describe('v1.RegistryClient', () => {
         new protos.google.cloud.apigeeregistry.v1.UpdateApiVersionRequest()
       );
       request.apiVersion ??= {};
-      const defaultValue1 = getTypeDefaultValue('UpdateApiVersionRequest', [
-        'apiVersion',
-        'name',
-      ]);
+      const defaultValue1 = getTypeDefaultValue(
+        '.google.cloud.apigeeregistry.v1.UpdateApiVersionRequest',
+        ['apiVersion', 'name']
+      );
       request.apiVersion.name = defaultValue1;
       const expectedHeaderRequestParams = `api_version.name=${defaultValue1}`;
       const expectedResponse = generateSampleMessage(
@@ -1049,10 +1088,10 @@ describe('v1.RegistryClient', () => {
         new protos.google.cloud.apigeeregistry.v1.UpdateApiVersionRequest()
       );
       request.apiVersion ??= {};
-      const defaultValue1 = getTypeDefaultValue('UpdateApiVersionRequest', [
-        'apiVersion',
-        'name',
-      ]);
+      const defaultValue1 = getTypeDefaultValue(
+        '.google.cloud.apigeeregistry.v1.UpdateApiVersionRequest',
+        ['apiVersion', 'name']
+      );
       request.apiVersion.name = defaultValue1;
       const expectedHeaderRequestParams = `api_version.name=${defaultValue1}`;
       const expectedError = new Error('expected');
@@ -1081,10 +1120,10 @@ describe('v1.RegistryClient', () => {
         new protos.google.cloud.apigeeregistry.v1.UpdateApiVersionRequest()
       );
       request.apiVersion ??= {};
-      const defaultValue1 = getTypeDefaultValue('UpdateApiVersionRequest', [
-        'apiVersion',
-        'name',
-      ]);
+      const defaultValue1 = getTypeDefaultValue(
+        '.google.cloud.apigeeregistry.v1.UpdateApiVersionRequest',
+        ['apiVersion', 'name']
+      );
       request.apiVersion.name = defaultValue1;
       const expectedError = new Error('The client has already been closed.');
       client.close();
@@ -1102,9 +1141,10 @@ describe('v1.RegistryClient', () => {
       const request = generateSampleMessage(
         new protos.google.cloud.apigeeregistry.v1.DeleteApiVersionRequest()
       );
-      const defaultValue1 = getTypeDefaultValue('DeleteApiVersionRequest', [
-        'name',
-      ]);
+      const defaultValue1 = getTypeDefaultValue(
+        '.google.cloud.apigeeregistry.v1.DeleteApiVersionRequest',
+        ['name']
+      );
       request.name = defaultValue1;
       const expectedHeaderRequestParams = `name=${defaultValue1}`;
       const expectedResponse = generateSampleMessage(
@@ -1132,9 +1172,10 @@ describe('v1.RegistryClient', () => {
       const request = generateSampleMessage(
         new protos.google.cloud.apigeeregistry.v1.DeleteApiVersionRequest()
       );
-      const defaultValue1 = getTypeDefaultValue('DeleteApiVersionRequest', [
-        'name',
-      ]);
+      const defaultValue1 = getTypeDefaultValue(
+        '.google.cloud.apigeeregistry.v1.DeleteApiVersionRequest',
+        ['name']
+      );
       request.name = defaultValue1;
       const expectedHeaderRequestParams = `name=${defaultValue1}`;
       const expectedResponse = generateSampleMessage(
@@ -1178,9 +1219,10 @@ describe('v1.RegistryClient', () => {
       const request = generateSampleMessage(
         new protos.google.cloud.apigeeregistry.v1.DeleteApiVersionRequest()
       );
-      const defaultValue1 = getTypeDefaultValue('DeleteApiVersionRequest', [
-        'name',
-      ]);
+      const defaultValue1 = getTypeDefaultValue(
+        '.google.cloud.apigeeregistry.v1.DeleteApiVersionRequest',
+        ['name']
+      );
       request.name = defaultValue1;
       const expectedHeaderRequestParams = `name=${defaultValue1}`;
       const expectedError = new Error('expected');
@@ -1208,9 +1250,10 @@ describe('v1.RegistryClient', () => {
       const request = generateSampleMessage(
         new protos.google.cloud.apigeeregistry.v1.DeleteApiVersionRequest()
       );
-      const defaultValue1 = getTypeDefaultValue('DeleteApiVersionRequest', [
-        'name',
-      ]);
+      const defaultValue1 = getTypeDefaultValue(
+        '.google.cloud.apigeeregistry.v1.DeleteApiVersionRequest',
+        ['name']
+      );
       request.name = defaultValue1;
       const expectedError = new Error('The client has already been closed.');
       client.close();
@@ -1228,7 +1271,10 @@ describe('v1.RegistryClient', () => {
       const request = generateSampleMessage(
         new protos.google.cloud.apigeeregistry.v1.GetApiSpecRequest()
       );
-      const defaultValue1 = getTypeDefaultValue('GetApiSpecRequest', ['name']);
+      const defaultValue1 = getTypeDefaultValue(
+        '.google.cloud.apigeeregistry.v1.GetApiSpecRequest',
+        ['name']
+      );
       request.name = defaultValue1;
       const expectedHeaderRequestParams = `name=${defaultValue1}`;
       const expectedResponse = generateSampleMessage(
@@ -1256,7 +1302,10 @@ describe('v1.RegistryClient', () => {
       const request = generateSampleMessage(
         new protos.google.cloud.apigeeregistry.v1.GetApiSpecRequest()
       );
-      const defaultValue1 = getTypeDefaultValue('GetApiSpecRequest', ['name']);
+      const defaultValue1 = getTypeDefaultValue(
+        '.google.cloud.apigeeregistry.v1.GetApiSpecRequest',
+        ['name']
+      );
       request.name = defaultValue1;
       const expectedHeaderRequestParams = `name=${defaultValue1}`;
       const expectedResponse = generateSampleMessage(
@@ -1300,7 +1349,10 @@ describe('v1.RegistryClient', () => {
       const request = generateSampleMessage(
         new protos.google.cloud.apigeeregistry.v1.GetApiSpecRequest()
       );
-      const defaultValue1 = getTypeDefaultValue('GetApiSpecRequest', ['name']);
+      const defaultValue1 = getTypeDefaultValue(
+        '.google.cloud.apigeeregistry.v1.GetApiSpecRequest',
+        ['name']
+      );
       request.name = defaultValue1;
       const expectedHeaderRequestParams = `name=${defaultValue1}`;
       const expectedError = new Error('expected');
@@ -1328,7 +1380,10 @@ describe('v1.RegistryClient', () => {
       const request = generateSampleMessage(
         new protos.google.cloud.apigeeregistry.v1.GetApiSpecRequest()
       );
-      const defaultValue1 = getTypeDefaultValue('GetApiSpecRequest', ['name']);
+      const defaultValue1 = getTypeDefaultValue(
+        '.google.cloud.apigeeregistry.v1.GetApiSpecRequest',
+        ['name']
+      );
       request.name = defaultValue1;
       const expectedError = new Error('The client has already been closed.');
       client.close();
@@ -1346,9 +1401,10 @@ describe('v1.RegistryClient', () => {
       const request = generateSampleMessage(
         new protos.google.cloud.apigeeregistry.v1.GetApiSpecContentsRequest()
       );
-      const defaultValue1 = getTypeDefaultValue('GetApiSpecContentsRequest', [
-        'name',
-      ]);
+      const defaultValue1 = getTypeDefaultValue(
+        '.google.cloud.apigeeregistry.v1.GetApiSpecContentsRequest',
+        ['name']
+      );
       request.name = defaultValue1;
       const expectedHeaderRequestParams = `name=${defaultValue1}`;
       const expectedResponse = generateSampleMessage(
@@ -1377,9 +1433,10 @@ describe('v1.RegistryClient', () => {
       const request = generateSampleMessage(
         new protos.google.cloud.apigeeregistry.v1.GetApiSpecContentsRequest()
       );
-      const defaultValue1 = getTypeDefaultValue('GetApiSpecContentsRequest', [
-        'name',
-      ]);
+      const defaultValue1 = getTypeDefaultValue(
+        '.google.cloud.apigeeregistry.v1.GetApiSpecContentsRequest',
+        ['name']
+      );
       request.name = defaultValue1;
       const expectedHeaderRequestParams = `name=${defaultValue1}`;
       const expectedResponse = generateSampleMessage(
@@ -1420,9 +1477,10 @@ describe('v1.RegistryClient', () => {
       const request = generateSampleMessage(
         new protos.google.cloud.apigeeregistry.v1.GetApiSpecContentsRequest()
       );
-      const defaultValue1 = getTypeDefaultValue('GetApiSpecContentsRequest', [
-        'name',
-      ]);
+      const defaultValue1 = getTypeDefaultValue(
+        '.google.cloud.apigeeregistry.v1.GetApiSpecContentsRequest',
+        ['name']
+      );
       request.name = defaultValue1;
       const expectedHeaderRequestParams = `name=${defaultValue1}`;
       const expectedError = new Error('expected');
@@ -1450,9 +1508,10 @@ describe('v1.RegistryClient', () => {
       const request = generateSampleMessage(
         new protos.google.cloud.apigeeregistry.v1.GetApiSpecContentsRequest()
       );
-      const defaultValue1 = getTypeDefaultValue('GetApiSpecContentsRequest', [
-        'name',
-      ]);
+      const defaultValue1 = getTypeDefaultValue(
+        '.google.cloud.apigeeregistry.v1.GetApiSpecContentsRequest',
+        ['name']
+      );
       request.name = defaultValue1;
       const expectedError = new Error('The client has already been closed.');
       client.close();
@@ -1470,9 +1529,10 @@ describe('v1.RegistryClient', () => {
       const request = generateSampleMessage(
         new protos.google.cloud.apigeeregistry.v1.CreateApiSpecRequest()
       );
-      const defaultValue1 = getTypeDefaultValue('CreateApiSpecRequest', [
-        'parent',
-      ]);
+      const defaultValue1 = getTypeDefaultValue(
+        '.google.cloud.apigeeregistry.v1.CreateApiSpecRequest',
+        ['parent']
+      );
       request.parent = defaultValue1;
       const expectedHeaderRequestParams = `parent=${defaultValue1}`;
       const expectedResponse = generateSampleMessage(
@@ -1500,9 +1560,10 @@ describe('v1.RegistryClient', () => {
       const request = generateSampleMessage(
         new protos.google.cloud.apigeeregistry.v1.CreateApiSpecRequest()
       );
-      const defaultValue1 = getTypeDefaultValue('CreateApiSpecRequest', [
-        'parent',
-      ]);
+      const defaultValue1 = getTypeDefaultValue(
+        '.google.cloud.apigeeregistry.v1.CreateApiSpecRequest',
+        ['parent']
+      );
       request.parent = defaultValue1;
       const expectedHeaderRequestParams = `parent=${defaultValue1}`;
       const expectedResponse = generateSampleMessage(
@@ -1546,9 +1607,10 @@ describe('v1.RegistryClient', () => {
       const request = generateSampleMessage(
         new protos.google.cloud.apigeeregistry.v1.CreateApiSpecRequest()
       );
-      const defaultValue1 = getTypeDefaultValue('CreateApiSpecRequest', [
-        'parent',
-      ]);
+      const defaultValue1 = getTypeDefaultValue(
+        '.google.cloud.apigeeregistry.v1.CreateApiSpecRequest',
+        ['parent']
+      );
       request.parent = defaultValue1;
       const expectedHeaderRequestParams = `parent=${defaultValue1}`;
       const expectedError = new Error('expected');
@@ -1576,9 +1638,10 @@ describe('v1.RegistryClient', () => {
       const request = generateSampleMessage(
         new protos.google.cloud.apigeeregistry.v1.CreateApiSpecRequest()
       );
-      const defaultValue1 = getTypeDefaultValue('CreateApiSpecRequest', [
-        'parent',
-      ]);
+      const defaultValue1 = getTypeDefaultValue(
+        '.google.cloud.apigeeregistry.v1.CreateApiSpecRequest',
+        ['parent']
+      );
       request.parent = defaultValue1;
       const expectedError = new Error('The client has already been closed.');
       client.close();
@@ -1597,10 +1660,10 @@ describe('v1.RegistryClient', () => {
         new protos.google.cloud.apigeeregistry.v1.UpdateApiSpecRequest()
       );
       request.apiSpec ??= {};
-      const defaultValue1 = getTypeDefaultValue('UpdateApiSpecRequest', [
-        'apiSpec',
-        'name',
-      ]);
+      const defaultValue1 = getTypeDefaultValue(
+        '.google.cloud.apigeeregistry.v1.UpdateApiSpecRequest',
+        ['apiSpec', 'name']
+      );
       request.apiSpec.name = defaultValue1;
       const expectedHeaderRequestParams = `api_spec.name=${defaultValue1}`;
       const expectedResponse = generateSampleMessage(
@@ -1629,10 +1692,10 @@ describe('v1.RegistryClient', () => {
         new protos.google.cloud.apigeeregistry.v1.UpdateApiSpecRequest()
       );
       request.apiSpec ??= {};
-      const defaultValue1 = getTypeDefaultValue('UpdateApiSpecRequest', [
-        'apiSpec',
-        'name',
-      ]);
+      const defaultValue1 = getTypeDefaultValue(
+        '.google.cloud.apigeeregistry.v1.UpdateApiSpecRequest',
+        ['apiSpec', 'name']
+      );
       request.apiSpec.name = defaultValue1;
       const expectedHeaderRequestParams = `api_spec.name=${defaultValue1}`;
       const expectedResponse = generateSampleMessage(
@@ -1677,10 +1740,10 @@ describe('v1.RegistryClient', () => {
         new protos.google.cloud.apigeeregistry.v1.UpdateApiSpecRequest()
       );
       request.apiSpec ??= {};
-      const defaultValue1 = getTypeDefaultValue('UpdateApiSpecRequest', [
-        'apiSpec',
-        'name',
-      ]);
+      const defaultValue1 = getTypeDefaultValue(
+        '.google.cloud.apigeeregistry.v1.UpdateApiSpecRequest',
+        ['apiSpec', 'name']
+      );
       request.apiSpec.name = defaultValue1;
       const expectedHeaderRequestParams = `api_spec.name=${defaultValue1}`;
       const expectedError = new Error('expected');
@@ -1709,10 +1772,10 @@ describe('v1.RegistryClient', () => {
         new protos.google.cloud.apigeeregistry.v1.UpdateApiSpecRequest()
       );
       request.apiSpec ??= {};
-      const defaultValue1 = getTypeDefaultValue('UpdateApiSpecRequest', [
-        'apiSpec',
-        'name',
-      ]);
+      const defaultValue1 = getTypeDefaultValue(
+        '.google.cloud.apigeeregistry.v1.UpdateApiSpecRequest',
+        ['apiSpec', 'name']
+      );
       request.apiSpec.name = defaultValue1;
       const expectedError = new Error('The client has already been closed.');
       client.close();
@@ -1730,9 +1793,10 @@ describe('v1.RegistryClient', () => {
       const request = generateSampleMessage(
         new protos.google.cloud.apigeeregistry.v1.DeleteApiSpecRequest()
       );
-      const defaultValue1 = getTypeDefaultValue('DeleteApiSpecRequest', [
-        'name',
-      ]);
+      const defaultValue1 = getTypeDefaultValue(
+        '.google.cloud.apigeeregistry.v1.DeleteApiSpecRequest',
+        ['name']
+      );
       request.name = defaultValue1;
       const expectedHeaderRequestParams = `name=${defaultValue1}`;
       const expectedResponse = generateSampleMessage(
@@ -1760,9 +1824,10 @@ describe('v1.RegistryClient', () => {
       const request = generateSampleMessage(
         new protos.google.cloud.apigeeregistry.v1.DeleteApiSpecRequest()
       );
-      const defaultValue1 = getTypeDefaultValue('DeleteApiSpecRequest', [
-        'name',
-      ]);
+      const defaultValue1 = getTypeDefaultValue(
+        '.google.cloud.apigeeregistry.v1.DeleteApiSpecRequest',
+        ['name']
+      );
       request.name = defaultValue1;
       const expectedHeaderRequestParams = `name=${defaultValue1}`;
       const expectedResponse = generateSampleMessage(
@@ -1806,9 +1871,10 @@ describe('v1.RegistryClient', () => {
       const request = generateSampleMessage(
         new protos.google.cloud.apigeeregistry.v1.DeleteApiSpecRequest()
       );
-      const defaultValue1 = getTypeDefaultValue('DeleteApiSpecRequest', [
-        'name',
-      ]);
+      const defaultValue1 = getTypeDefaultValue(
+        '.google.cloud.apigeeregistry.v1.DeleteApiSpecRequest',
+        ['name']
+      );
       request.name = defaultValue1;
       const expectedHeaderRequestParams = `name=${defaultValue1}`;
       const expectedError = new Error('expected');
@@ -1836,9 +1902,10 @@ describe('v1.RegistryClient', () => {
       const request = generateSampleMessage(
         new protos.google.cloud.apigeeregistry.v1.DeleteApiSpecRequest()
       );
-      const defaultValue1 = getTypeDefaultValue('DeleteApiSpecRequest', [
-        'name',
-      ]);
+      const defaultValue1 = getTypeDefaultValue(
+        '.google.cloud.apigeeregistry.v1.DeleteApiSpecRequest',
+        ['name']
+      );
       request.name = defaultValue1;
       const expectedError = new Error('The client has already been closed.');
       client.close();
@@ -1856,9 +1923,10 @@ describe('v1.RegistryClient', () => {
       const request = generateSampleMessage(
         new protos.google.cloud.apigeeregistry.v1.TagApiSpecRevisionRequest()
       );
-      const defaultValue1 = getTypeDefaultValue('TagApiSpecRevisionRequest', [
-        'name',
-      ]);
+      const defaultValue1 = getTypeDefaultValue(
+        '.google.cloud.apigeeregistry.v1.TagApiSpecRevisionRequest',
+        ['name']
+      );
       request.name = defaultValue1;
       const expectedHeaderRequestParams = `name=${defaultValue1}`;
       const expectedResponse = generateSampleMessage(
@@ -1887,9 +1955,10 @@ describe('v1.RegistryClient', () => {
       const request = generateSampleMessage(
         new protos.google.cloud.apigeeregistry.v1.TagApiSpecRevisionRequest()
       );
-      const defaultValue1 = getTypeDefaultValue('TagApiSpecRevisionRequest', [
-        'name',
-      ]);
+      const defaultValue1 = getTypeDefaultValue(
+        '.google.cloud.apigeeregistry.v1.TagApiSpecRevisionRequest',
+        ['name']
+      );
       request.name = defaultValue1;
       const expectedHeaderRequestParams = `name=${defaultValue1}`;
       const expectedResponse = generateSampleMessage(
@@ -1933,9 +2002,10 @@ describe('v1.RegistryClient', () => {
       const request = generateSampleMessage(
         new protos.google.cloud.apigeeregistry.v1.TagApiSpecRevisionRequest()
       );
-      const defaultValue1 = getTypeDefaultValue('TagApiSpecRevisionRequest', [
-        'name',
-      ]);
+      const defaultValue1 = getTypeDefaultValue(
+        '.google.cloud.apigeeregistry.v1.TagApiSpecRevisionRequest',
+        ['name']
+      );
       request.name = defaultValue1;
       const expectedHeaderRequestParams = `name=${defaultValue1}`;
       const expectedError = new Error('expected');
@@ -1963,9 +2033,10 @@ describe('v1.RegistryClient', () => {
       const request = generateSampleMessage(
         new protos.google.cloud.apigeeregistry.v1.TagApiSpecRevisionRequest()
       );
-      const defaultValue1 = getTypeDefaultValue('TagApiSpecRevisionRequest', [
-        'name',
-      ]);
+      const defaultValue1 = getTypeDefaultValue(
+        '.google.cloud.apigeeregistry.v1.TagApiSpecRevisionRequest',
+        ['name']
+      );
       request.name = defaultValue1;
       const expectedError = new Error('The client has already been closed.');
       client.close();
@@ -1983,9 +2054,10 @@ describe('v1.RegistryClient', () => {
       const request = generateSampleMessage(
         new protos.google.cloud.apigeeregistry.v1.RollbackApiSpecRequest()
       );
-      const defaultValue1 = getTypeDefaultValue('RollbackApiSpecRequest', [
-        'name',
-      ]);
+      const defaultValue1 = getTypeDefaultValue(
+        '.google.cloud.apigeeregistry.v1.RollbackApiSpecRequest',
+        ['name']
+      );
       request.name = defaultValue1;
       const expectedHeaderRequestParams = `name=${defaultValue1}`;
       const expectedResponse = generateSampleMessage(
@@ -2013,9 +2085,10 @@ describe('v1.RegistryClient', () => {
       const request = generateSampleMessage(
         new protos.google.cloud.apigeeregistry.v1.RollbackApiSpecRequest()
       );
-      const defaultValue1 = getTypeDefaultValue('RollbackApiSpecRequest', [
-        'name',
-      ]);
+      const defaultValue1 = getTypeDefaultValue(
+        '.google.cloud.apigeeregistry.v1.RollbackApiSpecRequest',
+        ['name']
+      );
       request.name = defaultValue1;
       const expectedHeaderRequestParams = `name=${defaultValue1}`;
       const expectedResponse = generateSampleMessage(
@@ -2059,9 +2132,10 @@ describe('v1.RegistryClient', () => {
       const request = generateSampleMessage(
         new protos.google.cloud.apigeeregistry.v1.RollbackApiSpecRequest()
       );
-      const defaultValue1 = getTypeDefaultValue('RollbackApiSpecRequest', [
-        'name',
-      ]);
+      const defaultValue1 = getTypeDefaultValue(
+        '.google.cloud.apigeeregistry.v1.RollbackApiSpecRequest',
+        ['name']
+      );
       request.name = defaultValue1;
       const expectedHeaderRequestParams = `name=${defaultValue1}`;
       const expectedError = new Error('expected');
@@ -2089,9 +2163,10 @@ describe('v1.RegistryClient', () => {
       const request = generateSampleMessage(
         new protos.google.cloud.apigeeregistry.v1.RollbackApiSpecRequest()
       );
-      const defaultValue1 = getTypeDefaultValue('RollbackApiSpecRequest', [
-        'name',
-      ]);
+      const defaultValue1 = getTypeDefaultValue(
+        '.google.cloud.apigeeregistry.v1.RollbackApiSpecRequest',
+        ['name']
+      );
       request.name = defaultValue1;
       const expectedError = new Error('The client has already been closed.');
       client.close();
@@ -2110,7 +2185,7 @@ describe('v1.RegistryClient', () => {
         new protos.google.cloud.apigeeregistry.v1.DeleteApiSpecRevisionRequest()
       );
       const defaultValue1 = getTypeDefaultValue(
-        'DeleteApiSpecRevisionRequest',
+        '.google.cloud.apigeeregistry.v1.DeleteApiSpecRevisionRequest',
         ['name']
       );
       request.name = defaultValue1;
@@ -2142,7 +2217,7 @@ describe('v1.RegistryClient', () => {
         new protos.google.cloud.apigeeregistry.v1.DeleteApiSpecRevisionRequest()
       );
       const defaultValue1 = getTypeDefaultValue(
-        'DeleteApiSpecRevisionRequest',
+        '.google.cloud.apigeeregistry.v1.DeleteApiSpecRevisionRequest',
         ['name']
       );
       request.name = defaultValue1;
@@ -2189,7 +2264,7 @@ describe('v1.RegistryClient', () => {
         new protos.google.cloud.apigeeregistry.v1.DeleteApiSpecRevisionRequest()
       );
       const defaultValue1 = getTypeDefaultValue(
-        'DeleteApiSpecRevisionRequest',
+        '.google.cloud.apigeeregistry.v1.DeleteApiSpecRevisionRequest',
         ['name']
       );
       request.name = defaultValue1;
@@ -2223,7 +2298,7 @@ describe('v1.RegistryClient', () => {
         new protos.google.cloud.apigeeregistry.v1.DeleteApiSpecRevisionRequest()
       );
       const defaultValue1 = getTypeDefaultValue(
-        'DeleteApiSpecRevisionRequest',
+        '.google.cloud.apigeeregistry.v1.DeleteApiSpecRevisionRequest',
         ['name']
       );
       request.name = defaultValue1;
@@ -2246,9 +2321,10 @@ describe('v1.RegistryClient', () => {
       const request = generateSampleMessage(
         new protos.google.cloud.apigeeregistry.v1.GetApiDeploymentRequest()
       );
-      const defaultValue1 = getTypeDefaultValue('GetApiDeploymentRequest', [
-        'name',
-      ]);
+      const defaultValue1 = getTypeDefaultValue(
+        '.google.cloud.apigeeregistry.v1.GetApiDeploymentRequest',
+        ['name']
+      );
       request.name = defaultValue1;
       const expectedHeaderRequestParams = `name=${defaultValue1}`;
       const expectedResponse = generateSampleMessage(
@@ -2276,9 +2352,10 @@ describe('v1.RegistryClient', () => {
       const request = generateSampleMessage(
         new protos.google.cloud.apigeeregistry.v1.GetApiDeploymentRequest()
       );
-      const defaultValue1 = getTypeDefaultValue('GetApiDeploymentRequest', [
-        'name',
-      ]);
+      const defaultValue1 = getTypeDefaultValue(
+        '.google.cloud.apigeeregistry.v1.GetApiDeploymentRequest',
+        ['name']
+      );
       request.name = defaultValue1;
       const expectedHeaderRequestParams = `name=${defaultValue1}`;
       const expectedResponse = generateSampleMessage(
@@ -2322,9 +2399,10 @@ describe('v1.RegistryClient', () => {
       const request = generateSampleMessage(
         new protos.google.cloud.apigeeregistry.v1.GetApiDeploymentRequest()
       );
-      const defaultValue1 = getTypeDefaultValue('GetApiDeploymentRequest', [
-        'name',
-      ]);
+      const defaultValue1 = getTypeDefaultValue(
+        '.google.cloud.apigeeregistry.v1.GetApiDeploymentRequest',
+        ['name']
+      );
       request.name = defaultValue1;
       const expectedHeaderRequestParams = `name=${defaultValue1}`;
       const expectedError = new Error('expected');
@@ -2352,9 +2430,10 @@ describe('v1.RegistryClient', () => {
       const request = generateSampleMessage(
         new protos.google.cloud.apigeeregistry.v1.GetApiDeploymentRequest()
       );
-      const defaultValue1 = getTypeDefaultValue('GetApiDeploymentRequest', [
-        'name',
-      ]);
+      const defaultValue1 = getTypeDefaultValue(
+        '.google.cloud.apigeeregistry.v1.GetApiDeploymentRequest',
+        ['name']
+      );
       request.name = defaultValue1;
       const expectedError = new Error('The client has already been closed.');
       client.close();
@@ -2372,9 +2451,10 @@ describe('v1.RegistryClient', () => {
       const request = generateSampleMessage(
         new protos.google.cloud.apigeeregistry.v1.CreateApiDeploymentRequest()
       );
-      const defaultValue1 = getTypeDefaultValue('CreateApiDeploymentRequest', [
-        'parent',
-      ]);
+      const defaultValue1 = getTypeDefaultValue(
+        '.google.cloud.apigeeregistry.v1.CreateApiDeploymentRequest',
+        ['parent']
+      );
       request.parent = defaultValue1;
       const expectedHeaderRequestParams = `parent=${defaultValue1}`;
       const expectedResponse = generateSampleMessage(
@@ -2403,9 +2483,10 @@ describe('v1.RegistryClient', () => {
       const request = generateSampleMessage(
         new protos.google.cloud.apigeeregistry.v1.CreateApiDeploymentRequest()
       );
-      const defaultValue1 = getTypeDefaultValue('CreateApiDeploymentRequest', [
-        'parent',
-      ]);
+      const defaultValue1 = getTypeDefaultValue(
+        '.google.cloud.apigeeregistry.v1.CreateApiDeploymentRequest',
+        ['parent']
+      );
       request.parent = defaultValue1;
       const expectedHeaderRequestParams = `parent=${defaultValue1}`;
       const expectedResponse = generateSampleMessage(
@@ -2449,9 +2530,10 @@ describe('v1.RegistryClient', () => {
       const request = generateSampleMessage(
         new protos.google.cloud.apigeeregistry.v1.CreateApiDeploymentRequest()
       );
-      const defaultValue1 = getTypeDefaultValue('CreateApiDeploymentRequest', [
-        'parent',
-      ]);
+      const defaultValue1 = getTypeDefaultValue(
+        '.google.cloud.apigeeregistry.v1.CreateApiDeploymentRequest',
+        ['parent']
+      );
       request.parent = defaultValue1;
       const expectedHeaderRequestParams = `parent=${defaultValue1}`;
       const expectedError = new Error('expected');
@@ -2479,9 +2561,10 @@ describe('v1.RegistryClient', () => {
       const request = generateSampleMessage(
         new protos.google.cloud.apigeeregistry.v1.CreateApiDeploymentRequest()
       );
-      const defaultValue1 = getTypeDefaultValue('CreateApiDeploymentRequest', [
-        'parent',
-      ]);
+      const defaultValue1 = getTypeDefaultValue(
+        '.google.cloud.apigeeregistry.v1.CreateApiDeploymentRequest',
+        ['parent']
+      );
       request.parent = defaultValue1;
       const expectedError = new Error('The client has already been closed.');
       client.close();
@@ -2500,10 +2583,10 @@ describe('v1.RegistryClient', () => {
         new protos.google.cloud.apigeeregistry.v1.UpdateApiDeploymentRequest()
       );
       request.apiDeployment ??= {};
-      const defaultValue1 = getTypeDefaultValue('UpdateApiDeploymentRequest', [
-        'apiDeployment',
-        'name',
-      ]);
+      const defaultValue1 = getTypeDefaultValue(
+        '.google.cloud.apigeeregistry.v1.UpdateApiDeploymentRequest',
+        ['apiDeployment', 'name']
+      );
       request.apiDeployment.name = defaultValue1;
       const expectedHeaderRequestParams = `api_deployment.name=${defaultValue1}`;
       const expectedResponse = generateSampleMessage(
@@ -2533,10 +2616,10 @@ describe('v1.RegistryClient', () => {
         new protos.google.cloud.apigeeregistry.v1.UpdateApiDeploymentRequest()
       );
       request.apiDeployment ??= {};
-      const defaultValue1 = getTypeDefaultValue('UpdateApiDeploymentRequest', [
-        'apiDeployment',
-        'name',
-      ]);
+      const defaultValue1 = getTypeDefaultValue(
+        '.google.cloud.apigeeregistry.v1.UpdateApiDeploymentRequest',
+        ['apiDeployment', 'name']
+      );
       request.apiDeployment.name = defaultValue1;
       const expectedHeaderRequestParams = `api_deployment.name=${defaultValue1}`;
       const expectedResponse = generateSampleMessage(
@@ -2581,10 +2664,10 @@ describe('v1.RegistryClient', () => {
         new protos.google.cloud.apigeeregistry.v1.UpdateApiDeploymentRequest()
       );
       request.apiDeployment ??= {};
-      const defaultValue1 = getTypeDefaultValue('UpdateApiDeploymentRequest', [
-        'apiDeployment',
-        'name',
-      ]);
+      const defaultValue1 = getTypeDefaultValue(
+        '.google.cloud.apigeeregistry.v1.UpdateApiDeploymentRequest',
+        ['apiDeployment', 'name']
+      );
       request.apiDeployment.name = defaultValue1;
       const expectedHeaderRequestParams = `api_deployment.name=${defaultValue1}`;
       const expectedError = new Error('expected');
@@ -2613,10 +2696,10 @@ describe('v1.RegistryClient', () => {
         new protos.google.cloud.apigeeregistry.v1.UpdateApiDeploymentRequest()
       );
       request.apiDeployment ??= {};
-      const defaultValue1 = getTypeDefaultValue('UpdateApiDeploymentRequest', [
-        'apiDeployment',
-        'name',
-      ]);
+      const defaultValue1 = getTypeDefaultValue(
+        '.google.cloud.apigeeregistry.v1.UpdateApiDeploymentRequest',
+        ['apiDeployment', 'name']
+      );
       request.apiDeployment.name = defaultValue1;
       const expectedError = new Error('The client has already been closed.');
       client.close();
@@ -2634,9 +2717,10 @@ describe('v1.RegistryClient', () => {
       const request = generateSampleMessage(
         new protos.google.cloud.apigeeregistry.v1.DeleteApiDeploymentRequest()
       );
-      const defaultValue1 = getTypeDefaultValue('DeleteApiDeploymentRequest', [
-        'name',
-      ]);
+      const defaultValue1 = getTypeDefaultValue(
+        '.google.cloud.apigeeregistry.v1.DeleteApiDeploymentRequest',
+        ['name']
+      );
       request.name = defaultValue1;
       const expectedHeaderRequestParams = `name=${defaultValue1}`;
       const expectedResponse = generateSampleMessage(
@@ -2665,9 +2749,10 @@ describe('v1.RegistryClient', () => {
       const request = generateSampleMessage(
         new protos.google.cloud.apigeeregistry.v1.DeleteApiDeploymentRequest()
       );
-      const defaultValue1 = getTypeDefaultValue('DeleteApiDeploymentRequest', [
-        'name',
-      ]);
+      const defaultValue1 = getTypeDefaultValue(
+        '.google.cloud.apigeeregistry.v1.DeleteApiDeploymentRequest',
+        ['name']
+      );
       request.name = defaultValue1;
       const expectedHeaderRequestParams = `name=${defaultValue1}`;
       const expectedResponse = generateSampleMessage(
@@ -2711,9 +2796,10 @@ describe('v1.RegistryClient', () => {
       const request = generateSampleMessage(
         new protos.google.cloud.apigeeregistry.v1.DeleteApiDeploymentRequest()
       );
-      const defaultValue1 = getTypeDefaultValue('DeleteApiDeploymentRequest', [
-        'name',
-      ]);
+      const defaultValue1 = getTypeDefaultValue(
+        '.google.cloud.apigeeregistry.v1.DeleteApiDeploymentRequest',
+        ['name']
+      );
       request.name = defaultValue1;
       const expectedHeaderRequestParams = `name=${defaultValue1}`;
       const expectedError = new Error('expected');
@@ -2741,9 +2827,10 @@ describe('v1.RegistryClient', () => {
       const request = generateSampleMessage(
         new protos.google.cloud.apigeeregistry.v1.DeleteApiDeploymentRequest()
       );
-      const defaultValue1 = getTypeDefaultValue('DeleteApiDeploymentRequest', [
-        'name',
-      ]);
+      const defaultValue1 = getTypeDefaultValue(
+        '.google.cloud.apigeeregistry.v1.DeleteApiDeploymentRequest',
+        ['name']
+      );
       request.name = defaultValue1;
       const expectedError = new Error('The client has already been closed.');
       client.close();
@@ -2762,7 +2849,7 @@ describe('v1.RegistryClient', () => {
         new protos.google.cloud.apigeeregistry.v1.TagApiDeploymentRevisionRequest()
       );
       const defaultValue1 = getTypeDefaultValue(
-        'TagApiDeploymentRevisionRequest',
+        '.google.cloud.apigeeregistry.v1.TagApiDeploymentRevisionRequest',
         ['name']
       );
       request.name = defaultValue1;
@@ -2794,7 +2881,7 @@ describe('v1.RegistryClient', () => {
         new protos.google.cloud.apigeeregistry.v1.TagApiDeploymentRevisionRequest()
       );
       const defaultValue1 = getTypeDefaultValue(
-        'TagApiDeploymentRevisionRequest',
+        '.google.cloud.apigeeregistry.v1.TagApiDeploymentRevisionRequest',
         ['name']
       );
       request.name = defaultValue1;
@@ -2841,7 +2928,7 @@ describe('v1.RegistryClient', () => {
         new protos.google.cloud.apigeeregistry.v1.TagApiDeploymentRevisionRequest()
       );
       const defaultValue1 = getTypeDefaultValue(
-        'TagApiDeploymentRevisionRequest',
+        '.google.cloud.apigeeregistry.v1.TagApiDeploymentRevisionRequest',
         ['name']
       );
       request.name = defaultValue1;
@@ -2875,7 +2962,7 @@ describe('v1.RegistryClient', () => {
         new protos.google.cloud.apigeeregistry.v1.TagApiDeploymentRevisionRequest()
       );
       const defaultValue1 = getTypeDefaultValue(
-        'TagApiDeploymentRevisionRequest',
+        '.google.cloud.apigeeregistry.v1.TagApiDeploymentRevisionRequest',
         ['name']
       );
       request.name = defaultValue1;
@@ -2899,7 +2986,7 @@ describe('v1.RegistryClient', () => {
         new protos.google.cloud.apigeeregistry.v1.RollbackApiDeploymentRequest()
       );
       const defaultValue1 = getTypeDefaultValue(
-        'RollbackApiDeploymentRequest',
+        '.google.cloud.apigeeregistry.v1.RollbackApiDeploymentRequest',
         ['name']
       );
       request.name = defaultValue1;
@@ -2931,7 +3018,7 @@ describe('v1.RegistryClient', () => {
         new protos.google.cloud.apigeeregistry.v1.RollbackApiDeploymentRequest()
       );
       const defaultValue1 = getTypeDefaultValue(
-        'RollbackApiDeploymentRequest',
+        '.google.cloud.apigeeregistry.v1.RollbackApiDeploymentRequest',
         ['name']
       );
       request.name = defaultValue1;
@@ -2978,7 +3065,7 @@ describe('v1.RegistryClient', () => {
         new protos.google.cloud.apigeeregistry.v1.RollbackApiDeploymentRequest()
       );
       const defaultValue1 = getTypeDefaultValue(
-        'RollbackApiDeploymentRequest',
+        '.google.cloud.apigeeregistry.v1.RollbackApiDeploymentRequest',
         ['name']
       );
       request.name = defaultValue1;
@@ -3012,7 +3099,7 @@ describe('v1.RegistryClient', () => {
         new protos.google.cloud.apigeeregistry.v1.RollbackApiDeploymentRequest()
       );
       const defaultValue1 = getTypeDefaultValue(
-        'RollbackApiDeploymentRequest',
+        '.google.cloud.apigeeregistry.v1.RollbackApiDeploymentRequest',
         ['name']
       );
       request.name = defaultValue1;
@@ -3036,7 +3123,7 @@ describe('v1.RegistryClient', () => {
         new protos.google.cloud.apigeeregistry.v1.DeleteApiDeploymentRevisionRequest()
       );
       const defaultValue1 = getTypeDefaultValue(
-        'DeleteApiDeploymentRevisionRequest',
+        '.google.cloud.apigeeregistry.v1.DeleteApiDeploymentRevisionRequest',
         ['name']
       );
       request.name = defaultValue1;
@@ -3068,7 +3155,7 @@ describe('v1.RegistryClient', () => {
         new protos.google.cloud.apigeeregistry.v1.DeleteApiDeploymentRevisionRequest()
       );
       const defaultValue1 = getTypeDefaultValue(
-        'DeleteApiDeploymentRevisionRequest',
+        '.google.cloud.apigeeregistry.v1.DeleteApiDeploymentRevisionRequest',
         ['name']
       );
       request.name = defaultValue1;
@@ -3115,7 +3202,7 @@ describe('v1.RegistryClient', () => {
         new protos.google.cloud.apigeeregistry.v1.DeleteApiDeploymentRevisionRequest()
       );
       const defaultValue1 = getTypeDefaultValue(
-        'DeleteApiDeploymentRevisionRequest',
+        '.google.cloud.apigeeregistry.v1.DeleteApiDeploymentRevisionRequest',
         ['name']
       );
       request.name = defaultValue1;
@@ -3149,7 +3236,7 @@ describe('v1.RegistryClient', () => {
         new protos.google.cloud.apigeeregistry.v1.DeleteApiDeploymentRevisionRequest()
       );
       const defaultValue1 = getTypeDefaultValue(
-        'DeleteApiDeploymentRevisionRequest',
+        '.google.cloud.apigeeregistry.v1.DeleteApiDeploymentRevisionRequest',
         ['name']
       );
       request.name = defaultValue1;
@@ -3172,7 +3259,10 @@ describe('v1.RegistryClient', () => {
       const request = generateSampleMessage(
         new protos.google.cloud.apigeeregistry.v1.GetArtifactRequest()
       );
-      const defaultValue1 = getTypeDefaultValue('GetArtifactRequest', ['name']);
+      const defaultValue1 = getTypeDefaultValue(
+        '.google.cloud.apigeeregistry.v1.GetArtifactRequest',
+        ['name']
+      );
       request.name = defaultValue1;
       const expectedHeaderRequestParams = `name=${defaultValue1}`;
       const expectedResponse = generateSampleMessage(
@@ -3200,7 +3290,10 @@ describe('v1.RegistryClient', () => {
       const request = generateSampleMessage(
         new protos.google.cloud.apigeeregistry.v1.GetArtifactRequest()
       );
-      const defaultValue1 = getTypeDefaultValue('GetArtifactRequest', ['name']);
+      const defaultValue1 = getTypeDefaultValue(
+        '.google.cloud.apigeeregistry.v1.GetArtifactRequest',
+        ['name']
+      );
       request.name = defaultValue1;
       const expectedHeaderRequestParams = `name=${defaultValue1}`;
       const expectedResponse = generateSampleMessage(
@@ -3244,7 +3337,10 @@ describe('v1.RegistryClient', () => {
       const request = generateSampleMessage(
         new protos.google.cloud.apigeeregistry.v1.GetArtifactRequest()
       );
-      const defaultValue1 = getTypeDefaultValue('GetArtifactRequest', ['name']);
+      const defaultValue1 = getTypeDefaultValue(
+        '.google.cloud.apigeeregistry.v1.GetArtifactRequest',
+        ['name']
+      );
       request.name = defaultValue1;
       const expectedHeaderRequestParams = `name=${defaultValue1}`;
       const expectedError = new Error('expected');
@@ -3272,7 +3368,10 @@ describe('v1.RegistryClient', () => {
       const request = generateSampleMessage(
         new protos.google.cloud.apigeeregistry.v1.GetArtifactRequest()
       );
-      const defaultValue1 = getTypeDefaultValue('GetArtifactRequest', ['name']);
+      const defaultValue1 = getTypeDefaultValue(
+        '.google.cloud.apigeeregistry.v1.GetArtifactRequest',
+        ['name']
+      );
       request.name = defaultValue1;
       const expectedError = new Error('The client has already been closed.');
       client.close();
@@ -3290,9 +3389,10 @@ describe('v1.RegistryClient', () => {
       const request = generateSampleMessage(
         new protos.google.cloud.apigeeregistry.v1.GetArtifactContentsRequest()
       );
-      const defaultValue1 = getTypeDefaultValue('GetArtifactContentsRequest', [
-        'name',
-      ]);
+      const defaultValue1 = getTypeDefaultValue(
+        '.google.cloud.apigeeregistry.v1.GetArtifactContentsRequest',
+        ['name']
+      );
       request.name = defaultValue1;
       const expectedHeaderRequestParams = `name=${defaultValue1}`;
       const expectedResponse = generateSampleMessage(
@@ -3321,9 +3421,10 @@ describe('v1.RegistryClient', () => {
       const request = generateSampleMessage(
         new protos.google.cloud.apigeeregistry.v1.GetArtifactContentsRequest()
       );
-      const defaultValue1 = getTypeDefaultValue('GetArtifactContentsRequest', [
-        'name',
-      ]);
+      const defaultValue1 = getTypeDefaultValue(
+        '.google.cloud.apigeeregistry.v1.GetArtifactContentsRequest',
+        ['name']
+      );
       request.name = defaultValue1;
       const expectedHeaderRequestParams = `name=${defaultValue1}`;
       const expectedResponse = generateSampleMessage(
@@ -3364,9 +3465,10 @@ describe('v1.RegistryClient', () => {
       const request = generateSampleMessage(
         new protos.google.cloud.apigeeregistry.v1.GetArtifactContentsRequest()
       );
-      const defaultValue1 = getTypeDefaultValue('GetArtifactContentsRequest', [
-        'name',
-      ]);
+      const defaultValue1 = getTypeDefaultValue(
+        '.google.cloud.apigeeregistry.v1.GetArtifactContentsRequest',
+        ['name']
+      );
       request.name = defaultValue1;
       const expectedHeaderRequestParams = `name=${defaultValue1}`;
       const expectedError = new Error('expected');
@@ -3394,9 +3496,10 @@ describe('v1.RegistryClient', () => {
       const request = generateSampleMessage(
         new protos.google.cloud.apigeeregistry.v1.GetArtifactContentsRequest()
       );
-      const defaultValue1 = getTypeDefaultValue('GetArtifactContentsRequest', [
-        'name',
-      ]);
+      const defaultValue1 = getTypeDefaultValue(
+        '.google.cloud.apigeeregistry.v1.GetArtifactContentsRequest',
+        ['name']
+      );
       request.name = defaultValue1;
       const expectedError = new Error('The client has already been closed.');
       client.close();
@@ -3414,9 +3517,10 @@ describe('v1.RegistryClient', () => {
       const request = generateSampleMessage(
         new protos.google.cloud.apigeeregistry.v1.CreateArtifactRequest()
       );
-      const defaultValue1 = getTypeDefaultValue('CreateArtifactRequest', [
-        'parent',
-      ]);
+      const defaultValue1 = getTypeDefaultValue(
+        '.google.cloud.apigeeregistry.v1.CreateArtifactRequest',
+        ['parent']
+      );
       request.parent = defaultValue1;
       const expectedHeaderRequestParams = `parent=${defaultValue1}`;
       const expectedResponse = generateSampleMessage(
@@ -3444,9 +3548,10 @@ describe('v1.RegistryClient', () => {
       const request = generateSampleMessage(
         new protos.google.cloud.apigeeregistry.v1.CreateArtifactRequest()
       );
-      const defaultValue1 = getTypeDefaultValue('CreateArtifactRequest', [
-        'parent',
-      ]);
+      const defaultValue1 = getTypeDefaultValue(
+        '.google.cloud.apigeeregistry.v1.CreateArtifactRequest',
+        ['parent']
+      );
       request.parent = defaultValue1;
       const expectedHeaderRequestParams = `parent=${defaultValue1}`;
       const expectedResponse = generateSampleMessage(
@@ -3490,9 +3595,10 @@ describe('v1.RegistryClient', () => {
       const request = generateSampleMessage(
         new protos.google.cloud.apigeeregistry.v1.CreateArtifactRequest()
       );
-      const defaultValue1 = getTypeDefaultValue('CreateArtifactRequest', [
-        'parent',
-      ]);
+      const defaultValue1 = getTypeDefaultValue(
+        '.google.cloud.apigeeregistry.v1.CreateArtifactRequest',
+        ['parent']
+      );
       request.parent = defaultValue1;
       const expectedHeaderRequestParams = `parent=${defaultValue1}`;
       const expectedError = new Error('expected');
@@ -3520,9 +3626,10 @@ describe('v1.RegistryClient', () => {
       const request = generateSampleMessage(
         new protos.google.cloud.apigeeregistry.v1.CreateArtifactRequest()
       );
-      const defaultValue1 = getTypeDefaultValue('CreateArtifactRequest', [
-        'parent',
-      ]);
+      const defaultValue1 = getTypeDefaultValue(
+        '.google.cloud.apigeeregistry.v1.CreateArtifactRequest',
+        ['parent']
+      );
       request.parent = defaultValue1;
       const expectedError = new Error('The client has already been closed.');
       client.close();
@@ -3541,10 +3648,10 @@ describe('v1.RegistryClient', () => {
         new protos.google.cloud.apigeeregistry.v1.ReplaceArtifactRequest()
       );
       request.artifact ??= {};
-      const defaultValue1 = getTypeDefaultValue('ReplaceArtifactRequest', [
-        'artifact',
-        'name',
-      ]);
+      const defaultValue1 = getTypeDefaultValue(
+        '.google.cloud.apigeeregistry.v1.ReplaceArtifactRequest',
+        ['artifact', 'name']
+      );
       request.artifact.name = defaultValue1;
       const expectedHeaderRequestParams = `artifact.name=${defaultValue1}`;
       const expectedResponse = generateSampleMessage(
@@ -3573,10 +3680,10 @@ describe('v1.RegistryClient', () => {
         new protos.google.cloud.apigeeregistry.v1.ReplaceArtifactRequest()
       );
       request.artifact ??= {};
-      const defaultValue1 = getTypeDefaultValue('ReplaceArtifactRequest', [
-        'artifact',
-        'name',
-      ]);
+      const defaultValue1 = getTypeDefaultValue(
+        '.google.cloud.apigeeregistry.v1.ReplaceArtifactRequest',
+        ['artifact', 'name']
+      );
       request.artifact.name = defaultValue1;
       const expectedHeaderRequestParams = `artifact.name=${defaultValue1}`;
       const expectedResponse = generateSampleMessage(
@@ -3621,10 +3728,10 @@ describe('v1.RegistryClient', () => {
         new protos.google.cloud.apigeeregistry.v1.ReplaceArtifactRequest()
       );
       request.artifact ??= {};
-      const defaultValue1 = getTypeDefaultValue('ReplaceArtifactRequest', [
-        'artifact',
-        'name',
-      ]);
+      const defaultValue1 = getTypeDefaultValue(
+        '.google.cloud.apigeeregistry.v1.ReplaceArtifactRequest',
+        ['artifact', 'name']
+      );
       request.artifact.name = defaultValue1;
       const expectedHeaderRequestParams = `artifact.name=${defaultValue1}`;
       const expectedError = new Error('expected');
@@ -3653,10 +3760,10 @@ describe('v1.RegistryClient', () => {
         new protos.google.cloud.apigeeregistry.v1.ReplaceArtifactRequest()
       );
       request.artifact ??= {};
-      const defaultValue1 = getTypeDefaultValue('ReplaceArtifactRequest', [
-        'artifact',
-        'name',
-      ]);
+      const defaultValue1 = getTypeDefaultValue(
+        '.google.cloud.apigeeregistry.v1.ReplaceArtifactRequest',
+        ['artifact', 'name']
+      );
       request.artifact.name = defaultValue1;
       const expectedError = new Error('The client has already been closed.');
       client.close();
@@ -3674,9 +3781,10 @@ describe('v1.RegistryClient', () => {
       const request = generateSampleMessage(
         new protos.google.cloud.apigeeregistry.v1.DeleteArtifactRequest()
       );
-      const defaultValue1 = getTypeDefaultValue('DeleteArtifactRequest', [
-        'name',
-      ]);
+      const defaultValue1 = getTypeDefaultValue(
+        '.google.cloud.apigeeregistry.v1.DeleteArtifactRequest',
+        ['name']
+      );
       request.name = defaultValue1;
       const expectedHeaderRequestParams = `name=${defaultValue1}`;
       const expectedResponse = generateSampleMessage(
@@ -3704,9 +3812,10 @@ describe('v1.RegistryClient', () => {
       const request = generateSampleMessage(
         new protos.google.cloud.apigeeregistry.v1.DeleteArtifactRequest()
       );
-      const defaultValue1 = getTypeDefaultValue('DeleteArtifactRequest', [
-        'name',
-      ]);
+      const defaultValue1 = getTypeDefaultValue(
+        '.google.cloud.apigeeregistry.v1.DeleteArtifactRequest',
+        ['name']
+      );
       request.name = defaultValue1;
       const expectedHeaderRequestParams = `name=${defaultValue1}`;
       const expectedResponse = generateSampleMessage(
@@ -3750,9 +3859,10 @@ describe('v1.RegistryClient', () => {
       const request = generateSampleMessage(
         new protos.google.cloud.apigeeregistry.v1.DeleteArtifactRequest()
       );
-      const defaultValue1 = getTypeDefaultValue('DeleteArtifactRequest', [
-        'name',
-      ]);
+      const defaultValue1 = getTypeDefaultValue(
+        '.google.cloud.apigeeregistry.v1.DeleteArtifactRequest',
+        ['name']
+      );
       request.name = defaultValue1;
       const expectedHeaderRequestParams = `name=${defaultValue1}`;
       const expectedError = new Error('expected');
@@ -3780,9 +3890,10 @@ describe('v1.RegistryClient', () => {
       const request = generateSampleMessage(
         new protos.google.cloud.apigeeregistry.v1.DeleteArtifactRequest()
       );
-      const defaultValue1 = getTypeDefaultValue('DeleteArtifactRequest', [
-        'name',
-      ]);
+      const defaultValue1 = getTypeDefaultValue(
+        '.google.cloud.apigeeregistry.v1.DeleteArtifactRequest',
+        ['name']
+      );
       request.name = defaultValue1;
       const expectedError = new Error('The client has already been closed.');
       client.close();
@@ -3800,7 +3911,10 @@ describe('v1.RegistryClient', () => {
       const request = generateSampleMessage(
         new protos.google.cloud.apigeeregistry.v1.ListApisRequest()
       );
-      const defaultValue1 = getTypeDefaultValue('ListApisRequest', ['parent']);
+      const defaultValue1 = getTypeDefaultValue(
+        '.google.cloud.apigeeregistry.v1.ListApisRequest',
+        ['parent']
+      );
       request.parent = defaultValue1;
       const expectedHeaderRequestParams = `parent=${defaultValue1}`;
       const expectedResponse = [
@@ -3830,7 +3944,10 @@ describe('v1.RegistryClient', () => {
       const request = generateSampleMessage(
         new protos.google.cloud.apigeeregistry.v1.ListApisRequest()
       );
-      const defaultValue1 = getTypeDefaultValue('ListApisRequest', ['parent']);
+      const defaultValue1 = getTypeDefaultValue(
+        '.google.cloud.apigeeregistry.v1.ListApisRequest',
+        ['parent']
+      );
       request.parent = defaultValue1;
       const expectedHeaderRequestParams = `parent=${defaultValue1}`;
       const expectedResponse = [
@@ -3876,7 +3993,10 @@ describe('v1.RegistryClient', () => {
       const request = generateSampleMessage(
         new protos.google.cloud.apigeeregistry.v1.ListApisRequest()
       );
-      const defaultValue1 = getTypeDefaultValue('ListApisRequest', ['parent']);
+      const defaultValue1 = getTypeDefaultValue(
+        '.google.cloud.apigeeregistry.v1.ListApisRequest',
+        ['parent']
+      );
       request.parent = defaultValue1;
       const expectedHeaderRequestParams = `parent=${defaultValue1}`;
       const expectedError = new Error('expected');
@@ -3901,7 +4021,10 @@ describe('v1.RegistryClient', () => {
       const request = generateSampleMessage(
         new protos.google.cloud.apigeeregistry.v1.ListApisRequest()
       );
-      const defaultValue1 = getTypeDefaultValue('ListApisRequest', ['parent']);
+      const defaultValue1 = getTypeDefaultValue(
+        '.google.cloud.apigeeregistry.v1.ListApisRequest',
+        ['parent']
+      );
       request.parent = defaultValue1;
       const expectedHeaderRequestParams = `parent=${defaultValue1}`;
       const expectedResponse = [
@@ -3952,7 +4075,10 @@ describe('v1.RegistryClient', () => {
       const request = generateSampleMessage(
         new protos.google.cloud.apigeeregistry.v1.ListApisRequest()
       );
-      const defaultValue1 = getTypeDefaultValue('ListApisRequest', ['parent']);
+      const defaultValue1 = getTypeDefaultValue(
+        '.google.cloud.apigeeregistry.v1.ListApisRequest',
+        ['parent']
+      );
       request.parent = defaultValue1;
       const expectedHeaderRequestParams = `parent=${defaultValue1}`;
       const expectedError = new Error('expected');
@@ -4000,7 +4126,10 @@ describe('v1.RegistryClient', () => {
       const request = generateSampleMessage(
         new protos.google.cloud.apigeeregistry.v1.ListApisRequest()
       );
-      const defaultValue1 = getTypeDefaultValue('ListApisRequest', ['parent']);
+      const defaultValue1 = getTypeDefaultValue(
+        '.google.cloud.apigeeregistry.v1.ListApisRequest',
+        ['parent']
+      );
       request.parent = defaultValue1;
       const expectedHeaderRequestParams = `parent=${defaultValue1}`;
       const expectedResponse = [
@@ -4039,7 +4168,10 @@ describe('v1.RegistryClient', () => {
       const request = generateSampleMessage(
         new protos.google.cloud.apigeeregistry.v1.ListApisRequest()
       );
-      const defaultValue1 = getTypeDefaultValue('ListApisRequest', ['parent']);
+      const defaultValue1 = getTypeDefaultValue(
+        '.google.cloud.apigeeregistry.v1.ListApisRequest',
+        ['parent']
+      );
       request.parent = defaultValue1;
       const expectedHeaderRequestParams = `parent=${defaultValue1}`;
       const expectedError = new Error('expected');
@@ -4079,9 +4211,10 @@ describe('v1.RegistryClient', () => {
       const request = generateSampleMessage(
         new protos.google.cloud.apigeeregistry.v1.ListApiVersionsRequest()
       );
-      const defaultValue1 = getTypeDefaultValue('ListApiVersionsRequest', [
-        'parent',
-      ]);
+      const defaultValue1 = getTypeDefaultValue(
+        '.google.cloud.apigeeregistry.v1.ListApiVersionsRequest',
+        ['parent']
+      );
       request.parent = defaultValue1;
       const expectedHeaderRequestParams = `parent=${defaultValue1}`;
       const expectedResponse = [
@@ -4117,9 +4250,10 @@ describe('v1.RegistryClient', () => {
       const request = generateSampleMessage(
         new protos.google.cloud.apigeeregistry.v1.ListApiVersionsRequest()
       );
-      const defaultValue1 = getTypeDefaultValue('ListApiVersionsRequest', [
-        'parent',
-      ]);
+      const defaultValue1 = getTypeDefaultValue(
+        '.google.cloud.apigeeregistry.v1.ListApiVersionsRequest',
+        ['parent']
+      );
       request.parent = defaultValue1;
       const expectedHeaderRequestParams = `parent=${defaultValue1}`;
       const expectedResponse = [
@@ -4171,9 +4305,10 @@ describe('v1.RegistryClient', () => {
       const request = generateSampleMessage(
         new protos.google.cloud.apigeeregistry.v1.ListApiVersionsRequest()
       );
-      const defaultValue1 = getTypeDefaultValue('ListApiVersionsRequest', [
-        'parent',
-      ]);
+      const defaultValue1 = getTypeDefaultValue(
+        '.google.cloud.apigeeregistry.v1.ListApiVersionsRequest',
+        ['parent']
+      );
       request.parent = defaultValue1;
       const expectedHeaderRequestParams = `parent=${defaultValue1}`;
       const expectedError = new Error('expected');
@@ -4201,9 +4336,10 @@ describe('v1.RegistryClient', () => {
       const request = generateSampleMessage(
         new protos.google.cloud.apigeeregistry.v1.ListApiVersionsRequest()
       );
-      const defaultValue1 = getTypeDefaultValue('ListApiVersionsRequest', [
-        'parent',
-      ]);
+      const defaultValue1 = getTypeDefaultValue(
+        '.google.cloud.apigeeregistry.v1.ListApiVersionsRequest',
+        ['parent']
+      );
       request.parent = defaultValue1;
       const expectedHeaderRequestParams = `parent=${defaultValue1}`;
       const expectedResponse = [
@@ -4261,9 +4397,10 @@ describe('v1.RegistryClient', () => {
       const request = generateSampleMessage(
         new protos.google.cloud.apigeeregistry.v1.ListApiVersionsRequest()
       );
-      const defaultValue1 = getTypeDefaultValue('ListApiVersionsRequest', [
-        'parent',
-      ]);
+      const defaultValue1 = getTypeDefaultValue(
+        '.google.cloud.apigeeregistry.v1.ListApiVersionsRequest',
+        ['parent']
+      );
       request.parent = defaultValue1;
       const expectedHeaderRequestParams = `parent=${defaultValue1}`;
       const expectedError = new Error('expected');
@@ -4310,9 +4447,10 @@ describe('v1.RegistryClient', () => {
       const request = generateSampleMessage(
         new protos.google.cloud.apigeeregistry.v1.ListApiVersionsRequest()
       );
-      const defaultValue1 = getTypeDefaultValue('ListApiVersionsRequest', [
-        'parent',
-      ]);
+      const defaultValue1 = getTypeDefaultValue(
+        '.google.cloud.apigeeregistry.v1.ListApiVersionsRequest',
+        ['parent']
+      );
       request.parent = defaultValue1;
       const expectedHeaderRequestParams = `parent=${defaultValue1}`;
       const expectedResponse = [
@@ -4358,9 +4496,10 @@ describe('v1.RegistryClient', () => {
       const request = generateSampleMessage(
         new protos.google.cloud.apigeeregistry.v1.ListApiVersionsRequest()
       );
-      const defaultValue1 = getTypeDefaultValue('ListApiVersionsRequest', [
-        'parent',
-      ]);
+      const defaultValue1 = getTypeDefaultValue(
+        '.google.cloud.apigeeregistry.v1.ListApiVersionsRequest',
+        ['parent']
+      );
       request.parent = defaultValue1;
       const expectedHeaderRequestParams = `parent=${defaultValue1}`;
       const expectedError = new Error('expected');
@@ -4400,9 +4539,10 @@ describe('v1.RegistryClient', () => {
       const request = generateSampleMessage(
         new protos.google.cloud.apigeeregistry.v1.ListApiSpecsRequest()
       );
-      const defaultValue1 = getTypeDefaultValue('ListApiSpecsRequest', [
-        'parent',
-      ]);
+      const defaultValue1 = getTypeDefaultValue(
+        '.google.cloud.apigeeregistry.v1.ListApiSpecsRequest',
+        ['parent']
+      );
       request.parent = defaultValue1;
       const expectedHeaderRequestParams = `parent=${defaultValue1}`;
       const expectedResponse = [
@@ -4438,9 +4578,10 @@ describe('v1.RegistryClient', () => {
       const request = generateSampleMessage(
         new protos.google.cloud.apigeeregistry.v1.ListApiSpecsRequest()
       );
-      const defaultValue1 = getTypeDefaultValue('ListApiSpecsRequest', [
-        'parent',
-      ]);
+      const defaultValue1 = getTypeDefaultValue(
+        '.google.cloud.apigeeregistry.v1.ListApiSpecsRequest',
+        ['parent']
+      );
       request.parent = defaultValue1;
       const expectedHeaderRequestParams = `parent=${defaultValue1}`;
       const expectedResponse = [
@@ -4492,9 +4633,10 @@ describe('v1.RegistryClient', () => {
       const request = generateSampleMessage(
         new protos.google.cloud.apigeeregistry.v1.ListApiSpecsRequest()
       );
-      const defaultValue1 = getTypeDefaultValue('ListApiSpecsRequest', [
-        'parent',
-      ]);
+      const defaultValue1 = getTypeDefaultValue(
+        '.google.cloud.apigeeregistry.v1.ListApiSpecsRequest',
+        ['parent']
+      );
       request.parent = defaultValue1;
       const expectedHeaderRequestParams = `parent=${defaultValue1}`;
       const expectedError = new Error('expected');
@@ -4522,9 +4664,10 @@ describe('v1.RegistryClient', () => {
       const request = generateSampleMessage(
         new protos.google.cloud.apigeeregistry.v1.ListApiSpecsRequest()
       );
-      const defaultValue1 = getTypeDefaultValue('ListApiSpecsRequest', [
-        'parent',
-      ]);
+      const defaultValue1 = getTypeDefaultValue(
+        '.google.cloud.apigeeregistry.v1.ListApiSpecsRequest',
+        ['parent']
+      );
       request.parent = defaultValue1;
       const expectedHeaderRequestParams = `parent=${defaultValue1}`;
       const expectedResponse = [
@@ -4581,9 +4724,10 @@ describe('v1.RegistryClient', () => {
       const request = generateSampleMessage(
         new protos.google.cloud.apigeeregistry.v1.ListApiSpecsRequest()
       );
-      const defaultValue1 = getTypeDefaultValue('ListApiSpecsRequest', [
-        'parent',
-      ]);
+      const defaultValue1 = getTypeDefaultValue(
+        '.google.cloud.apigeeregistry.v1.ListApiSpecsRequest',
+        ['parent']
+      );
       request.parent = defaultValue1;
       const expectedHeaderRequestParams = `parent=${defaultValue1}`;
       const expectedError = new Error('expected');
@@ -4631,9 +4775,10 @@ describe('v1.RegistryClient', () => {
       const request = generateSampleMessage(
         new protos.google.cloud.apigeeregistry.v1.ListApiSpecsRequest()
       );
-      const defaultValue1 = getTypeDefaultValue('ListApiSpecsRequest', [
-        'parent',
-      ]);
+      const defaultValue1 = getTypeDefaultValue(
+        '.google.cloud.apigeeregistry.v1.ListApiSpecsRequest',
+        ['parent']
+      );
       request.parent = defaultValue1;
       const expectedHeaderRequestParams = `parent=${defaultValue1}`;
       const expectedResponse = [
@@ -4679,9 +4824,10 @@ describe('v1.RegistryClient', () => {
       const request = generateSampleMessage(
         new protos.google.cloud.apigeeregistry.v1.ListApiSpecsRequest()
       );
-      const defaultValue1 = getTypeDefaultValue('ListApiSpecsRequest', [
-        'parent',
-      ]);
+      const defaultValue1 = getTypeDefaultValue(
+        '.google.cloud.apigeeregistry.v1.ListApiSpecsRequest',
+        ['parent']
+      );
       request.parent = defaultValue1;
       const expectedHeaderRequestParams = `parent=${defaultValue1}`;
       const expectedError = new Error('expected');
@@ -4720,9 +4866,10 @@ describe('v1.RegistryClient', () => {
       const request = generateSampleMessage(
         new protos.google.cloud.apigeeregistry.v1.ListApiSpecRevisionsRequest()
       );
-      const defaultValue1 = getTypeDefaultValue('ListApiSpecRevisionsRequest', [
-        'name',
-      ]);
+      const defaultValue1 = getTypeDefaultValue(
+        '.google.cloud.apigeeregistry.v1.ListApiSpecRevisionsRequest',
+        ['name']
+      );
       request.name = defaultValue1;
       const expectedHeaderRequestParams = `name=${defaultValue1}`;
       const expectedResponse = [
@@ -4759,9 +4906,10 @@ describe('v1.RegistryClient', () => {
       const request = generateSampleMessage(
         new protos.google.cloud.apigeeregistry.v1.ListApiSpecRevisionsRequest()
       );
-      const defaultValue1 = getTypeDefaultValue('ListApiSpecRevisionsRequest', [
-        'name',
-      ]);
+      const defaultValue1 = getTypeDefaultValue(
+        '.google.cloud.apigeeregistry.v1.ListApiSpecRevisionsRequest',
+        ['name']
+      );
       request.name = defaultValue1;
       const expectedHeaderRequestParams = `name=${defaultValue1}`;
       const expectedResponse = [
@@ -4813,9 +4961,10 @@ describe('v1.RegistryClient', () => {
       const request = generateSampleMessage(
         new protos.google.cloud.apigeeregistry.v1.ListApiSpecRevisionsRequest()
       );
-      const defaultValue1 = getTypeDefaultValue('ListApiSpecRevisionsRequest', [
-        'name',
-      ]);
+      const defaultValue1 = getTypeDefaultValue(
+        '.google.cloud.apigeeregistry.v1.ListApiSpecRevisionsRequest',
+        ['name']
+      );
       request.name = defaultValue1;
       const expectedHeaderRequestParams = `name=${defaultValue1}`;
       const expectedError = new Error('expected');
@@ -4843,9 +4992,10 @@ describe('v1.RegistryClient', () => {
       const request = generateSampleMessage(
         new protos.google.cloud.apigeeregistry.v1.ListApiSpecRevisionsRequest()
       );
-      const defaultValue1 = getTypeDefaultValue('ListApiSpecRevisionsRequest', [
-        'name',
-      ]);
+      const defaultValue1 = getTypeDefaultValue(
+        '.google.cloud.apigeeregistry.v1.ListApiSpecRevisionsRequest',
+        ['name']
+      );
       request.name = defaultValue1;
       const expectedHeaderRequestParams = `name=${defaultValue1}`;
       const expectedResponse = [
@@ -4902,9 +5052,10 @@ describe('v1.RegistryClient', () => {
       const request = generateSampleMessage(
         new protos.google.cloud.apigeeregistry.v1.ListApiSpecRevisionsRequest()
       );
-      const defaultValue1 = getTypeDefaultValue('ListApiSpecRevisionsRequest', [
-        'name',
-      ]);
+      const defaultValue1 = getTypeDefaultValue(
+        '.google.cloud.apigeeregistry.v1.ListApiSpecRevisionsRequest',
+        ['name']
+      );
       request.name = defaultValue1;
       const expectedHeaderRequestParams = `name=${defaultValue1}`;
       const expectedError = new Error('expected');
@@ -4950,9 +5101,10 @@ describe('v1.RegistryClient', () => {
       const request = generateSampleMessage(
         new protos.google.cloud.apigeeregistry.v1.ListApiSpecRevisionsRequest()
       );
-      const defaultValue1 = getTypeDefaultValue('ListApiSpecRevisionsRequest', [
-        'name',
-      ]);
+      const defaultValue1 = getTypeDefaultValue(
+        '.google.cloud.apigeeregistry.v1.ListApiSpecRevisionsRequest',
+        ['name']
+      );
       request.name = defaultValue1;
       const expectedHeaderRequestParams = `name=${defaultValue1}`;
       const expectedResponse = [
@@ -4998,9 +5150,10 @@ describe('v1.RegistryClient', () => {
       const request = generateSampleMessage(
         new protos.google.cloud.apigeeregistry.v1.ListApiSpecRevisionsRequest()
       );
-      const defaultValue1 = getTypeDefaultValue('ListApiSpecRevisionsRequest', [
-        'name',
-      ]);
+      const defaultValue1 = getTypeDefaultValue(
+        '.google.cloud.apigeeregistry.v1.ListApiSpecRevisionsRequest',
+        ['name']
+      );
       request.name = defaultValue1;
       const expectedHeaderRequestParams = `name=${defaultValue1}`;
       const expectedError = new Error('expected');
@@ -5039,9 +5192,10 @@ describe('v1.RegistryClient', () => {
       const request = generateSampleMessage(
         new protos.google.cloud.apigeeregistry.v1.ListApiDeploymentsRequest()
       );
-      const defaultValue1 = getTypeDefaultValue('ListApiDeploymentsRequest', [
-        'parent',
-      ]);
+      const defaultValue1 = getTypeDefaultValue(
+        '.google.cloud.apigeeregistry.v1.ListApiDeploymentsRequest',
+        ['parent']
+      );
       request.parent = defaultValue1;
       const expectedHeaderRequestParams = `parent=${defaultValue1}`;
       const expectedResponse = [
@@ -5078,9 +5232,10 @@ describe('v1.RegistryClient', () => {
       const request = generateSampleMessage(
         new protos.google.cloud.apigeeregistry.v1.ListApiDeploymentsRequest()
       );
-      const defaultValue1 = getTypeDefaultValue('ListApiDeploymentsRequest', [
-        'parent',
-      ]);
+      const defaultValue1 = getTypeDefaultValue(
+        '.google.cloud.apigeeregistry.v1.ListApiDeploymentsRequest',
+        ['parent']
+      );
       request.parent = defaultValue1;
       const expectedHeaderRequestParams = `parent=${defaultValue1}`;
       const expectedResponse = [
@@ -5134,9 +5289,10 @@ describe('v1.RegistryClient', () => {
       const request = generateSampleMessage(
         new protos.google.cloud.apigeeregistry.v1.ListApiDeploymentsRequest()
       );
-      const defaultValue1 = getTypeDefaultValue('ListApiDeploymentsRequest', [
-        'parent',
-      ]);
+      const defaultValue1 = getTypeDefaultValue(
+        '.google.cloud.apigeeregistry.v1.ListApiDeploymentsRequest',
+        ['parent']
+      );
       request.parent = defaultValue1;
       const expectedHeaderRequestParams = `parent=${defaultValue1}`;
       const expectedError = new Error('expected');
@@ -5164,9 +5320,10 @@ describe('v1.RegistryClient', () => {
       const request = generateSampleMessage(
         new protos.google.cloud.apigeeregistry.v1.ListApiDeploymentsRequest()
       );
-      const defaultValue1 = getTypeDefaultValue('ListApiDeploymentsRequest', [
-        'parent',
-      ]);
+      const defaultValue1 = getTypeDefaultValue(
+        '.google.cloud.apigeeregistry.v1.ListApiDeploymentsRequest',
+        ['parent']
+      );
       request.parent = defaultValue1;
       const expectedHeaderRequestParams = `parent=${defaultValue1}`;
       const expectedResponse = [
@@ -5224,9 +5381,10 @@ describe('v1.RegistryClient', () => {
       const request = generateSampleMessage(
         new protos.google.cloud.apigeeregistry.v1.ListApiDeploymentsRequest()
       );
-      const defaultValue1 = getTypeDefaultValue('ListApiDeploymentsRequest', [
-        'parent',
-      ]);
+      const defaultValue1 = getTypeDefaultValue(
+        '.google.cloud.apigeeregistry.v1.ListApiDeploymentsRequest',
+        ['parent']
+      );
       request.parent = defaultValue1;
       const expectedHeaderRequestParams = `parent=${defaultValue1}`;
       const expectedError = new Error('expected');
@@ -5273,9 +5431,10 @@ describe('v1.RegistryClient', () => {
       const request = generateSampleMessage(
         new protos.google.cloud.apigeeregistry.v1.ListApiDeploymentsRequest()
       );
-      const defaultValue1 = getTypeDefaultValue('ListApiDeploymentsRequest', [
-        'parent',
-      ]);
+      const defaultValue1 = getTypeDefaultValue(
+        '.google.cloud.apigeeregistry.v1.ListApiDeploymentsRequest',
+        ['parent']
+      );
       request.parent = defaultValue1;
       const expectedHeaderRequestParams = `parent=${defaultValue1}`;
       const expectedResponse = [
@@ -5322,9 +5481,10 @@ describe('v1.RegistryClient', () => {
       const request = generateSampleMessage(
         new protos.google.cloud.apigeeregistry.v1.ListApiDeploymentsRequest()
       );
-      const defaultValue1 = getTypeDefaultValue('ListApiDeploymentsRequest', [
-        'parent',
-      ]);
+      const defaultValue1 = getTypeDefaultValue(
+        '.google.cloud.apigeeregistry.v1.ListApiDeploymentsRequest',
+        ['parent']
+      );
       request.parent = defaultValue1;
       const expectedHeaderRequestParams = `parent=${defaultValue1}`;
       const expectedError = new Error('expected');
@@ -5365,7 +5525,7 @@ describe('v1.RegistryClient', () => {
         new protos.google.cloud.apigeeregistry.v1.ListApiDeploymentRevisionsRequest()
       );
       const defaultValue1 = getTypeDefaultValue(
-        'ListApiDeploymentRevisionsRequest',
+        '.google.cloud.apigeeregistry.v1.ListApiDeploymentRevisionsRequest',
         ['name']
       );
       request.name = defaultValue1;
@@ -5405,7 +5565,7 @@ describe('v1.RegistryClient', () => {
         new protos.google.cloud.apigeeregistry.v1.ListApiDeploymentRevisionsRequest()
       );
       const defaultValue1 = getTypeDefaultValue(
-        'ListApiDeploymentRevisionsRequest',
+        '.google.cloud.apigeeregistry.v1.ListApiDeploymentRevisionsRequest',
         ['name']
       );
       request.name = defaultValue1;
@@ -5462,7 +5622,7 @@ describe('v1.RegistryClient', () => {
         new protos.google.cloud.apigeeregistry.v1.ListApiDeploymentRevisionsRequest()
       );
       const defaultValue1 = getTypeDefaultValue(
-        'ListApiDeploymentRevisionsRequest',
+        '.google.cloud.apigeeregistry.v1.ListApiDeploymentRevisionsRequest',
         ['name']
       );
       request.name = defaultValue1;
@@ -5496,7 +5656,7 @@ describe('v1.RegistryClient', () => {
         new protos.google.cloud.apigeeregistry.v1.ListApiDeploymentRevisionsRequest()
       );
       const defaultValue1 = getTypeDefaultValue(
-        'ListApiDeploymentRevisionsRequest',
+        '.google.cloud.apigeeregistry.v1.ListApiDeploymentRevisionsRequest',
         ['name']
       );
       request.name = defaultValue1;
@@ -5563,7 +5723,7 @@ describe('v1.RegistryClient', () => {
         new protos.google.cloud.apigeeregistry.v1.ListApiDeploymentRevisionsRequest()
       );
       const defaultValue1 = getTypeDefaultValue(
-        'ListApiDeploymentRevisionsRequest',
+        '.google.cloud.apigeeregistry.v1.ListApiDeploymentRevisionsRequest',
         ['name']
       );
       request.name = defaultValue1;
@@ -5619,7 +5779,7 @@ describe('v1.RegistryClient', () => {
         new protos.google.cloud.apigeeregistry.v1.ListApiDeploymentRevisionsRequest()
       );
       const defaultValue1 = getTypeDefaultValue(
-        'ListApiDeploymentRevisionsRequest',
+        '.google.cloud.apigeeregistry.v1.ListApiDeploymentRevisionsRequest',
         ['name']
       );
       request.name = defaultValue1;
@@ -5673,7 +5833,7 @@ describe('v1.RegistryClient', () => {
         new protos.google.cloud.apigeeregistry.v1.ListApiDeploymentRevisionsRequest()
       );
       const defaultValue1 = getTypeDefaultValue(
-        'ListApiDeploymentRevisionsRequest',
+        '.google.cloud.apigeeregistry.v1.ListApiDeploymentRevisionsRequest',
         ['name']
       );
       request.name = defaultValue1;
@@ -5719,9 +5879,10 @@ describe('v1.RegistryClient', () => {
       const request = generateSampleMessage(
         new protos.google.cloud.apigeeregistry.v1.ListArtifactsRequest()
       );
-      const defaultValue1 = getTypeDefaultValue('ListArtifactsRequest', [
-        'parent',
-      ]);
+      const defaultValue1 = getTypeDefaultValue(
+        '.google.cloud.apigeeregistry.v1.ListArtifactsRequest',
+        ['parent']
+      );
       request.parent = defaultValue1;
       const expectedHeaderRequestParams = `parent=${defaultValue1}`;
       const expectedResponse = [
@@ -5757,9 +5918,10 @@ describe('v1.RegistryClient', () => {
       const request = generateSampleMessage(
         new protos.google.cloud.apigeeregistry.v1.ListArtifactsRequest()
       );
-      const defaultValue1 = getTypeDefaultValue('ListArtifactsRequest', [
-        'parent',
-      ]);
+      const defaultValue1 = getTypeDefaultValue(
+        '.google.cloud.apigeeregistry.v1.ListArtifactsRequest',
+        ['parent']
+      );
       request.parent = defaultValue1;
       const expectedHeaderRequestParams = `parent=${defaultValue1}`;
       const expectedResponse = [
@@ -5811,9 +5973,10 @@ describe('v1.RegistryClient', () => {
       const request = generateSampleMessage(
         new protos.google.cloud.apigeeregistry.v1.ListArtifactsRequest()
       );
-      const defaultValue1 = getTypeDefaultValue('ListArtifactsRequest', [
-        'parent',
-      ]);
+      const defaultValue1 = getTypeDefaultValue(
+        '.google.cloud.apigeeregistry.v1.ListArtifactsRequest',
+        ['parent']
+      );
       request.parent = defaultValue1;
       const expectedHeaderRequestParams = `parent=${defaultValue1}`;
       const expectedError = new Error('expected');
@@ -5841,9 +6004,10 @@ describe('v1.RegistryClient', () => {
       const request = generateSampleMessage(
         new protos.google.cloud.apigeeregistry.v1.ListArtifactsRequest()
       );
-      const defaultValue1 = getTypeDefaultValue('ListArtifactsRequest', [
-        'parent',
-      ]);
+      const defaultValue1 = getTypeDefaultValue(
+        '.google.cloud.apigeeregistry.v1.ListArtifactsRequest',
+        ['parent']
+      );
       request.parent = defaultValue1;
       const expectedHeaderRequestParams = `parent=${defaultValue1}`;
       const expectedResponse = [
@@ -5900,9 +6064,10 @@ describe('v1.RegistryClient', () => {
       const request = generateSampleMessage(
         new protos.google.cloud.apigeeregistry.v1.ListArtifactsRequest()
       );
-      const defaultValue1 = getTypeDefaultValue('ListArtifactsRequest', [
-        'parent',
-      ]);
+      const defaultValue1 = getTypeDefaultValue(
+        '.google.cloud.apigeeregistry.v1.ListArtifactsRequest',
+        ['parent']
+      );
       request.parent = defaultValue1;
       const expectedHeaderRequestParams = `parent=${defaultValue1}`;
       const expectedError = new Error('expected');
@@ -5948,9 +6113,10 @@ describe('v1.RegistryClient', () => {
       const request = generateSampleMessage(
         new protos.google.cloud.apigeeregistry.v1.ListArtifactsRequest()
       );
-      const defaultValue1 = getTypeDefaultValue('ListArtifactsRequest', [
-        'parent',
-      ]);
+      const defaultValue1 = getTypeDefaultValue(
+        '.google.cloud.apigeeregistry.v1.ListArtifactsRequest',
+        ['parent']
+      );
       request.parent = defaultValue1;
       const expectedHeaderRequestParams = `parent=${defaultValue1}`;
       const expectedResponse = [
@@ -5996,9 +6162,10 @@ describe('v1.RegistryClient', () => {
       const request = generateSampleMessage(
         new protos.google.cloud.apigeeregistry.v1.ListArtifactsRequest()
       );
-      const defaultValue1 = getTypeDefaultValue('ListArtifactsRequest', [
-        'parent',
-      ]);
+      const defaultValue1 = getTypeDefaultValue(
+        '.google.cloud.apigeeregistry.v1.ListArtifactsRequest',
+        ['parent']
+      );
       request.parent = defaultValue1;
       const expectedHeaderRequestParams = `parent=${defaultValue1}`;
       const expectedError = new Error('expected');
@@ -6545,311 +6712,6 @@ describe('v1.RegistryClient', () => {
           .args[2].otherArgs.headers['x-goog-request-params'].includes(
             expectedHeaderRequestParams
           )
-      );
-    });
-  });
-  describe('getOperation', () => {
-    it('invokes getOperation without error', async () => {
-      const client = new registryModule.v1.RegistryClient({
-        credentials: {client_email: 'bogus', private_key: 'bogus'},
-        projectId: 'bogus',
-      });
-      client.initialize();
-      const request = generateSampleMessage(
-        new operationsProtos.google.longrunning.GetOperationRequest()
-      );
-      const expectedResponse = generateSampleMessage(
-        new operationsProtos.google.longrunning.Operation()
-      );
-      client.operationsClient.getOperation = stubSimpleCall(expectedResponse);
-      const response = await client.getOperation(request);
-      assert.deepStrictEqual(response, [expectedResponse]);
-      assert(
-        (client.operationsClient.getOperation as SinonStub)
-          .getCall(0)
-          .calledWith(request)
-      );
-    });
-    it('invokes getOperation without error using callback', async () => {
-      const client = new registryModule.v1.RegistryClient({
-        credentials: {client_email: 'bogus', private_key: 'bogus'},
-        projectId: 'bogus',
-      });
-      const request = generateSampleMessage(
-        new operationsProtos.google.longrunning.GetOperationRequest()
-      );
-      const expectedResponse = generateSampleMessage(
-        new operationsProtos.google.longrunning.Operation()
-      );
-      client.operationsClient.getOperation = sinon
-        .stub()
-        .callsArgWith(2, null, expectedResponse);
-      const promise = new Promise((resolve, reject) => {
-        client.operationsClient.getOperation(
-          request,
-          undefined,
-          (
-            err?: Error | null,
-            result?: operationsProtos.google.longrunning.Operation | null
-          ) => {
-            if (err) {
-              reject(err);
-            } else {
-              resolve(result);
-            }
-          }
-        );
-      });
-      const response = await promise;
-      assert.deepStrictEqual(response, expectedResponse);
-      assert((client.operationsClient.getOperation as SinonStub).getCall(0));
-    });
-    it('invokes getOperation with error', async () => {
-      const client = new registryModule.v1.RegistryClient({
-        credentials: {client_email: 'bogus', private_key: 'bogus'},
-        projectId: 'bogus',
-      });
-      const request = generateSampleMessage(
-        new operationsProtos.google.longrunning.GetOperationRequest()
-      );
-      const expectedError = new Error('expected');
-      client.operationsClient.getOperation = stubSimpleCall(
-        undefined,
-        expectedError
-      );
-      await assert.rejects(async () => {
-        await client.getOperation(request);
-      }, expectedError);
-      assert(
-        (client.operationsClient.getOperation as SinonStub)
-          .getCall(0)
-          .calledWith(request)
-      );
-    });
-  });
-  describe('cancelOperation', () => {
-    it('invokes cancelOperation without error', async () => {
-      const client = new registryModule.v1.RegistryClient({
-        credentials: {client_email: 'bogus', private_key: 'bogus'},
-        projectId: 'bogus',
-      });
-      client.initialize();
-      const request = generateSampleMessage(
-        new operationsProtos.google.longrunning.CancelOperationRequest()
-      );
-      const expectedResponse = generateSampleMessage(
-        new protos.google.protobuf.Empty()
-      );
-      client.operationsClient.cancelOperation =
-        stubSimpleCall(expectedResponse);
-      const response = await client.cancelOperation(request);
-      assert.deepStrictEqual(response, [expectedResponse]);
-      assert(
-        (client.operationsClient.cancelOperation as SinonStub)
-          .getCall(0)
-          .calledWith(request)
-      );
-    });
-    it('invokes cancelOperation without error using callback', async () => {
-      const client = new registryModule.v1.RegistryClient({
-        credentials: {client_email: 'bogus', private_key: 'bogus'},
-        projectId: 'bogus',
-      });
-      const request = generateSampleMessage(
-        new operationsProtos.google.longrunning.CancelOperationRequest()
-      );
-      const expectedResponse = generateSampleMessage(
-        new protos.google.protobuf.Empty()
-      );
-      client.operationsClient.cancelOperation = sinon
-        .stub()
-        .callsArgWith(2, null, expectedResponse);
-      const promise = new Promise((resolve, reject) => {
-        client.operationsClient.cancelOperation(
-          request,
-          undefined,
-          (
-            err?: Error | null,
-            result?: protos.google.protobuf.Empty | null
-          ) => {
-            if (err) {
-              reject(err);
-            } else {
-              resolve(result);
-            }
-          }
-        );
-      });
-      const response = await promise;
-      assert.deepStrictEqual(response, expectedResponse);
-      assert((client.operationsClient.cancelOperation as SinonStub).getCall(0));
-    });
-    it('invokes cancelOperation with error', async () => {
-      const client = new registryModule.v1.RegistryClient({
-        credentials: {client_email: 'bogus', private_key: 'bogus'},
-        projectId: 'bogus',
-      });
-      const request = generateSampleMessage(
-        new operationsProtos.google.longrunning.CancelOperationRequest()
-      );
-      const expectedError = new Error('expected');
-      client.operationsClient.cancelOperation = stubSimpleCall(
-        undefined,
-        expectedError
-      );
-      await assert.rejects(async () => {
-        await client.cancelOperation(request);
-      }, expectedError);
-      assert(
-        (client.operationsClient.cancelOperation as SinonStub)
-          .getCall(0)
-          .calledWith(request)
-      );
-    });
-  });
-  describe('deleteOperation', () => {
-    it('invokes deleteOperation without error', async () => {
-      const client = new registryModule.v1.RegistryClient({
-        credentials: {client_email: 'bogus', private_key: 'bogus'},
-        projectId: 'bogus',
-      });
-      client.initialize();
-      const request = generateSampleMessage(
-        new operationsProtos.google.longrunning.DeleteOperationRequest()
-      );
-      const expectedResponse = generateSampleMessage(
-        new protos.google.protobuf.Empty()
-      );
-      client.operationsClient.deleteOperation =
-        stubSimpleCall(expectedResponse);
-      const response = await client.deleteOperation(request);
-      assert.deepStrictEqual(response, [expectedResponse]);
-      assert(
-        (client.operationsClient.deleteOperation as SinonStub)
-          .getCall(0)
-          .calledWith(request)
-      );
-    });
-    it('invokes deleteOperation without error using callback', async () => {
-      const client = new registryModule.v1.RegistryClient({
-        credentials: {client_email: 'bogus', private_key: 'bogus'},
-        projectId: 'bogus',
-      });
-      const request = generateSampleMessage(
-        new operationsProtos.google.longrunning.DeleteOperationRequest()
-      );
-      const expectedResponse = generateSampleMessage(
-        new protos.google.protobuf.Empty()
-      );
-      client.operationsClient.deleteOperation = sinon
-        .stub()
-        .callsArgWith(2, null, expectedResponse);
-      const promise = new Promise((resolve, reject) => {
-        client.operationsClient.deleteOperation(
-          request,
-          undefined,
-          (
-            err?: Error | null,
-            result?: protos.google.protobuf.Empty | null
-          ) => {
-            if (err) {
-              reject(err);
-            } else {
-              resolve(result);
-            }
-          }
-        );
-      });
-      const response = await promise;
-      assert.deepStrictEqual(response, expectedResponse);
-      assert((client.operationsClient.deleteOperation as SinonStub).getCall(0));
-    });
-    it('invokes deleteOperation with error', async () => {
-      const client = new registryModule.v1.RegistryClient({
-        credentials: {client_email: 'bogus', private_key: 'bogus'},
-        projectId: 'bogus',
-      });
-      const request = generateSampleMessage(
-        new operationsProtos.google.longrunning.DeleteOperationRequest()
-      );
-      const expectedError = new Error('expected');
-      client.operationsClient.deleteOperation = stubSimpleCall(
-        undefined,
-        expectedError
-      );
-      await assert.rejects(async () => {
-        await client.deleteOperation(request);
-      }, expectedError);
-      assert(
-        (client.operationsClient.deleteOperation as SinonStub)
-          .getCall(0)
-          .calledWith(request)
-      );
-    });
-  });
-  describe('listOperationsAsync', () => {
-    it('uses async iteration with listOperations without error', async () => {
-      const client = new registryModule.v1.RegistryClient({
-        credentials: {client_email: 'bogus', private_key: 'bogus'},
-        projectId: 'bogus',
-      });
-      const request = generateSampleMessage(
-        new operationsProtos.google.longrunning.ListOperationsRequest()
-      );
-      const expectedResponse = [
-        generateSampleMessage(
-          new operationsProtos.google.longrunning.ListOperationsResponse()
-        ),
-        generateSampleMessage(
-          new operationsProtos.google.longrunning.ListOperationsResponse()
-        ),
-        generateSampleMessage(
-          new operationsProtos.google.longrunning.ListOperationsResponse()
-        ),
-      ];
-      client.operationsClient.descriptor.listOperations.asyncIterate =
-        stubAsyncIterationCall(expectedResponse);
-      const responses: operationsProtos.google.longrunning.ListOperationsResponse[] =
-        [];
-      const iterable = client.operationsClient.listOperationsAsync(request);
-      for await (const resource of iterable) {
-        responses.push(resource!);
-      }
-      assert.deepStrictEqual(responses, expectedResponse);
-      assert.deepStrictEqual(
-        (
-          client.operationsClient.descriptor.listOperations
-            .asyncIterate as SinonStub
-        ).getCall(0).args[1],
-        request
-      );
-    });
-    it('uses async iteration with listOperations with error', async () => {
-      const client = new registryModule.v1.RegistryClient({
-        credentials: {client_email: 'bogus', private_key: 'bogus'},
-        projectId: 'bogus',
-      });
-      client.initialize();
-      const request = generateSampleMessage(
-        new operationsProtos.google.longrunning.ListOperationsRequest()
-      );
-      const expectedError = new Error('expected');
-      client.operationsClient.descriptor.listOperations.asyncIterate =
-        stubAsyncIterationCall(undefined, expectedError);
-      const iterable = client.operationsClient.listOperationsAsync(request);
-      await assert.rejects(async () => {
-        const responses: operationsProtos.google.longrunning.ListOperationsResponse[] =
-          [];
-        for await (const resource of iterable) {
-          responses.push(resource!);
-        }
-      });
-      assert.deepStrictEqual(
-        (
-          client.operationsClient.descriptor.listOperations
-            .asyncIterate as SinonStub
-        ).getCall(0).args[1],
-        request
       );
     });
   });
