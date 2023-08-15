@@ -574,7 +574,7 @@ export class ProvisioningClient {
     [
       protos.google.cloud.apigeeregistry.v1.IInstance,
       protos.google.cloud.apigeeregistry.v1.IGetInstanceRequest | undefined,
-      {} | undefined
+      {} | undefined,
     ]
   >;
   getInstance(
@@ -620,7 +620,7 @@ export class ProvisioningClient {
     [
       protos.google.cloud.apigeeregistry.v1.IInstance,
       protos.google.cloud.apigeeregistry.v1.IGetInstanceRequest | undefined,
-      {} | undefined
+      {} | undefined,
     ]
   > | void {
     request = request || {};
@@ -675,7 +675,7 @@ export class ProvisioningClient {
         protos.google.cloud.apigeeregistry.v1.IOperationMetadata
       >,
       protos.google.longrunning.IOperation | undefined,
-      {} | undefined
+      {} | undefined,
     ]
   >;
   createInstance(
@@ -728,7 +728,7 @@ export class ProvisioningClient {
         protos.google.cloud.apigeeregistry.v1.IOperationMetadata
       >,
       protos.google.longrunning.IOperation | undefined,
-      {} | undefined
+      {} | undefined,
     ]
   > | void {
     request = request || {};
@@ -812,7 +812,7 @@ export class ProvisioningClient {
         protos.google.cloud.apigeeregistry.v1.IOperationMetadata
       >,
       protos.google.longrunning.IOperation | undefined,
-      {} | undefined
+      {} | undefined,
     ]
   >;
   deleteInstance(
@@ -865,7 +865,7 @@ export class ProvisioningClient {
         protos.google.cloud.apigeeregistry.v1.IOperationMetadata
       >,
       protos.google.longrunning.IOperation | undefined,
-      {} | undefined
+      {} | undefined,
     ]
   > | void {
     request = request || {};
